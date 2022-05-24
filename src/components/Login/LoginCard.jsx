@@ -7,13 +7,12 @@ import {
   Input,
   Stack,
   Text,
-  useColorModeValue,
 } from '@chakra-ui/react';
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { supabase } from '../../supabaseClient';
+import { useAuth } from '../../contexts/AuthContext';
 
-function LoginCard() {
+export default function LoginCard() {
+  const auth = useAuth();
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
 
@@ -22,23 +21,19 @@ function LoginCard() {
 
     try {
       setLoading(true);
-      const { error } = await supabase.auth.signIn({ email });
+      const { error } = await auth.login(email);
       if (error) throw error;
       alert('Check your email for the login link!');
     } catch (error) {
       alert(error.error_description || error.message);
     } finally {
       setLoading(false);
+      setEmail('');
     }
   };
 
   return (
-    <Box
-      bg={useColorModeValue('white', 'gray.700')}
-      boxShadow="lg"
-      p="8"
-      rounded="lg"
-    >
+    <Box bg="gray.100" boxShadow="lg" p="8" rounded="lg">
       <Stack spacing={4}>
         <Heading fontSize="3xl" textAlign="center">
           Welcome
@@ -76,5 +71,3 @@ function LoginCard() {
     </Box>
   );
 }
-
-export default LoginCard;
