@@ -1,5 +1,5 @@
-import React from 'react';
+import Layout from '../components/Layout/MainNavBar/Layout';
 
 export default function DashboardPage() {
-  return <div>DashboardPage</div>;
+  return <Layout>DashboardPage</Layout>;
 }

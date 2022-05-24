@@ -1,27 +1,53 @@
 import { ChakraProvider, theme } from '@chakra-ui/react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import CommunityPage from './pages/CommunityPage';
 import DashboardPage from './pages/DashboardPage';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
-import MainNavBar from './components/Layout/MainNavBar/MainNavBar';
-import TestPage from './pages/TestPage';
+import AccountPage from './pages/AccountPage';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import { AuthProvider } from './contexts/AuthContext';
 
-function App() {
+export default function App() {
   return (
     <ChakraProvider theme={theme}>
-      <Router>
-        <MainNavBar />
+      <AuthProvider>
         <Routes>
-          <Route path="/" element={<TestPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/community" element={<CommunityPage />} />
+          <Route
+            path="/"
+            element={
+              <PrivateRoute>
+                <HomePage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <DashboardPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/community"
+            element={
+              <PrivateRoute>
+                <CommunityPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/account"
+            element={
+              <PrivateRoute>
+                <AccountPage />
+              </PrivateRoute>
+            }
+          />
         </Routes>
-      </Router>
+      </AuthProvider>
     </ChakraProvider>
   );
 }
-
-export default App;

@@ -1,7 +1,7 @@
 import { Flex, Heading, Stack, Text, VStack } from '@chakra-ui/react';
 import LoginCard from '../components/Login/LoginCard';
 
-function LoginPage() {
+export default function LoginPage() {
   return (
     <>
       <Stack w="auto" direction={{ base: 'column', md: 'row' }} spacing="0">
@@ -36,5 +36,3 @@ function LoginPage() {
     </>
   );
 }
-
-export default LoginPage;

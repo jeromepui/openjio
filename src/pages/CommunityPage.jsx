@@ -1,5 +1,5 @@
-import React from 'react';
+import Layout from '../components/Layout/MainNavBar/Layout';
 
 export default function CommunityPage() {
-  return <div>CommunityPage</div>;
+  return <Layout>CommunityPage</Layout>;
 }
