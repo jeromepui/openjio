@@ -1,5 +1,6 @@
 import React from 'react';
+import { Box } from '@chakra-ui/react';
 
 export default function CommunityPage() {
-  return <div>CommunityPage</div>;
+  return <Box marginTop='10%'>Your Community</Box>;;
 }

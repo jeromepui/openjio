@@ -1,5 +1,6 @@
 import React from 'react';
+import { Box } from '@chakra-ui/react';
 
 export default function DashboardPage() {
-  return <div>DashboardPage</div>;
+  return <Box marginTop='10%'>Your Dashboard</Box>;;
 }
