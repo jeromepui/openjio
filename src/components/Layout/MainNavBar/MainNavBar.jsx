@@ -5,7 +5,7 @@ import LowerNavBar from './LowerNavBar';
 
 export default function MainNavBar() {
   return (
-    <Box as="nav" position="fixed" w="full">
+    <Box as="nav" w="full" >
       <UpperNavBar />
       <LowerNavBar />
     </Box>
