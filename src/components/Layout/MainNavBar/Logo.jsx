@@ -5,12 +5,7 @@ export default function Logo(props) {
   return (
     <Box {...props}>
       <Link to="/">
-        <Text
-          fontSize="md"
-          fontFamily="sans-serif"
-          margin="1em"
-          fontWeight="1000"
-        >
+        <Text fontSize="lg" fontWeight="700" margin="1em">
           OpenJio
         </Text>
       </Link>

@@ -10,24 +10,26 @@ import {
 } from '@chakra-ui/react';
 import { BsChatFill } from 'react-icons/bs';
 import { CgProfile } from 'react-icons/cg';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../../../contexts/AuthContext';
 import Logo from './Logo';
 import SearchBar from './SearchBar';
-import { useAuth } from '../../../contexts/AuthContext';
-import { Link } from 'react-router-dom';
 
 export default function UpperNavBar() {
   const auth = useAuth();
 
   return (
-    <Flex bgColor="#FDC500" justify="space-between" align="center" pr={2}>
+    <Flex align="center" bgColor="#FDC500" justify="space-between" w="auto">
       <Logo />
       <SearchBar />
-      <HStack>
-        <IconButton
-          aria-label="Chat"
-          borderRadius="50%"
-          icon={<BsChatFill />}
-        />
+      <HStack px="4" spacing="4">
+        <Link to="/chat">
+          <IconButton
+            aria-label="Chat"
+            borderRadius="50%"
+            icon={<BsChatFill />}
+          />
+        </Link>
         <Box>
           <Menu>
             <MenuButton
@@ -37,10 +39,10 @@ export default function UpperNavBar() {
               icon={<CgProfile />}
             />
             <MenuList>
-              <Link to="/account">
-                <MenuItem>Profile settings</MenuItem>
+              <Link to="/profile">
+                <MenuItem>Settings</MenuItem>
               </Link>
-              <MenuItem onClick={auth.logout}>Log out</MenuItem>
+              <MenuItem onClick={auth.logout}>Log Out</MenuItem>
             </MenuList>
           </Menu>
         </Box>

@@ -1,4 +1,6 @@
 import {
+  Alert,
+  AlertIcon,
   Box,
   Button,
   FormControl,
@@ -11,10 +13,12 @@ import {
 import { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 
-export default function LoginCard() {
+export default function LoginForm() {
   const auth = useAuth();
-  const [loading, setLoading] = useState(false);
+
   const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [sent, setSent] = useState(false);
 
   const handleLogin = async e => {
     e.preventDefault();
@@ -23,12 +27,12 @@ export default function LoginCard() {
       setLoading(true);
       const { error } = await auth.login(email);
       if (error) throw error;
-      alert('Check your email for the login link!');
+      setSent(true);
     } catch (error) {
       alert(error.error_description || error.message);
     } finally {
-      setLoading(false);
       setEmail('');
+      setLoading(false);
     }
   };
 
@@ -39,6 +43,12 @@ export default function LoginCard() {
           Welcome
         </Heading>
         <Text>Sign in via magic link with your email below</Text>
+        {sent && (
+          <Alert status="success">
+            <AlertIcon />
+            Check your email for the login link!
+          </Alert>
+        )}
         {loading ? (
           <Text>Sending magic link...</Text>
         ) : (
