@@ -5,6 +5,7 @@ import DashboardPage from './pages/DashboardPage';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import AccountPage from './pages/AccountPage';
+import ListingFormPage from './pages/ListingFormPage';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import { AuthProvider } from './contexts/AuthContext';
 
@@ -43,6 +44,14 @@ export default function App() {
             element={
               <PrivateRoute>
                 <AccountPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/dashboard/add-new-listing"
+            element={
+              <PrivateRoute>
+                <ListingFormPage />
               </PrivateRoute>
             }
           />
