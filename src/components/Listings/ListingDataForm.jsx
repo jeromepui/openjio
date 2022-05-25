@@ -1,75 +1,78 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import exports from './Fields/fieldsIndex';
-import { FormErrorMessage, Button, VStack } from '@chakra-ui/react';
-import { useState, useEffect } from 'react';
+import { useToast, Button, VStack } from '@chakra-ui/react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function ListingDataForm() {
+  const makeToast = useToast();
   const [listingType, setListingType] = useState('');
+  const navigate = useNavigate();
 
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    mode: 'onTouched',
+    defaultValues: {
+      website: 'https://',
+    },
+  });
 
-  const onSubmit = data => console.log(data);
+  const onSubmit = data => {
+    console.log(data);
+    makeToast({
+      title: 'Listing added',
+      description: 'Your new listing is added.',
+      status: 'success',
+      duration: 9000,
+      isClosable: true,
+    });
+    navigate("/dashboard", {replace: true})
 
-  const formAlterer = () => {
-    switch (listingType) {
+  };
+
+  function renderSwitch(param) {
+    switch (param) {
       case 'deliverySaver':
-        <>
-          <exports.MinRequirementField register={register} />
-          <FormErrorMessage>{errors.minreq?.message}</FormErrorMessage>
-        </>;
-        break;
+        return (
+          <exports.MinRequirementField register={register} errors={errors} />
+        );
 
       case 'bundleDeal':
-        <>
-          <exports.ItemField register={register} />
-          <FormErrorMessage>{errors.item?.message}</FormErrorMessage>
-        </>;
-        break;
+        return <exports.ItemField register={register} errors={errors} />;
+
       case 'discount':
-        <>
-          <exports.MinRequirementField register={register} />
-          <FormErrorMessage>{errors.minreq?.message}</FormErrorMessage>
-          <exports.DiscountField register={register} />
-          <FormErrorMessage>{errors.currentSpend?.message}</FormErrorMessage>
-        </>;
-        break;
+        return (
+          <>
+            <exports.MinRequirementField register={register} errors={errors} />
+            <exports.DiscountField register={register} errors={errors} />
+          </>
+        );
+
       default:
         break;
     }
-  };
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-    <VStack spacing="1%">
-  
-          <exports.TitleField register={register} />
-          <FormErrorMessage>{errors.title?.message}</FormErrorMessage>{' '}
-    
-          <exports.WebsiteField register={register} />
-          <FormErrorMessage>{errors.website?.message}</FormErrorMessage>{' '}
-
-
-          <exports.SlotsField register={register} />
-          <FormErrorMessage>{errors.slots?.message}</FormErrorMessage>
-    
-          <exports.TypeField
-            register={register}
-            setListingType={setListingType}
-          />
-          <FormErrorMessage>{errors.type?.message}</FormErrorMessage>
-    
-          <exports.DescriptionField register={register} />
-          <FormErrorMessage>{errors.desc?.message}</FormErrorMessage>{' '}
-          
-          <Button type="submit">Submit</Button>{' '}
-  
+      <VStack spacing="1%">
+        <exports.TitleField register={register} errors={errors} />
+        <exports.WebsiteField register={register} errors={errors} />
+        <exports.SlotsField register={register} errors={errors} />
+        <exports.TypeField
+          register={register}
+          errors={errors}
+          setListingType={setListingType}
+          listingType={listingType}
+        />
+        <exports.DescriptionField register={register} />
+        {renderSwitch(listingType)}
+        <Button type="submit">Submit</Button>{' '}
       </VStack>
-
     </form>
   );
 }
