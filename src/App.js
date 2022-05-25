@@ -1,53 +1,39 @@
 import { ChakraProvider, theme } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { supabase } from './supabaseClient';
 import CommunityPage from './pages/CommunityPage';
 import DashboardPage from './pages/DashboardPage';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
-import AccountPage from './pages/AccountPage';
-import PrivateRoute from './components/PrivateRoute/PrivateRoute';
-import { AuthProvider } from './contexts/AuthContext';
+import ProfilePage from './pages/ProfilePage';
+import ChatPage from './pages/ChatPage';
 
 export default function App() {
+  const [session, setSession] = useState(null);
+
+  useEffect(() => {
+    setSession(supabase.auth.session());
+
+    supabase.auth.onAuthStateChange((event, session) => {
+      setSession(session);
+    });
+  }, []);
+
   return (
     <ChakraProvider theme={theme}>
-      <AuthProvider>
+      {!session ? (
+        <LoginPage />
+      ) : (
         <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/chat" element={<ChatPage />} />
+          <Route path="/community" element={<CommunityPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route
-            path="/"
-            element={
-              <PrivateRoute>
-                <HomePage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/dashboard"
-            element={
-              <PrivateRoute>
-                <DashboardPage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/community"
-            element={
-              <PrivateRoute>
-                <CommunityPage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/account"
-            element={
-              <PrivateRoute>
-                <AccountPage />
-              </PrivateRoute>
-            }
-          />
+          <Route path="/profile" element={<ProfilePage />} />
         </Routes>
-      </AuthProvider>
+      )}
     </ChakraProvider>
   );
 }

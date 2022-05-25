@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 
 export default function LowerNavBar() {
   return (
-    <Flex bgColor="#0FA3B1" justify="flex-start" basis="100vh">
-      <ButtonGroup variant="ghost" color="black">
+    <Flex bgColor="#0FA3B1" justify="flex-start">
+      <ButtonGroup variant="ghost" color="black" ml="2" spacing="6">
         <Link to="/">
           <Button>Home</Button>
         </Link>
