@@ -1,9 +1,10 @@
 import Layout from '../components/Layout/MainNavBar/Layout';
 import TitleBarContext from '../contexts/TitleBarContext';
 import { useContext, useEffect } from 'react';
-import { Text, IconButton, Box } from '@chakra-ui/react';
+import { Text, IconButton, Box, Flex, VStack } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
-import { GrAddCircle } from 'react-icons/gr'
+import { GrAddCircle } from 'react-icons/gr';
+import { RiEditBoxLine } from 'react-icons/ri'
 
 export default function DashboardPage() {
   const TBarContext = useContext(TitleBarContext);
@@ -18,9 +19,28 @@ export default function DashboardPage() {
         <Text display="block" width="100vw" marginBottom="1%" fontWeight="bold">
           Quick Tools
         </Text>
-        <Link to="/dashboard/add-new-listing">
-          <IconButton icon={<GrAddCircle aria-label='Add new listing'/>} />
-        </Link>
+        <Flex justify="flex-start" gap="5%">
+          <Link to="/dashboard/add-new-listing">
+            <VStack alignItems="center">
+              <IconButton
+                icon={<GrAddCircle aria-label="Add new listing" />}
+                size="lg"
+              />
+
+              <Text fontSize="smaller">Add listing</Text>
+            </VStack>
+          </Link>
+          <Link to="/dashboard/listing-manager">
+            <VStack alignItems="center">
+              <IconButton
+                icon={<RiEditBoxLine aria-label="Manage listings" />}
+                size="lg"
+              />
+
+              <Text fontSize="smaller">Manage listings</Text>
+            </VStack>
+          </Link>
+        </Flex>
       </Box>
     </Layout>
   );

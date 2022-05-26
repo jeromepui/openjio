@@ -8,6 +8,8 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import ProfilePage from './pages/ProfilePage';
 import ChatPage from './pages/ChatPage';
+import ListingFormPage from './pages/ListingFormPage'
+import ListingManagerPage from './pages/ListingManagerPage';
 
 export default function App() {
   const [session, setSession] = useState(null);
@@ -32,6 +34,8 @@ export default function App() {
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/dashboard/add-new-listing" element={<ListingFormPage />} />
+          <Route path="/dashboard/listing-manager" element={<ListingManagerPage />} />
         </Routes>
       )}
     </ChakraProvider>
