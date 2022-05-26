@@ -5,11 +5,13 @@ import {
   AlertTitle,
 } from '@chakra-ui/react';
 import Layout from '../components/Layout/MainNavBar/Layout';
+import TitleBar from '../components/Layout/MainNavBar/TitleBar';
 
 export default function ChatPage() {
   return (
     <Layout>
-      <Alert status="info" m="4" w="auto" borderRadius="10">
+      <TitleBar backButton={false} text="Chat" />
+      <Alert borderRadius="10" m="4" w="auto" status="info">
         <AlertIcon />
         <AlertTitle>Coming soon.</AlertTitle>
         <AlertDescription>

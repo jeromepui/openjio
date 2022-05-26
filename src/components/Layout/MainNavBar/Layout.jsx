@@ -1,23 +1,14 @@
+import { Box } from '@chakra-ui/react';
 import UpperNavBar from './UpperNavBar';
 import LowerNavBar from './LowerNavBar';
-import { Box } from '@chakra-ui/react';
-import TitleBar from './TitleBar';
 
-export default function Layout(props) {
+export default function Layout({ children }) {
   return (
     <>
-      <Box
-        position="sticky"
-        top="0"
-        left="0"
-        w="100%"
-        h="100vh"
-        overflowY="auto"
-      >
+      <Box position="sticky" w="100%">
         <UpperNavBar />
         <LowerNavBar />
-        <TitleBar />
-        {props.children}
+        {children}
       </Box>
     </>
   );

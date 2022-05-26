@@ -1,12 +1,12 @@
 import Layout from '../components/Layout/MainNavBar/Layout';
-import TitleBarContext from '../contexts/TitleBarContext';
-import { useContext, useEffect } from 'react';
+import TitleBar from '../components/Layout/MainNavBar/TitleBar';
+import Listings from '../components/Listings/Listings';
 
 export default function HomePage() {
-  const TBarContext = useContext(TitleBarContext);
-  useEffect(() => {
-    TBarContext.toggleBackButton(false);
-    TBarContext.changeTitle('Welcome to OpenJio');
-  });
-  return <Layout></Layout>;
+  return (
+    <Layout>
+      <TitleBar backButton={false} text="Welcome to OpenJio"></TitleBar>
+      <Listings></Listings>
+    </Layout>
+  );
 }

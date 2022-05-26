@@ -1,11 +1,11 @@
 import { Text, Box } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
-export default function Logo(props) {
+export default function Logo() {
   return (
-    <Box {...props}>
+    <Box px="6" py="4">
       <Link to="/">
-        <Text fontSize="lg" fontWeight="700" margin="1em">
+        <Text fontSize="lg" fontWeight="700">
           OpenJio
         </Text>
       </Link>

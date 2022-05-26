@@ -5,19 +5,13 @@ import {
   AlertTitle,
 } from '@chakra-ui/react';
 import Layout from '../components/Layout/MainNavBar/Layout';
-import TitleBarContext from '../contexts/TitleBarContext';
-import { useContext, useEffect } from 'react';
+import TitleBar from '../components/Layout/MainNavBar/TitleBar';
 
 export default function CommunityPage() {
-  const TBarContext = useContext(TitleBarContext);
-  useEffect(() => {
-    TBarContext.toggleBackButton(false);
-    TBarContext.changeTitle('The OpenJio Community');
-  });
-  
   return (
     <Layout>
-      <Alert status="info" m="4" w="auto" borderRadius="10">
+      <TitleBar backButton={false} text="Community"></TitleBar>
+      <Alert borderRadius="10" m="4" status="info" w="auto">
         <AlertIcon />
         <AlertTitle>Coming soon.</AlertTitle>
         <AlertDescription>
