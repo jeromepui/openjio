@@ -1,18 +1,12 @@
-import React from 'react';
 import Layout from '../components/Layout/MainNavBar/Layout';
-import ListingDataForm from '../components/Listings/ListingDataForm';
-import TitleBarContext from '../contexts/TitleBarContext';
-import { useContext, useEffect } from 'react';
+import ListingForm from '../components/Listings/ListingForm';
+import TitleBar from '../components/Layout/MainNavBar/TitleBar';
 
 export default function ListingFormPage() {
-  const TBarContext = useContext(TitleBarContext);
-  useEffect(() => {
-    TBarContext.toggleBackButton(true);
-    TBarContext.changeTitle('Add a new listing');
-  });
   return (
     <Layout>
-      <ListingDataForm />
+      <TitleBar backButton={true} text="Add a new listing"></TitleBar>
+      <ListingForm />
     </Layout>
   );
 }

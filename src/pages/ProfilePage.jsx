@@ -12,8 +12,9 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
-import { supabase } from '../supabaseClient';
+import { supabase } from '../supabase';
 import Layout from '../components/Layout/MainNavBar/Layout';
+import TitleBar from '../components/Layout/MainNavBar/TitleBar';
 
 export default function ProfilePage({ session }) {
   const [avatarUrl, setAvatarUrl] = useState(null);
@@ -79,7 +80,7 @@ export default function ProfilePage({ session }) {
         avatar_url: avatarUrl,
       };
 
-      let { error } = await supabase.from('profiles').upsert(updates, {
+      const { error } = await supabase.from('profiles').upsert(updates, {
         returning: 'minimal', // Don't return the value after inserting
       });
 
@@ -93,10 +94,10 @@ export default function ProfilePage({ session }) {
 
   return (
     <Layout>
-      <Box alignItems="center" justifyContent="center" m="5" p="5">
+      <TitleBar backButton={false} text="Edit profile" />
+      <Box px="6" w={['auto', '50%']}>
         <form onSubmit={updateProfile}>
           <Stack spacing="4">
-            <Heading>Edit profile</Heading>
             {loading ? (
               <Alert status="info">Loading...</Alert>
             ) : (
@@ -144,13 +145,13 @@ export default function ProfilePage({ session }) {
                   />
                 </FormControl>
                 <Button
-                  bg={'#0FA3B1'}
-                  color={'white'}
+                  bg="#0FA3B1"
+                  color="white"
                   _hover={{
                     bg: 'blue.500',
                   }}
                   type="submit"
-                  width={{ base: 'auto', md: '20%' }}
+                  width={['auto', '20%']}
                 >
                   Save Changes
                 </Button>

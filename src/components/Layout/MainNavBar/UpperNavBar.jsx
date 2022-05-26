@@ -24,16 +24,11 @@ export default function UpperNavBar() {
       <SearchBar />
       <HStack px="4" spacing="4">
         <Link to="/chat">
-          <IconButton
-            aria-label="Chat"
-            borderRadius="50%"
-            icon={<BsChatFill />}
-          />
+          <IconButton borderRadius="50%" icon={<BsChatFill />} />
         </Link>
         <Box>
           <Menu>
             <MenuButton
-              aria-label="Profile"
               as={IconButton}
               borderRadius="50%"
               icon={<CgProfile />}

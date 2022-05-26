@@ -1,5 +1,5 @@
 import Layout from '../components/Layout/MainNavBar/Layout';
-import TitleBarContext from '../contexts/TitleBarContext';
+import TitleBar from '../components/Layout/MainNavBar/TitleBar';
 import { useContext, useEffect } from 'react';
 import { Text, IconButton, Box, Flex, VStack } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
@@ -7,26 +7,20 @@ import { GrAddCircle } from 'react-icons/gr';
 import { RiEditBoxLine } from 'react-icons/ri'
 
 export default function DashboardPage() {
-  const TBarContext = useContext(TitleBarContext);
-  useEffect(() => {
-    TBarContext.toggleBackButton(false);
-    TBarContext.changeTitle('Your dashboard');
-  });
-
   return (
     <Layout>
-      <Box paddingLeft="3%" paddingBottom="2%" bgColor="teal.300">
-        <Text display="block" width="100vw" marginBottom="1%" fontWeight="bold">
+      <TitleBar backButton={false} text="Dashboard"></TitleBar>
+      <Box bgColor="teal.300" my="2" pl="4" py="2">
+        <Text display="block" fontWeight="bold" mb="2" width="100vw">
           Quick Tools
         </Text>
         <Flex justify="flex-start" gap="5%">
-          <Link to="/dashboard/add-new-listing">
+          <Link to="/dashboard/add-listing">
             <VStack alignItems="center">
               <IconButton
                 icon={<GrAddCircle aria-label="Add new listing" />}
                 size="lg"
               />
-
               <Text fontSize="smaller">Add listing</Text>
             </VStack>
           </Link>
@@ -36,7 +30,6 @@ export default function DashboardPage() {
                 icon={<RiEditBoxLine aria-label="Manage listings" />}
                 size="lg"
               />
-
               <Text fontSize="smaller">Manage listings</Text>
             </VStack>
           </Link>
