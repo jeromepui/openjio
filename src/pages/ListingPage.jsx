@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   Heading,
+  Link,
   List,
   ListItem,
   Stack,
@@ -11,12 +12,13 @@ import {
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { supabase } from '../supabase';
-import Layout from '../components/Layout/MainNavBar/Layout';
+import Layout from '../components/Layout/Layout';
 
 export default function ListingPage() {
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
   const [listing, setListing] = useState(null);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     getListing();
@@ -25,7 +27,7 @@ export default function ListingPage() {
   const getListing = async () => {
     try {
       setLoading(true);
-      let { data, error } = await supabase
+      let { data: listingData, error } = await supabase
         .from('listings')
         .select()
         .eq('id', id)
@@ -33,8 +35,18 @@ export default function ListingPage() {
 
       if (error) throw error;
 
-      if (data) {
-        setListing(data);
+      if (listingData) {
+        setListing(listingData);
+      }
+
+      let { data: userData } = await supabase
+        .from('profiles')
+        .select('username')
+        .eq('id', listingData?.created_by)
+        .single();
+
+      if (userData) {
+        setUser(userData);
       }
     } catch (error) {
       alert(error.message);
@@ -48,10 +60,10 @@ export default function ListingPage() {
       {loading ? (
         <Alert status="info">Loading...</Alert>
       ) : (
-        <Box p="4">
+        <Box px="6" py="4">
           <Stack spacing="4">
             <Heading fontWeight="700" fontSize="4xl">
-              {listing?.title}
+              {listing.title}
             </Heading>
             <Text fontSize="2xl" fontWeight="500">
               Listing Details
@@ -61,7 +73,7 @@ export default function ListingPage() {
                 <Text as="span" fontWeight="bold">
                   Website:
                 </Text>{' '}
-                {listing.website}
+                <Link href={listing.website}>{listing.website}</Link>
               </ListItem>
               <ListItem>
                 <Text as="span" fontWeight="bold">
@@ -85,15 +97,12 @@ export default function ListingPage() {
                 <Text as={'span'} fontWeight={'bold'}>
                   Created by:
                 </Text>{' '}
-                {listing.created_by_username}
+                {user.username}
               </ListItem>
             </List>
             <Button
-              bg="#0FA3B1"
-              color="white"
-              _hover={{
-                bg: 'blue.500',
-              }}
+              colorScheme="teal"
+              isDisabled
               type="submit"
               width={['auto', '20%']}
             >

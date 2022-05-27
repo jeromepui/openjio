@@ -4,8 +4,8 @@ import {
   AlertIcon,
   AlertTitle,
 } from '@chakra-ui/react';
-import Layout from '../components/Layout/MainNavBar/Layout';
-import TitleBar from '../components/Layout/MainNavBar/TitleBar';
+import Layout from '../components/Layout/Layout';
+import TitleBar from '../components/Layout/TitleBar';
 
 export default function CommunityPage() {
   return (

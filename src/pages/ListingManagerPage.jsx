@@ -1,70 +1,44 @@
-import { Tab, TabList, Tabs, TabPanels, TabPanel } from '@chakra-ui/react';
-import React from 'react';
-import TitleBarContext from '../contexts/TitleBarContext';
-import { useContext, useEffect } from 'react';
-import Layout from '../components/Layout/MainNavBar/Layout';
-import { useState } from 'react';
-import ListingManagerSlider from '../components/Listings/Listing Manager/ListingManagerSlider';
+import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
+  Tab,
+  TabList,
+  Tabs,
+  TabPanels,
+  TabPanel,
+} from '@chakra-ui/react';
+import Layout from '../components/Layout/Layout';
+import ListingManager from '../components/Listings/ListingManager/ListingManager';
+import TitleBar from '../components/Layout/TitleBar';
 
 export default function ListingManagerPage() {
-  const TBarContext = useContext(TitleBarContext);
-  const [category, setCategory] = useState('open');
-  useEffect(() => {
-    TBarContext.toggleBackButton(true);
-    TBarContext.changeTitle('Manage your listings here');
-  });
-
   return (
     <Layout>
-      <Tabs variant="enclosed" orientation="vertical" isFitted>
-        <TabList width="10%" bgColor="lightblue">
-          <Tab
-            _selected={{ bgColor: 'white' }}
-            onClick={() => {
-              setCategory('open');
-            }}
-          >
-            Open
-          </Tab>
-          <Tab
-            _selected={{ bgColor: 'white' }}
-            onClick={() => {
-              setCategory('closed');
-            }}
-          >
-            Closed
-          </Tab>
-          <Tab
-            _selected={{ bgColor: 'white' }}
-            onClick={() => {
-              setCategory('joined');
-            }}
-          >
-            Joined
-          </Tab>
-          <Tab
-            _selected={{ bgColor: 'white' }}
-            onClick={() => {
-              setCategory('followed');
-            }}
-          >
-            Followed
-          </Tab>
+      <TitleBar backButton={true} text="Manage your listings" />
+      <Tabs orientation="vertical" p="2" variant="soft-rounded" width="300">
+        <TabList>
+          <Tab>Open</Tab>
+          <Tab>Closed</Tab>
+          <Tab>Joined</Tab>
         </TabList>
-        <TabPanels bgColor="telegram.50" height="100vh">
+        <TabPanels height="100vh">
           <TabPanel>
-            <ListingManagerSlider category={category} />
+            <ListingManager category="open" status="open" />
           </TabPanel>
           <TabPanel>
-            <ListingManagerSlider category={category} />
+            <ListingManager category="closed" status="closed" />
           </TabPanel>
-
           <TabPanel>
-            <ListingManagerSlider category={category} />
-          </TabPanel>
-
-          <TabPanel>
-            <ListingManagerSlider category={category} />
+            <ListingManager category="joined" />
+            <Alert borderRadius="10" status="info" w="50%">
+              <AlertIcon />
+              <AlertTitle>Coming soon.</AlertTitle>
+              <AlertDescription>
+                You will be able to join listings soon!
+              </AlertDescription>
+            </Alert>
           </TabPanel>
         </TabPanels>
       </Tabs>

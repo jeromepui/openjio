@@ -1,5 +1,5 @@
 import { Flex, Heading, IconButton } from '@chakra-ui/react';
-import { IoIosArrowRoundBack } from 'react-icons/io';
+import { MdArrowBack } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 
 export default function TitleBar({ backButton, text }) {
@@ -10,7 +10,7 @@ export default function TitleBar({ backButton, text }) {
       {backButton && (
         <IconButton
           borderRadius="50%"
-          icon={<IoIosArrowRoundBack />}
+          icon={<MdArrowBack />}
           mr="4"
           onClick={() => navigate(-1)}
           size="sm"

@@ -1,6 +1,6 @@
-import Layout from '../components/Layout/MainNavBar/Layout';
-import ListingForm from '../components/Listings/ListingForm';
-import TitleBar from '../components/Layout/MainNavBar/TitleBar';
+import Layout from '../components/Layout/Layout';
+import ListingForm from '../components/Listings/ListingForm/ListingForm';
+import TitleBar from '../components/Layout/TitleBar';
 
 export default function ListingFormPage() {
   return (

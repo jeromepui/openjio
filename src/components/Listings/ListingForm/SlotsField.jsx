@@ -2,8 +2,6 @@ import { FormControl, FormLabel, Input, Text } from '@chakra-ui/react';
 import { ErrorMessage } from '@hookform/error-message';
 
 export default function SlotsField({ errors, register }) {
-  const MAX_PPL_ALLOWED = 10;
-
   return (
     <FormControl isRequired>
       <FormLabel>Slots Available</FormLabel>
@@ -13,15 +11,15 @@ export default function SlotsField({ errors, register }) {
         {...register('slots', {
           required: {
             value: true,
-            message: 'Please enter a number.',
+            message: 'Please enter a number (maximum 10).',
           },
           min: {
             value: 0,
-            message: 'Must be 0 and above',
+            message: 'Must be more than 0',
           },
           max: {
-            value: MAX_PPL_ALLOWED,
-            message: `Cannot be more than ${MAX_PPL_ALLOWED}`,
+            value: 10,
+            message: `Cannot be more than 10.`,
           },
         })}
       />
