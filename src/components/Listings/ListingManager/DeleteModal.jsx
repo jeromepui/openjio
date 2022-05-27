@@ -40,12 +40,8 @@ export default function DeleteModal({ isOpen, listing, onClose }) {
         <ModalHeader>Delete listing</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Text fontWeight="bold" mb="1rem">
-            Are you sure you want to delete this listing?
-          </Text>
-          <Text fontWeight="bold" mb="1rem">
-            This action cannot be undone.
-          </Text>
+          <Text>Are you sure you want to delete this listing?</Text>
+          <Text fontWeight="500">This action cannot be undone.</Text>
         </ModalBody>
 
         <ModalFooter>

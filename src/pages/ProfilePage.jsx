@@ -103,7 +103,7 @@ export default function ProfilePage({ session }) {
         avatar_url: '',
       };
 
-      let { error } = await supabase.from('profiles').upsert(deleteIcon);
+      const { error } = await supabase.from('profiles').upsert(deleteIcon);
 
       if (error) throw error;
     } catch (error) {

@@ -4,7 +4,7 @@ import ListingCardActions from './ListingCardActions';
 export default function ManagerListingCard({ category, listing }) {
   return (
     <WrapItem>
-      <Box maxW="400px" maxH="400px" boxShadow="lg" p="2" rounded="lg">
+      <Box w="300px" h="200px" boxShadow="lg" p="2" rounded="lg">
         <Stack
           align={{ base: 'center', md: 'stretch' }}
           textAlign={{ base: 'center', md: 'left' }}

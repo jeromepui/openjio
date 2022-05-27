@@ -29,36 +29,38 @@ export default function Listings() {
     <Wrap mx="4" p="2" spacing="30px">
       {listings?.map((listing, index) => (
         <WrapItem key={index}>
-          <Box boxShadow="lg" maxW="400px" maxH="400px" p="2" rounded="lg">
-            <Stack
-              align={{ base: 'center', md: 'stretch' }}
-              textAlign={{ base: 'center', md: 'left' }}
-              mt={{ base: 4, md: 0 }}
-            >
-              <Text
-                color="teal"
-                fontSize="lg"
-                fontWeight="bold"
-                letterSpacing="wide"
+          <Link to={`/listing/${listing.id}`}>
+            <Box boxShadow="lg" w="200px" h="200px" p="2" rounded="lg">
+              <Stack
+                align={{ base: 'center', md: 'stretch' }}
+                textAlign={{ base: 'center', md: 'left' }}
+                mt={{ base: 4, md: 0 }}
               >
-                {listing.title}
-              </Text>
-              <Text fontSize="md" fontWeight="500" my="1" noOfLines="1">
-                {listing.website}
-              </Text>
-              <Text fontSize="md" fontWeight="500" my="1">
-                Slots: {listing.slots}
-              </Text>
-              <Text my="2" color="gray.500">
-                {listing.type}
-              </Text>
-              <Link to={`/listing/${listing.id}`}>
-                <Button maxWidth="100px" my="2">
-                  View Listing
-                </Button>
-              </Link>
-            </Stack>
-          </Box>
+                <Text
+                  color="teal"
+                  fontSize="lg"
+                  fontWeight="bold"
+                  letterSpacing="wide"
+                >
+                  {listing.title}
+                </Text>
+                <Text fontSize="md" fontWeight="500" my="1" noOfLines="1">
+                  {listing.website}
+                </Text>
+                <Text fontSize="md" fontWeight="500" my="1">
+                  Slots: {listing.slots}
+                </Text>
+                <Text my="2" color="gray.500">
+                  {listing.type}
+                </Text>
+                <Link to={`/listing/${listing.id}`}>
+                  <Button maxWidth="100px" my="2">
+                    View Listing
+                  </Button>
+                </Link>
+              </Stack>
+            </Box>
+          </Link>
         </WrapItem>
       ))}
     </Wrap>

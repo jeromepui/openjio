@@ -30,19 +30,11 @@ export default function ListingForm() {
   const onSubmit = async listingData => {
     try {
       const user = supabase.auth.user();
-
-      const { data: userData } = await supabase
-        .from('profiles')
-        .select('username')
-        .eq('id', user.id)
-        .single();
-
       const listingId = uuidv4();
 
       const listing = {
         id: listingId,
         created_by: user.id,
-        created_by_username: userData.username,
         description: listingData.description,
         required_spend: listingData.requiredSpend,
         slots: listingData.slots,
