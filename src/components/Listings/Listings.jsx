@@ -12,13 +12,12 @@ export default function Listings() {
 
   const getListings = async () => {
     try {
-      const { data, error } = await supabase.from('listings');
+      const { data, error } = await supabase
+        .from('listings')
+        .select()
+        .eq('status', 'open');
 
       if (error) throw error;
-
-      if (data) {
-        data.sort(() => Math.random() - 0.5);
-      }
 
       setListings(data);
     } catch (error) {
@@ -30,7 +29,7 @@ export default function Listings() {
     <Wrap mx="4" p="2" spacing="30px">
       {listings?.map((listing, index) => (
         <WrapItem key={index}>
-          <Box maxW="200px" maxH="200px" boxShadow="lg" p="2" rounded="lg">
+          <Box boxShadow="lg" maxW="400px" maxH="400px" p="2" rounded="lg">
             <Stack
               align={{ base: 'center', md: 'stretch' }}
               textAlign={{ base: 'center', md: 'left' }}
@@ -47,7 +46,10 @@ export default function Listings() {
               <Text fontSize="md" fontWeight="500" my="1" noOfLines="1">
                 {listing.website}
               </Text>
-              <Text my={2} color="gray.500">
+              <Text fontSize="md" fontWeight="500" my="1">
+                Slots: {listing.slots}
+              </Text>
+              <Text my="2" color="gray.500">
                 {listing.type}
               </Text>
               <Link to={`/listing/${listing.id}`}>

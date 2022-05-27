@@ -4,7 +4,7 @@ import { ErrorMessage } from '@hookform/error-message';
 export default function WebsiteField({ errors, register }) {
   return (
     <FormControl isRequired>
-      <FormLabel htmlFor="website">Website</FormLabel>
+      <FormLabel>Website</FormLabel>
       <Input
         id="website"
         type="url"

@@ -1,12 +1,12 @@
 import { FormControl, FormLabel, Select } from '@chakra-ui/react';
 
-export default function TypeField({ register, setListingType }) {
+export default function TypeField({ register, setListingType, value }) {
   return (
     <FormControl isRequired>
       <FormLabel>Type</FormLabel>
       <Select
-        isRequired
         id="type"
+        value={value}
         {...register('type', {
           validate: {
             required: v => !(v = '') || 'Please select an option.',

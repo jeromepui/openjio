@@ -10,7 +10,6 @@ import ListingPage from './pages/ListingPage';
 import LoginPage from './pages/LoginPage';
 import ProfilePage from './pages/ProfilePage';
 import ChatPage from './pages/ChatPage';
-import ListingFormPage from './pages/ListingFormPage'
 import ListingManagerPage from './pages/ListingManagerPage';
 
 export default function App() {
@@ -38,8 +37,14 @@ export default function App() {
           <Route path="/listing/:id" element={<ListingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/dashboard/add-new-listing" element={<ListingFormPage />} />
-          <Route path="/dashboard/listing-manager" element={<ListingManagerPage />} />
+          <Route
+            path="/dashboard/add-new-listing"
+            element={<ListingFormPage />}
+          />
+          <Route
+            path="/dashboard/listing-manager"
+            element={<ListingManagerPage />}
+          />
         </Routes>
       )}
     </ChakraProvider>

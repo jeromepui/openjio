@@ -5,20 +5,20 @@ import {
   InputLeftElement,
   InputRightElement,
 } from '@chakra-ui/react';
-import { BiSearch } from 'react-icons/bi';
+import { MdSearch } from 'react-icons/md';
 
 export default function SearchBar() {
   return (
     <InputGroup w="40%">
       <Input
+        bg="white"
         borderRadius="10"
-        focusBorderColor="black"
         placeholder="Search for listings (Work in Progress)"
       />
-      <InputLeftElement children={<BiSearch />} />
+      <InputLeftElement children={<MdSearch />} />
       <InputRightElement
         children={
-          <Button h="60%" mr="4" size="md" variant="solid">
+          <Button h="8" mr="4">
             Go
           </Button>
         }

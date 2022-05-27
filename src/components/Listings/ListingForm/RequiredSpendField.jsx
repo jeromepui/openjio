@@ -8,14 +8,13 @@ import {
 } from '@chakra-ui/react';
 import { ErrorMessage } from '@hookform/error-message';
 
-export default function MinRequirementField({ errors, register }) {
+export default function RequiredSpendField({ errors, register }) {
   return (
     <FormControl isRequired>
-      <FormLabel>Amount required to hit minimum spend</FormLabel>
+      <FormLabel>$ required to hit minimum spend</FormLabel>
       <InputGroup>
         <InputLeftAddon children="$" />
         <Input
-          required={true}
           id="requiredSpend"
           type="number"
           {...register('requiredSpend', {

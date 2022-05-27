@@ -1,20 +1,22 @@
 import {
   Alert,
   Avatar,
+  AvatarBadge,
   Box,
   Button,
   Center,
   FormControl,
   FormLabel,
-  Heading,
+  IconButton,
   Input,
   Stack,
   VStack,
 } from '@chakra-ui/react';
+import { SmallCloseIcon } from '@chakra-ui/icons';
 import { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
-import Layout from '../components/Layout/MainNavBar/Layout';
-import TitleBar from '../components/Layout/MainNavBar/TitleBar';
+import Layout from '../components/Layout/Layout';
+import TitleBar from '../components/Layout/TitleBar';
 
 export default function ProfilePage({ session }) {
   const [avatarUrl, setAvatarUrl] = useState(null);
@@ -92,6 +94,25 @@ export default function ProfilePage({ session }) {
     }
   };
 
+  const handleDeleteIcon = async () => {
+    try {
+      const user = supabase.auth.user();
+
+      const deleteIcon = {
+        id: user.id,
+        avatar_url: '',
+      };
+
+      let { error } = await supabase.from('profiles').upsert(deleteIcon);
+
+      if (error) throw error;
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      window.location.reload(false);
+    }
+  };
+
   return (
     <Layout>
       <TitleBar backButton={false} text="Edit profile" />
@@ -108,13 +129,24 @@ export default function ProfilePage({ session }) {
                     <Center>
                       <Avatar
                         alt={avatarUrl ? 'Avatar' : 'No image'}
+                        name={username}
                         size="xl"
                         src={
                           avatarUrl
                             ? `https://mtwxkbwufcrhoaevfoxk.supabase.co/storage/v1/object/public/${avatarUrl}`
                             : ''
                         }
-                      ></Avatar>
+                      >
+                        <AvatarBadge
+                          as={IconButton}
+                          colorScheme="red"
+                          icon={<SmallCloseIcon />}
+                          onClick={handleDeleteIcon}
+                          rounded="full"
+                          size="sm"
+                          top="-10px"
+                        />
+                      </Avatar>
                     </Center>
                     <Center>
                       <VStack>
@@ -145,11 +177,7 @@ export default function ProfilePage({ session }) {
                   />
                 </FormControl>
                 <Button
-                  bg="#0FA3B1"
-                  color="white"
-                  _hover={{
-                    bg: 'blue.500',
-                  }}
+                  colorScheme="teal"
                   type="submit"
                   width={['auto', '20%']}
                 >
