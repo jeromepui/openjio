@@ -1,6 +1,6 @@
-import { ChakraProvider, theme } from '@chakra-ui/react';
+import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { supabase } from './supabase';
 import CommunityPage from './pages/CommunityPage';
 import DashboardPage from './pages/DashboardPage';
@@ -10,7 +10,11 @@ import ListingPage from './pages/ListingPage';
 import LoginPage from './pages/LoginPage';
 import ProfilePage from './pages/ProfilePage';
 import ChatPage from './pages/ChatPage';
-import ListingManagerPage from './pages/ListingManagerPage';
+import NavBar from './components/NavBar/NavBar';
+
+const theme = extendTheme({
+  components: { Button: { baseStyle: { _focus: { boxShadow: 'none' } } } },
+});
 
 export default function App() {
   const [session, setSession] = useState(null);
@@ -28,24 +32,23 @@ export default function App() {
       {!session ? (
         <LoginPage />
       ) : (
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/chat" element={<ChatPage />} />
-          <Route path="/community" element={<CommunityPage />} />
-          <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/dashboard/add-listing" element={<ListingFormPage />} />
-          <Route path="/listing/:id" element={<ListingPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route
-            path="/dashboard/add-new-listing"
-            element={<ListingFormPage />}
-          />
-          <Route
-            path="/dashboard/listing-manager"
-            element={<ListingManagerPage />}
-          />
-        </Routes>
+        <>
+          <NavBar />
+          <Routes>
+            <Route path="*" element={<Navigate to="/" />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/chat" element={<ChatPage />} />
+            <Route path="/community" element={<CommunityPage />} />
+            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/add-listing" element={<ListingFormPage />} />
+            <Route path="/listing/:id" element={<ListingPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route
+              path="/dashboard/add-new-listing"
+              element={<ListingFormPage />}
+            />
+          </Routes>
+        </>
       )}
     </ChakraProvider>
   );

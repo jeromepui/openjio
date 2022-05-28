@@ -1,7 +1,7 @@
 import { Button, HStack, useDisclosure } from '@chakra-ui/react';
 import DeleteModal from './DeleteModal';
 import EditModal from './EditModal';
-import { supabase } from '../../../supabase';
+import { supabase } from '../../supabase';
 
 export default function ListingCardActionBar({ category, listing }) {
   const {
@@ -37,7 +37,7 @@ export default function ListingCardActionBar({ category, listing }) {
     } catch (error) {
       alert(error.message);
     } finally {
-      window.location.reload(false);
+      window.location.reload();
     }
   };
 
@@ -56,7 +56,7 @@ export default function ListingCardActionBar({ category, listing }) {
     } catch (error) {
       alert(error.message);
     } finally {
-      window.location.reload(false);
+      window.location.reload();
     }
   };
 

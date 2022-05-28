@@ -10,12 +10,14 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
+  const [session, setSession] = useState();
 
   useEffect(() => {
     const session = supabase.auth.session();
 
     setUser(session?.user ?? null);
     setLoading(false);
+    setSession(session);
 
     const { data: listener } = supabase.auth.onAuthStateChange(
       (event, session) => {
@@ -30,18 +32,21 @@ export function AuthProvider({ children }) {
   }, []);
 
   const login = async email => {
-    const { error, user } = await supabase.auth.signIn({ email });
-    if (error) console.log(error);
-    return { error, user };
+    const { error } = await supabase.auth.signIn({ email });
+    if (error) {
+      console.log(error);
+      throw error;
+    }
+    return { error };
   };
 
   const logout = async () => {
     const { error } = await supabase.auth.signOut();
-    if (error) console.log(error);
+    if (error) alert(error);
     setUser(null);
   };
 
-  const value = { login, logout, user };
+  const value = { login, logout, session, user };
 
   return (
     <AuthContext.Provider value={value}>

@@ -4,7 +4,7 @@ import BottomNavBar from './BottomNavBar';
 
 export default function NavBar() {
   return (
-    <Box w="100%">
+    <Box w="100vw">
       <TopNavBar />
       <BottomNavBar />
     </Box>

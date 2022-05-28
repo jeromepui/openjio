@@ -26,7 +26,9 @@ export default function Login() {
 
     try {
       setLoading(true);
+
       const { error } = await auth.login(email);
+
       if (error) throw error;
       setSent(true);
     } catch (error) {

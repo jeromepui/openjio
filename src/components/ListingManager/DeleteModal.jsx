@@ -9,7 +9,7 @@ import {
   ModalOverlay,
   Text,
 } from '@chakra-ui/react';
-import { supabase } from '../../../supabase';
+import { supabase } from '../../supabase';
 
 export default function DeleteModal({ isOpen, listing, onClose }) {
   const handleDelete = async () => {

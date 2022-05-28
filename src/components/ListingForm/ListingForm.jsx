@@ -9,7 +9,7 @@ import SlotsField from './SlotsField';
 import TitleField from './TitleField';
 import TypeField from './TypeField';
 import WebsiteField from './WebsiteField';
-import { supabase } from '../../../supabase';
+import { supabase } from '../../supabase';
 
 export default function ListingForm() {
   const navigate = useNavigate();
@@ -90,7 +90,7 @@ export default function ListingForm() {
           <GridItem colSpan="2">
             <DescriptionField register={register} />
           </GridItem>
-          <Button type="submit" width={['auto', '20%']}>
+          <Button type="submit" width={['auto', '40%']}>
             Submit
           </Button>
         </SimpleGrid>

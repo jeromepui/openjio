@@ -11,7 +11,9 @@ export default function Hero() {
     >
       <Stack w={{ base: '0', md: '70%' }}>
         <Heading fontSize="6xl">OpenJio</Heading>
-        <Text fontSize="4xl">Your go-to website for group buy deals!</Text>
+        <Text fontSize="2xl">
+          Your go-to website for coordinating group buy deals!
+        </Text>
       </Stack>
     </Flex>
   );

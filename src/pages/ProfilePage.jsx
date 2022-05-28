@@ -15,8 +15,7 @@ import {
 import { SmallCloseIcon } from '@chakra-ui/icons';
 import { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
-import Layout from '../components/Layout/Layout';
-import TitleBar from '../components/Layout/TitleBar';
+import TitleBar from '../components/TitleBar/TitleBar';
 
 export default function ProfilePage({ session }) {
   const [avatarUrl, setAvatarUrl] = useState(null);
@@ -109,12 +108,12 @@ export default function ProfilePage({ session }) {
     } catch (error) {
       alert(error.message);
     } finally {
-      window.location.reload(false);
+      window.location.reload();
     }
   };
 
   return (
-    <Layout>
+    <>
       <TitleBar backButton={false} text="Edit profile" />
       <Box px="6" w={['auto', '50%']}>
         <form onSubmit={updateProfile}>
@@ -129,7 +128,6 @@ export default function ProfilePage({ session }) {
                     <Center>
                       <Avatar
                         alt={avatarUrl ? 'Avatar' : 'No image'}
-                        name={username}
                         size="xl"
                         src={
                           avatarUrl
@@ -188,6 +186,6 @@ export default function ProfilePage({ session }) {
           </Stack>
         </form>
       </Box>
-    </Layout>
+    </>
   );
 }
