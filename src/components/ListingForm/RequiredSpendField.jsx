@@ -11,7 +11,7 @@ import { ErrorMessage } from '@hookform/error-message';
 export default function RequiredSpendField({ errors, register }) {
   return (
     <FormControl isRequired>
-      <FormLabel>$ required to hit minimum spend</FormLabel>
+      <FormLabel>$ Required for Free Delivery</FormLabel>
       <InputGroup>
         <InputLeftAddon children="$" />
         <Input

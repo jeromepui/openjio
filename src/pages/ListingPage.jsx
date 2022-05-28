@@ -12,7 +12,6 @@ import {
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { supabase } from '../supabase';
-import Layout from '../components/Layout/Layout';
 
 export default function ListingPage() {
   const { id } = useParams();
@@ -27,7 +26,7 @@ export default function ListingPage() {
   const getListing = async () => {
     try {
       setLoading(true);
-      let { data: listingData, error } = await supabase
+      const { data: listingData, error } = await supabase
         .from('listings')
         .select()
         .eq('id', id)
@@ -35,19 +34,15 @@ export default function ListingPage() {
 
       if (error) throw error;
 
-      if (listingData) {
-        setListing(listingData);
-      }
+      setListing(listingData);
 
-      let { data: userData } = await supabase
+      const { data: userData } = await supabase
         .from('profiles')
         .select('username')
         .eq('id', listingData?.created_by)
         .single();
 
-      if (userData) {
-        setUser(userData);
-      }
+      setUser(userData);
     } catch (error) {
       alert(error.message);
     } finally {
@@ -56,7 +51,7 @@ export default function ListingPage() {
   };
 
   return (
-    <Layout>
+    <>
       {loading ? (
         <Alert status="info">Loading...</Alert>
       ) : (
@@ -68,36 +63,36 @@ export default function ListingPage() {
             <Text fontSize="2xl" fontWeight="500">
               Listing Details
             </Text>
-            <List spacing={4}>
+            <List spacing={6}>
               <ListItem>
-                <Text as="span" fontWeight="bold">
-                  Website:
-                </Text>{' '}
+                <Text fontWeight="bold">Website:</Text>{' '}
                 <Link href={listing.website}>{listing.website}</Link>
               </ListItem>
               <ListItem>
-                <Text as="span" fontWeight="bold">
-                  Type:
-                </Text>{' '}
-                {listing.type}
+                <Text fontWeight="bold">Type:</Text> {listing.type}
+              </ListItem>
+              {listing.type === 'Min. Spend' && (
+                <ListItem>
+                  <Text fontWeight="bold">
+                    Amount Required For Free Delivery:
+                  </Text>{' '}
+                  ${listing.required_spend}
+                </ListItem>
+              )}
+              <ListItem>
+                <Text fontWeight="bold">Slots Available:</Text> {listing.slots}
               </ListItem>
               <ListItem>
-                <Text as="span" fontWeight="bold">
-                  Slots Available:
-                </Text>{' '}
-                {listing.slots}
+                <Text fontWeight="bold">Description:</Text>{' '}
+                {listing.description
+                  ? listing.description
+                  : 'No description provided'}
               </ListItem>
               <ListItem>
-                <Text as="span" fontWeight="bold">
-                  Description:
-                </Text>{' '}
-                {listing.description}
-              </ListItem>
-              <ListItem>
-                <Text as={'span'} fontWeight={'bold'}>
-                  Created by:
-                </Text>{' '}
-                {user.username}
+                <Text fontWeight={'bold'}>Created by:</Text>{' '}
+                {user?.username
+                  ? user.username
+                  : 'User has not created a username'}
               </ListItem>
             </List>
             <Button
@@ -111,6 +106,6 @@ export default function ListingPage() {
           </Stack>
         </Box>
       )}
-    </Layout>
+    </>
   );
 }

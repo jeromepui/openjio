@@ -8,11 +8,10 @@ import {
 } from '@chakra-ui/react';
 import { MdPerson } from 'react-icons/md';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../../../contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 
-function ProfileButton() {
+export default function ProfileButton() {
   const auth = useAuth();
-
   return (
     <Box>
       <Menu>
@@ -27,5 +26,3 @@ function ProfileButton() {
     </Box>
   );
 }
-
-export default ProfileButton;

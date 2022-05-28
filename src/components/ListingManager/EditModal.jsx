@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { supabase } from '../../../supabase';
+import { supabase } from '../../supabase';
 import DescriptionField from '../ListingForm/DescriptionField';
 import MinSpendField from '../ListingForm/RequiredSpendField';
 import SlotsField from '../ListingForm/SlotsField';
@@ -22,7 +22,7 @@ import WebsiteField from '../ListingForm/WebsiteField';
 
 export default function EditModal({ isOpen, listing, onClose }) {
   const makeToast = useToast();
-  const [listingType, setListingType] = useState('');
+  const [listingType, setListingType] = useState(listing.type);
 
   const {
     handleSubmit,
@@ -71,6 +71,9 @@ export default function EditModal({ isOpen, listing, onClose }) {
       });
     } catch (error) {
       alert(error.message);
+    } finally {
+      window.location.reload(false);
+      onClose();
     }
   };
 
@@ -103,7 +106,7 @@ export default function EditModal({ isOpen, listing, onClose }) {
             </Stack>
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme="teal" onClick={onClose} type="submit">
+            <Button colorScheme="teal" type="submit">
               Save Changes
             </Button>
           </ModalFooter>

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Wrap } from '@chakra-ui/react';
+import { Heading, Wrap } from '@chakra-ui/react';
 import ManagerListingCard from './ManagerListingCard';
-import { supabase } from '../../../supabase';
+import { supabase } from '../../supabase';
 
 export default function ListingManager({ category, status }) {
-  const [listings, setListings] = useState();
+  const [listings, setListings] = useState(null);
 
   useEffect(() => {
     getListings();
@@ -32,13 +32,19 @@ export default function ListingManager({ category, status }) {
 
   return (
     <Wrap mx="4" p="2" spacing="30px">
-      {listings?.map((listing, index) => (
-        <ManagerListingCard
-          category={category}
-          key={index}
-          listing={listing}
-        ></ManagerListingCard>
-      ))}
+      {listings?.length > 0 ? (
+        listings?.map((listing, index) => (
+          <ManagerListingCard
+            category={category}
+            key={index}
+            listing={listing}
+          ></ManagerListingCard>
+        ))
+      ) : (
+        <Heading fontSize="2xl">
+          You do not have any {category} listings.
+        </Heading>
+      )}
     </Wrap>
   );
 }

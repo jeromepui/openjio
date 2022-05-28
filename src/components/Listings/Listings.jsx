@@ -1,4 +1,4 @@
-import { Box, Button, Stack, Text, Wrap, WrapItem } from '@chakra-ui/react';
+import { Box, Stack, Text, Wrap, WrapItem } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../../supabase';
@@ -26,11 +26,11 @@ export default function Listings() {
   };
 
   return (
-    <Wrap mx="4" p="2" spacing="30px">
+    <Wrap mx="4" p="2" spacing="40px">
       {listings?.map((listing, index) => (
         <WrapItem key={index}>
           <Link to={`/listing/${listing.id}`}>
-            <Box boxShadow="lg" w="200px" h="200px" p="2" rounded="lg">
+            <Box boxShadow="lg" w="200px" h="160px" p="2" rounded="lg">
               <Stack
                 align={{ base: 'center', md: 'stretch' }}
                 textAlign={{ base: 'center', md: 'left' }}
@@ -44,20 +44,13 @@ export default function Listings() {
                 >
                   {listing.title}
                 </Text>
-                <Text fontSize="md" fontWeight="500" my="1" noOfLines="1">
+                <Text fontSize="md" fontWeight="500" noOfLines="1">
                   {listing.website}
                 </Text>
-                <Text fontSize="md" fontWeight="500" my="1">
+                <Text fontSize="md" fontWeight="500">
                   Slots: {listing.slots}
                 </Text>
-                <Text my="2" color="gray.500">
-                  {listing.type}
-                </Text>
-                <Link to={`/listing/${listing.id}`}>
-                  <Button maxWidth="100px" my="2">
-                    View Listing
-                  </Button>
-                </Link>
+                <Text color="gray.600">{listing.type}</Text>
               </Stack>
             </Box>
           </Link>
