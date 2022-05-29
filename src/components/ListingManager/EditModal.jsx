@@ -41,10 +41,6 @@ export default function EditModal({ isOpen, listing, onClose }) {
   });
 
   const onSubmit = async listingData => {
-    if (listingType === 'Bundle Deal') {
-      listingData.requiredSpend = 0;
-    }
-
     try {
       const listingUpdates = {
         id: listing.id,

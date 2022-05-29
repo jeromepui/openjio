@@ -22,6 +22,7 @@ export default function ListingForm() {
     formState: { errors },
   } = useForm({
     defaultValues: {
+      requiredSpend: 1,
       website: 'https://',
     },
     mode: 'onTouched',
@@ -31,6 +32,10 @@ export default function ListingForm() {
     try {
       const user = supabase.auth.user();
       const listingId = uuidv4();
+
+      if (listingData.type === 'Min. Spend') {
+        listingData.requiredSpend = '0';
+      }
 
       const listing = {
         id: listingId,

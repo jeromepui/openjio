@@ -10,12 +10,7 @@ export default function ManagerListingCard({ category, listing }) {
           textAlign={{ base: 'center', md: 'left' }}
           mt={{ base: 4, md: 0 }}
         >
-          <Text
-            color="teal"
-            fontSize="lg"
-            fontWeight="bold"
-            letterSpacing="wide"
-          >
+          <Text color="teal.500" fontSize="lg" fontWeight="bold" noOfLines="1">
             {listing.title}
           </Text>
           <Text fontSize="md" fontWeight="500" my="1" noOfLines="1">

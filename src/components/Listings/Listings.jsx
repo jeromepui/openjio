@@ -37,10 +37,10 @@ export default function Listings() {
                 mt={{ base: 4, md: 0 }}
               >
                 <Text
-                  color="teal"
+                  color="teal.500"
                   fontSize="lg"
                   fontWeight="bold"
-                  letterSpacing="wide"
+                  noOfLines="1"
                 >
                   {listing.title}
                 </Text>
