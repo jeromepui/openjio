@@ -16,19 +16,15 @@ import { useAuth } from '../../contexts/AuthContext';
 
 export default function Login() {
   const auth = useAuth();
-
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
 
   const handleLogin = async e => {
     e.preventDefault();
-
     try {
       setLoading(true);
-
       const { error } = await auth.login(email);
-
       if (error) throw error;
       setSent(true);
     } catch (error) {
@@ -42,14 +38,14 @@ export default function Login() {
   return (
     <Flex
       alignItems="center"
-      bgGradient={'linear(to-l, #FFECAB, #FDC500)'}
+      bgGradient={'linear(to-l, #FED811, #FDC100)'}
       direction="column"
       h="100vh"
       justifyContent="center"
       w={{ base: 'auto', md: '50%' }}
     >
       <Box bg="white" boxShadow="lg" p="8" rounded="lg">
-        <Stack spacing={4}>
+        <Stack spacing="4">
           <Heading fontSize="3xl" textAlign="center">
             Welcome to OpenJio
           </Heading>
@@ -74,7 +70,11 @@ export default function Login() {
                   />
                 </FormControl>
                 <Button
-                  colorScheme="teal"
+                  bg="#02CECB"
+                  color="white"
+                  _hover={{
+                    background: '#06837F',
+                  }}
                   isLoading={loading}
                   type="submit"
                   w="100%"

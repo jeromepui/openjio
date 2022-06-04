@@ -10,7 +10,14 @@ export default function DashboardPage() {
       <TitleBar backButton={false} text="Dashboard"></TitleBar>
       <Box my="2" px="6">
         <Link to="/add-listing">
-          <Button colorScheme="teal" leftIcon={<MdAdd />}>
+          <Button
+            bg="#02CECB"
+            color="white"
+            _hover={{
+              background: '#06837F',
+            }}
+            leftIcon={<MdAdd />}
+          >
             Add Listing
           </Button>
         </Link>

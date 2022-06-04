@@ -33,12 +33,10 @@ export default function ListingForm() {
       const user = supabase.auth.user();
       const listingId = uuidv4();
 
-      if (listingData.type === 'Min. Spend') {
-        listingData.requiredSpend = '0';
-      }
+      if (listingData.type === 'Bundle Deal') listingData.requiredSpend = '0';
 
       const listing = {
-        id: listingId,
+        listing_id: listingId,
         created_by: user.id,
         description: listingData.description,
         required_spend: listingData.requiredSpend,
@@ -50,14 +48,13 @@ export default function ListingForm() {
       };
 
       const { error } = await supabase.from('listings').insert(listing);
-
       if (error) throw error;
 
       makeToast({
         title: 'Success!',
-        description: 'Your new listing has been added.',
+        description: 'Your new listing has been added!',
         status: 'success',
-        duration: 6000,
+        duration: 4000,
         isClosable: true,
       });
 

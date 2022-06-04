@@ -32,17 +32,19 @@ export function AuthProvider({ children }) {
   }, []);
 
   const login = async email => {
-    const { error } = await supabase.auth.signIn({ email });
-    if (error) {
-      console.log(error);
-      throw error;
-    }
+    const { error } = await supabase.auth.signIn(
+      { email },
+      {
+        redirectTo: window.location.origin,
+      }
+    );
+    if (error) throw error;
     return { error };
   };
 
   const logout = async () => {
     const { error } = await supabase.auth.signOut();
-    if (error) alert(error);
+    if (error) alert(error.message);
     setUser(null);
   };
 

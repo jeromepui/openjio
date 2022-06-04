@@ -4,51 +4,38 @@ import {
   Button,
   Heading,
   Link,
-  List,
-  ListItem,
   Stack,
   Text,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { supabase } from '../supabase';
+import { getListing, getListingOwnerUsername } from '../utils/ListingUtils';
 
 export default function ListingPage() {
-  const { id } = useParams();
+  const { id: listingId } = useParams();
   const [loading, setLoading] = useState(true);
   const [listing, setListing] = useState(null);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    getListing();
-  }, []);
+    const getListingData = async () => {
+      try {
+        setLoading(true);
 
-  const getListing = async () => {
-    try {
-      setLoading(true);
-      const { data: listingData, error } = await supabase
-        .from('listings')
-        .select()
-        .eq('id', id)
-        .single();
+        const { listingData, error } = await getListing(listingId);
+        if (error) throw error;
+        setListing(listingData);
 
-      if (error) throw error;
-
-      setListing(listingData);
-
-      const { data: userData } = await supabase
-        .from('profiles')
-        .select('username')
-        .eq('id', listingData?.created_by)
-        .single();
-
-      setUser(userData);
-    } catch (error) {
-      alert(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+        const userData = await getListingOwnerUsername(listingData.created_by);
+        setUser(userData);
+      } catch (error) {
+        alert(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getListingData();
+  }, [listingId]);
 
   return (
     <>
@@ -63,38 +50,34 @@ export default function ListingPage() {
             <Text fontSize="2xl" fontWeight="500">
               Listing Details
             </Text>
-            <List spacing={6}>
-              <ListItem>
-                <Text fontWeight="bold">Website:</Text>{' '}
-                <Link href={listing.website}>{listing.website}</Link>
-              </ListItem>
-              <ListItem>
-                <Text fontWeight="bold">Type:</Text> {listing.type}
-              </ListItem>
-              {listing.type === 'Min. Spend' && (
-                <ListItem>
-                  <Text fontWeight="bold">
-                    Amount Required For Free Delivery:
-                  </Text>{' '}
-                  ${listing.required_spend}
-                </ListItem>
-              )}
-              <ListItem>
-                <Text fontWeight="bold">Slots Available:</Text> {listing.slots}
-              </ListItem>
-              <ListItem>
-                <Text fontWeight="bold">Description:</Text>{' '}
-                {listing.description
-                  ? listing.description
-                  : 'No description provided'}
-              </ListItem>
-              <ListItem>
-                <Text fontWeight={'bold'}>Created by:</Text>{' '}
-                {user?.username
-                  ? user.username
-                  : 'User has not created a username'}
-              </ListItem>
-            </List>
+            <Text fontWeight="bold">Website:</Text>{' '}
+            <Link href={listing.website} noOfLines="1">
+              {listing.website}
+            </Link>
+            <Text fontWeight="bold">Type:</Text>
+            <Text>{listing.type}</Text>
+            {listing.type === 'Min. Spend' && (
+              <>
+                <Text fontWeight="bold">
+                  Amount Required For Free Delivery:
+                </Text>
+                <Text>${listing.required_spend}</Text>
+              </>
+            )}
+            <Text fontWeight="bold">Slots Available:</Text>
+            <Text> {listing.slots}</Text>
+            <Text fontWeight="bold">Description:</Text>{' '}
+            <Text>
+              {listing.description
+                ? listing.description
+                : 'No description provided'}
+            </Text>
+            <Text fontWeight={'bold'}>Created by:</Text>{' '}
+            <Text>
+              {user?.username
+                ? user.username
+                : 'User has not created a username'}
+            </Text>
             <Button
               colorScheme="teal"
               isDisabled

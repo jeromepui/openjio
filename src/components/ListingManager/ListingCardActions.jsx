@@ -25,13 +25,11 @@ export default function ListingCardActionBar({ category, listing }) {
   const handleOpenListing = async () => {
     try {
       const openListing = {
-        id: listing.id,
+        listing_id: listing.listing_id,
         status: 'open',
       };
 
-      const { error } = await supabase.from('listings').upsert(openListing, {
-        returning: 'minimal', // Don't return the value after inserting
-      });
+      const { error } = await supabase.from('listings').upsert(openListing);
 
       if (error) throw error;
     } catch (error) {
@@ -44,13 +42,11 @@ export default function ListingCardActionBar({ category, listing }) {
   const handleCloseListing = async () => {
     try {
       const closeListing = {
-        id: listing.id,
+        listing_id: listing.listing_id,
         status: 'closed',
       };
 
-      const { error } = await supabase.from('listings').upsert(closeListing, {
-        returning: 'minimal', // Don't return the value after inserting
-      });
+      const { error } = await supabase.from('listings').upsert(closeListing);
 
       if (error) throw error;
     } catch (error) {
@@ -65,7 +61,14 @@ export default function ListingCardActionBar({ category, listing }) {
       case 'open':
         return (
           <HStack justify="flex-start">
-            <Button colorScheme="teal" onClick={onEditOpen}>
+            <Button
+              bg="#02CECB"
+              color="white"
+              _hover={{
+                background: '#06837F',
+              }}
+              onClick={onEditOpen}
+            >
               Edit
             </Button>
             <Button colorScheme="red" onClick={onOpenDeleteOpen}>
