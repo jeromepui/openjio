@@ -7,28 +7,27 @@ export default function ListingManager({ category, status }) {
   const [listings, setListings] = useState(null);
 
   useEffect(() => {
-    getListings();
-  }, []);
+    const getListings = async () => {
+      try {
+        const user = supabase.auth.user();
 
-  const getListings = async () => {
-    try {
-      const user = supabase.auth.user();
+        if (category === 'open' || category === 'closed') {
+          const { data, error } = await supabase
+            .from('listings')
+            .select()
+            .eq('created_by', user.id)
+            .eq('status', status);
 
-      if (category === 'open' || category === 'closed') {
-        const { data, error } = await supabase
-          .from('listings')
-          .select()
-          .eq('created_by', user.id)
-          .eq('status', status);
+          if (error) throw error;
 
-        if (error) throw error;
-
-        setListings(data);
+          setListings(data);
+        }
+      } catch (error) {
+        alert(error.message);
       }
-    } catch (error) {
-      alert(error.message);
-    }
-  };
+    };
+    getListings();
+  }, [category, status]);
 
   return (
     <Wrap mx="4" p="2" spacing="30px">

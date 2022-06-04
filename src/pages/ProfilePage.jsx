@@ -16,48 +16,43 @@ import { SmallCloseIcon } from '@chakra-ui/icons';
 import { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import TitleBar from '../components/TitleBar/TitleBar';
+import { getUserProfile } from '../utils/UserUtils';
+import { useAuth } from '../contexts/AuthContext';
 
-export default function ProfilePage({ session }) {
+export default function ProfilePage() {
+  const auth = useAuth();
   const [avatarUrl, setAvatarUrl] = useState(null);
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
   const [username, setUsername] = useState('');
 
   useEffect(() => {
-    getProfile();
-  }, [session]);
+    const getProfile = async () => {
+      try {
+        setLoading(true);
 
-  const getProfile = async () => {
-    try {
-      setLoading(true);
-      const user = supabase.auth.user();
+        const { userData, error } = await getUserProfile(auth.user.id);
+        if (error) throw error;
 
-      let { data, error, status } = await supabase
-        .from('profiles')
-        .select('username , avatar_url')
-        .eq('id', user.id)
-        .single();
-
-      if (error && status !== 406) throw error;
-
-      if (data) {
-        setUsername(data.username);
-        setAvatarUrl(data.avatar_url);
+        if (userData) {
+          setUsername(userData.username);
+          setAvatarUrl(userData.avatar_url);
+        }
+      } catch (error) {
+        alert(error.message);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      alert(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
+    getProfile();
+    setUser(supabase.auth.user());
+  }, [auth.user.id]);
 
   const updateProfile = async e => {
     e.preventDefault();
-
     try {
       setLoading(true);
-
-      const user = supabase.auth.user();
 
       let avatarUrl = '';
 
@@ -74,16 +69,14 @@ export default function ProfilePage({ session }) {
         }
       }
 
-      const updates = {
-        id: user.id,
+      const updateProfile = {
+        profile_id: user.id,
         updated_at: new Date(),
         username,
         avatar_url: avatarUrl,
       };
 
-      const { error } = await supabase.from('profiles').upsert(updates, {
-        returning: 'minimal', // Don't return the value after inserting
-      });
+      const { error } = await supabase.from('profiles').upsert(updateProfile);
 
       if (error) throw error;
     } catch (error) {
@@ -95,15 +88,12 @@ export default function ProfilePage({ session }) {
 
   const handleDeleteIcon = async () => {
     try {
-      const user = supabase.auth.user();
-
-      const deleteIcon = {
-        id: user.id,
+      const updateAvatar = {
+        profile_id: user.id,
         avatar_url: '',
       };
 
-      const { error } = await supabase.from('profiles').upsert(deleteIcon);
-
+      const { error } = await supabase.from('profiles').upsert(updateAvatar);
       if (error) throw error;
     } catch (error) {
       alert(error.message);
@@ -160,11 +150,7 @@ export default function ProfilePage({ session }) {
                 </FormControl>
                 <FormControl>
                   <FormLabel>Email address</FormLabel>
-                  <Input
-                    isDisabled
-                    type="email"
-                    value={supabase.auth.session().user.email}
-                  />
+                  <Input isDisabled type="email" value={user.email} />
                 </FormControl>
                 <FormControl>
                   <FormLabel>Username</FormLabel>
@@ -175,7 +161,11 @@ export default function ProfilePage({ session }) {
                   />
                 </FormControl>
                 <Button
-                  colorScheme="teal"
+                  bg="#02CECB"
+                  color="white"
+                  _hover={{
+                    background: '#06837F',
+                  }}
                   type="submit"
                   width={['auto', '20%']}
                 >

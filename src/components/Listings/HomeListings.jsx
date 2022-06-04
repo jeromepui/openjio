@@ -1,35 +1,29 @@
 import { Box, Stack, Text, Wrap, WrapItem } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { supabase } from '../../supabase';
+import { getAllOpenListings } from '../../utils/ListingUtils';
 
 export default function Listings() {
   const [listings, setListings] = useState();
 
   useEffect(() => {
+    const getListings = async () => {
+      try {
+        const { data, error } = await getAllOpenListings();
+        if (error) throw error;
+        setListings(data);
+      } catch (error) {
+        alert(error.message);
+      }
+    };
     getListings();
   }, []);
-
-  const getListings = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('listings')
-        .select()
-        .eq('status', 'open');
-
-      if (error) throw error;
-
-      setListings(data);
-    } catch (error) {
-      alert(error.message);
-    }
-  };
 
   return (
     <Wrap mx="4" p="2" spacing="40px">
       {listings?.map((listing, index) => (
         <WrapItem key={index}>
-          <Link to={`/listing/${listing.id}`}>
+          <Link to={`/listing/${listing.listing_id}`}>
             <Box boxShadow="lg" w="200px" h="160px" p="2" rounded="lg">
               <Stack
                 align={{ base: 'center', md: 'stretch' }}

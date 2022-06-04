@@ -43,13 +43,14 @@ export default function EditModal({ isOpen, listing, onClose }) {
   const onSubmit = async listingData => {
     try {
       const listingUpdates = {
-        id: listing.id,
+        listing_id: listing.listing_id,
         title: listingData.title,
         website: listingData.website,
         type: listingData.type,
         required_spend: listingData.requiredSpend,
         slots: listingData.slots,
         description: listingData.description,
+        status: listing.status,
       };
 
       const { error } = await supabase.from('listings').upsert(listingUpdates, {
@@ -102,7 +103,14 @@ export default function EditModal({ isOpen, listing, onClose }) {
             </Stack>
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme="teal" type="submit">
+            <Button
+              bg="#02CECB"
+              color="white"
+              _hover={{
+                background: '#06837F',
+              }}
+              type="submit"
+            >
               Save Changes
             </Button>
           </ModalFooter>

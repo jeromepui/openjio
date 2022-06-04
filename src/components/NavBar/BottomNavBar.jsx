@@ -4,16 +4,37 @@ import { Link } from 'react-router-dom';
 
 export default function BottomNavBar() {
   return (
-    <Flex bgColor="teal.400" justify="flex-start">
+    <Flex bg="#02CECB" justify="flex-start">
       <ButtonGroup color="black" spacing="6" px="2" variant="ghost">
         <Link to="/">
-          <Button leftIcon={<MdHome />}>Home</Button>
+          <Button
+            _hover={{
+              background: '#B4FFFF',
+            }}
+            leftIcon={<MdHome />}
+          >
+            Home
+          </Button>
         </Link>
         <Link to="/dashboard">
-          <Button leftIcon={<MdDashboard />}>Dashboard</Button>
+          <Button
+            _hover={{
+              background: '#B4FFFF',
+            }}
+            leftIcon={<MdDashboard />}
+          >
+            Dashboard
+          </Button>
         </Link>
         <Link to="/community">
-          <Button leftIcon={<MdPeople />}>Community</Button>
+          <Button
+            _hover={{
+              background: '#B4FFFF',
+            }}
+            leftIcon={<MdPeople />}
+          >
+            Community
+          </Button>
         </Link>
       </ButtonGroup>
     </Flex>

@@ -4,12 +4,12 @@ export default function Hero() {
   return (
     <Flex
       alignItems="center"
-      bgGradient={'linear(to-r, #FFECAB, #FDC500)'}
-      h={{ base: '0', md: '100vh' }}
+      bgGradient={'linear(to-r, #FED811, #FDC100)'}
+      display={{ sm: 'none', md: 'flex' }}
       justifyContent="center"
-      w={{ base: '0', md: '50%' }}
+      w="50%"
     >
-      <Stack w={{ base: '0', md: '70%' }}>
+      <Stack w="70%">
         <Heading fontSize="6xl">OpenJio</Heading>
         <Text fontSize="2xl">
           Your go-to website for coordinating group buy deals!
