@@ -12,16 +12,16 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { supabase } from '../../supabase';
 import DescriptionField from '../ListingForm/DescriptionField';
 import MinSpendField from '../ListingForm/RequiredSpendField';
 import SlotsField from '../ListingForm/SlotsField';
 import TitleField from '../ListingForm/TitleField';
 import TypeField from '../ListingForm/TypeField';
 import WebsiteField from '../ListingForm/WebsiteField';
+import { supabase } from '../../supabase';
 
 export default function EditModal({ isOpen, listing, onClose }) {
-  const makeToast = useToast();
+  const toast = useToast();
   const [listingType, setListingType] = useState(listing.type);
 
   const {
@@ -53,23 +53,20 @@ export default function EditModal({ isOpen, listing, onClose }) {
         status: listing.status,
       };
 
-      const { error } = await supabase.from('listings').upsert(listingUpdates, {
-        returning: 'minimal', // Don't return the value after inserting
-      });
-
+      const { error } = await supabase.from('listings').upsert(listingUpdates);
       if (error) throw error;
 
-      makeToast({
+      toast({
         title: 'Success!',
-        description: 'Your listing has been updated.',
+        description: 'Your listing has been updated!',
         status: 'success',
-        duration: 6000,
+        duration: 4000,
         isClosable: true,
       });
     } catch (error) {
       alert(error.message);
     } finally {
-      window.location.reload(false);
+      window.location.reload();
       onClose();
     }
   };

@@ -6,9 +6,10 @@ import CommunityPage from './pages/CommunityPage';
 import DashboardPage from './pages/DashboardPage';
 import HomePage from './pages/HomePage';
 import ListingFormPage from './pages/ListingFormPage';
-import ListingPage from './pages/ListingPage';
+import ListingDetailsPage from './pages/ListingDetailsPage';
 import LoginPage from './pages/LoginPage';
 import ProfilePage from './pages/ProfilePage';
+import SettingsPage from './pages/SettingsPage';
 import ChatPage from './pages/ChatPage';
 import NavBar from './components/NavBar/NavBar';
 
@@ -48,8 +49,9 @@ export default function App() {
             <Route path="/community" element={<CommunityPage />} />
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/add-listing" element={<ListingFormPage />} />
-            <Route path="/listing/:id" element={<ListingPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/listing/:id" element={<ListingDetailsPage />} />
+            <Route path="/profile/:id" element={<ProfilePage />} />
+            <Route path="/settings" element={<SettingsPage />} />
             <Route
               path="/dashboard/add-new-listing"
               element={<ListingFormPage />}

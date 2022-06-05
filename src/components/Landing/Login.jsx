@@ -24,8 +24,10 @@ export default function Login() {
     e.preventDefault();
     try {
       setLoading(true);
-      const { error } = await auth.login(email);
-      if (error) throw error;
+
+      const { loginError } = await auth.login(email);
+      if (loginError) throw loginError;
+
       setSent(true);
     } catch (error) {
       alert(error.message);

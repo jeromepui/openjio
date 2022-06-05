@@ -3,21 +3,17 @@ import { supabase } from '../supabase';
 
 const AuthContext = createContext();
 
-export function useAuth() {
-  return useContext(AuthContext);
-}
+export const useAuth = () => useContext(AuthContext);
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
-  const [session, setSession] = useState();
+  const [user, setUser] = useState();
 
   useEffect(() => {
     const session = supabase.auth.session();
 
     setUser(session?.user ?? null);
     setLoading(false);
-    setSession(session);
 
     const { data: listener } = supabase.auth.onAuthStateChange(
       (event, session) => {
@@ -32,23 +28,22 @@ export function AuthProvider({ children }) {
   }, []);
 
   const login = async email => {
-    const { error } = await supabase.auth.signIn(
+    const { error: loginError } = await supabase.auth.signIn(
       { email },
       {
         redirectTo: window.location.origin,
       }
     );
-    if (error) throw error;
-    return { error };
+    return { loginError };
   };
 
   const logout = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) alert(error.message);
+    const { error: logoutError } = await supabase.auth.signOut();
+    if (logoutError) alert(logoutError.message);
     setUser(null);
   };
 
-  const value = { login, logout, session, user };
+  const value = { login, logout, user };
 
   return (
     <AuthContext.Provider value={value}>
