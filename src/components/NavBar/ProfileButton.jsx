@@ -17,7 +17,7 @@ export default function ProfileButton() {
       <Menu>
         <MenuButton as={IconButton} borderRadius="50%" icon={<MdPerson />} />
         <MenuList>
-          <Link to="/profile">
+          <Link to="/settings">
             <MenuItem>Settings</MenuItem>
           </Link>
           <MenuItem onClick={auth.logout}>Log Out</MenuItem>

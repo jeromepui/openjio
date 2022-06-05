@@ -9,7 +9,8 @@ import {
   TabPanels,
   TabPanel,
 } from '@chakra-ui/react';
-import ListingManager from './ListingManagerTab';
+import ListingManagerTab from './ListingManagerTab';
+import RequestsTab from './RequestsTab';
 
 export default function ListingManagerPage() {
   return (
@@ -17,14 +18,18 @@ export default function ListingManagerPage() {
       <TabList>
         <Tab>Open</Tab>
         <Tab>Closed</Tab>
+        <Tab>Requests</Tab>
         <Tab>Joined</Tab>
       </TabList>
       <TabPanels>
         <TabPanel>
-          <ListingManager category="open" status="open" />
+          <ListingManagerTab category="open" status="open" />
         </TabPanel>
         <TabPanel>
-          <ListingManager category="closed" status="closed" />
+          <ListingManagerTab category="closed" status="closed" />
+        </TabPanel>
+        <TabPanel>
+          <RequestsTab />
         </TabPanel>
         <TabPanel>
           <Alert borderRadius="10" status="info" w="50%">

@@ -103,6 +103,25 @@ export default function ListingCardActionBar({ category, listing }) {
           </HStack>
         );
 
+      case 'requests':
+        return (
+          <HStack justify="flex-start">
+            <Button
+              bg="#02CECB"
+              color="white"
+              _hover={{
+                background: '#06837F',
+              }}
+              onClick={onEditOpen}
+            >
+              Edit
+            </Button>
+            <Button colorScheme="red" onClick={onOpenDeleteOpen}>
+              Delete
+            </Button>
+          </HStack>
+        );
+
       case 'joined':
         return (
           <HStack justify="flex-start">

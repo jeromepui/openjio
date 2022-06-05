@@ -12,8 +12,9 @@ import WebsiteField from './WebsiteField';
 import { supabase } from '../../supabase';
 
 export default function ListingForm() {
+  const toast = useToast();
   const navigate = useNavigate();
-  const makeToast = useToast();
+
   const [listingType, setListingType] = useState('');
 
   const {
@@ -49,18 +50,17 @@ export default function ListingForm() {
 
       const { error } = await supabase.from('listings').insert(listing);
       if (error) throw error;
-
-      makeToast({
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      toast({
         title: 'Success!',
         description: 'Your new listing has been added!',
         status: 'success',
         duration: 4000,
         isClosable: true,
       });
-
-      navigate('/dashboard', { replace: true });
-    } catch (error) {
-      alert(error.message);
+      navigate('/dashboard');
     }
   };
 
@@ -92,7 +92,15 @@ export default function ListingForm() {
           <GridItem colSpan="2">
             <DescriptionField register={register} />
           </GridItem>
-          <Button type="submit" width={['auto', '40%']}>
+          <Button
+            bg="#02CECB"
+            color="white"
+            _hover={{
+              background: '#06837F',
+            }}
+            type="submit"
+            width={['auto', '40%']}
+          >
             Submit
           </Button>
         </SimpleGrid>

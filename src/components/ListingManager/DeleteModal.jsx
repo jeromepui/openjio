@@ -24,7 +24,7 @@ export default function DeleteModal({ isOpen, listing, onClose }) {
       alert(error.message);
     } finally {
       onClose();
-      window.location.reload(false);
+      window.location.reload();
     }
   };
 

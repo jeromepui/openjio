@@ -2,12 +2,12 @@ import { supabase } from '../supabase';
 
 // Get single listing
 export const getListing = async listingId => {
-  const { data: listingData, error } = await supabase
+  const { data: listingData, error: listingError } = await supabase
     .from('listings')
     .select()
     .eq('listing_id', listingId)
     .single();
-  return { listingData, error };
+  return { listingData, listingError };
 };
 
 // Get all open listings
