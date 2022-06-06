@@ -14,7 +14,6 @@ import { supabase } from '../../supabase';
 export default function ListingForm() {
   const toast = useToast();
   const navigate = useNavigate();
-
   const [listingType, setListingType] = useState('');
 
   const {

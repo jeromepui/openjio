@@ -17,7 +17,7 @@ export default function DeleteModal({ isOpen, listing, onClose }) {
       const { error } = await supabase
         .from('listings')
         .delete()
-        .match({ listing_id: listing.listing_id });
+        .eq('listing_id', listing.listing_id);
 
       if (error) throw error;
     } catch (error) {

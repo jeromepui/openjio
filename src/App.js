@@ -9,6 +9,7 @@ import ListingFormPage from './pages/ListingFormPage';
 import ListingDetailsPage from './pages/ListingDetailsPage';
 import LoginPage from './pages/LoginPage';
 import ProfilePage from './pages/ProfilePage';
+import RegisterPage from './pages/RegisterPage';
 import SettingsPage from './pages/SettingsPage';
 import ChatPage from './pages/ChatPage';
 import NavBar from './components/NavBar/NavBar';
@@ -38,7 +39,11 @@ export default function App() {
   return (
     <ChakraProvider theme={theme}>
       {!session ? (
-        <LoginPage />
+        <Routes>
+          <Route path="*" element={<Navigate to="/login" />} />
+          <Route path="/login" element={<LoginPage />}></Route>
+          <Route path="/register" element={<RegisterPage />}></Route>
+        </Routes>
       ) : (
         <>
           <NavBar />
@@ -52,10 +57,6 @@ export default function App() {
             <Route path="/listing/:id" element={<ListingDetailsPage />} />
             <Route path="/profile/:id" element={<ProfilePage />} />
             <Route path="/settings" element={<SettingsPage />} />
-            <Route
-              path="/dashboard/add-new-listing"
-              element={<ListingFormPage />}
-            />
           </Routes>
         </>
       )}

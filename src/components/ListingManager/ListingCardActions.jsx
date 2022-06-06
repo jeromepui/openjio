@@ -30,7 +30,6 @@ export default function ListingCardActionBar({ category, listing }) {
       };
 
       const { error } = await supabase.from('listings').upsert(openListing);
-
       if (error) throw error;
     } catch (error) {
       alert(error.message);
@@ -47,7 +46,6 @@ export default function ListingCardActionBar({ category, listing }) {
       };
 
       const { error } = await supabase.from('listings').upsert(closeListing);
-
       if (error) throw error;
     } catch (error) {
       alert(error.message);

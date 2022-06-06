@@ -17,7 +17,6 @@ export default function ListingManager({ category, status }) {
             .select()
             .eq('created_by', auth.user.id)
             .eq('status', status);
-
           if (error) throw error;
 
           setListings(data);
