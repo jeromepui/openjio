@@ -2,7 +2,6 @@ import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { supabase } from './supabase';
-import CommunityPage from './pages/CommunityPage';
 import DashboardPage from './pages/DashboardPage';
 import HomePage from './pages/HomePage';
 import ListingFormPage from './pages/ListingFormPage';
@@ -51,7 +50,6 @@ export default function App() {
             <Route path="*" element={<Navigate to="/" />} />
             <Route path="/" element={<HomePage />} />
             <Route path="/chat" element={<ChatPage />} />
-            <Route path="/community" element={<CommunityPage />} />
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/add-listing" element={<ListingFormPage />} />
             <Route path="/listing/:id" element={<ListingDetailsPage />} />

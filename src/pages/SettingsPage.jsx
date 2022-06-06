@@ -105,11 +105,13 @@ export default function SettingsPage() {
   return (
     <>
       <TitleBar backButton={false} text="Edit profile" />
-      <Box px="6" w={['auto', '50%']}>
+      <Box px="6">
         <form onSubmit={updateProfile}>
           <Stack spacing="4">
             {loading ? (
-              <Alert status="info">Loading...</Alert>
+              <Box mx="6" my="4">
+                <Alert status="info">Loading...</Alert>
+              </Box>
             ) : (
               <>
                 <FormControl>
@@ -154,8 +156,8 @@ export default function SettingsPage() {
                   _hover={{
                     background: '#06837F',
                   }}
+                  maxW="200px"
                   type="submit"
-                  width={['auto', '30%']}
                 >
                   Upload Photo
                 </Button>

@@ -10,7 +10,7 @@ export default function ChatPage() {
   return (
     <>
       <TitleBar backButton={false} text="Chat" />
-      <Alert borderRadius="10" m="4" status="info" w="50%">
+      <Alert borderRadius="10" mx="6" status="info" maxW="90vw">
         <AlertIcon />
         <AlertTitle>Coming soon.</AlertTitle>
         <AlertDescription>

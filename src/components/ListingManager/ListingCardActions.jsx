@@ -34,7 +34,7 @@ export default function ListingCardActionBar({ category, listing }) {
     } catch (error) {
       alert(error.message);
     } finally {
-      window.location.reload();
+      window.location.reload(false);
     }
   };
 
@@ -50,7 +50,7 @@ export default function ListingCardActionBar({ category, listing }) {
     } catch (error) {
       alert(error.message);
     } finally {
-      window.location.reload();
+      window.location.reload(false);
     }
   };
 

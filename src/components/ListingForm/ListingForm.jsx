@@ -64,7 +64,7 @@ export default function ListingForm() {
   };
 
   return (
-    <Box p="6" w={['auto', '50%']}>
+    <Box p="6" w={{ base: 'auto', md: '50%' }}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <SimpleGrid columns="2" spacing="4">
           <GridItem colSpan="2">
@@ -73,14 +73,14 @@ export default function ListingForm() {
           <GridItem colSpan="2">
             <WebsiteField register={register} errors={errors} />
           </GridItem>
-          <GridItem colSpan="1">
+          <GridItem colSpan={{ base: '2', md: '1' }}>
             <TypeField
               register={register}
               errors={errors}
               setListingType={setListingType}
             />
           </GridItem>
-          <GridItem colSpan="1">
+          <GridItem colSpan={{ base: '2', md: '1' }}>
             {listingType === 'Min. Spend' && (
               <MinSpendField register={register} errors={errors} />
             )}
@@ -98,7 +98,7 @@ export default function ListingForm() {
               background: '#06837F',
             }}
             type="submit"
-            width={['auto', '40%']}
+            maxW="200px"
           >
             Submit
           </Button>

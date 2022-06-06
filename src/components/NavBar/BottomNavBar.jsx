@@ -1,5 +1,5 @@
 import { Button, ButtonGroup, Flex } from '@chakra-ui/react';
-import { MdDashboard, MdHome, MdPeople } from 'react-icons/md';
+import { MdDashboard, MdHome } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
 export default function BottomNavBar() {
@@ -24,16 +24,6 @@ export default function BottomNavBar() {
             leftIcon={<MdDashboard />}
           >
             Dashboard
-          </Button>
-        </Link>
-        <Link to="/community">
-          <Button
-            _hover={{
-              background: '#B4FFFF',
-            }}
-            leftIcon={<MdPeople />}
-          >
-            Community
           </Button>
         </Link>
       </ButtonGroup>

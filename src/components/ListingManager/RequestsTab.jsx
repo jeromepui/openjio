@@ -71,7 +71,7 @@ export default function RequestsTab() {
                   <Text fontSize="md" fontWeight="500" my="1" noOfLines="1">
                     Requested by:
                   </Text>
-                  <Text fontSize="md" fontWeight="500" my="1" noOfLines="1">
+                  <Text fontSize="md" my="1" noOfLines="1">
                     {request.requester_username}
                   </Text>
                   <HStack justify="flex-start">

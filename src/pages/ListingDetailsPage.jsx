@@ -43,7 +43,7 @@ export default function ListingPage() {
         if (userError) throw userError;
         setUser(userData);
 
-        const { data: requestData, data: requestError } =
+        const { data: requestData, error: requestError } =
           await userJoinedListing(listingData.listing_id, auth.user.id);
         if (requestError) throw requestError;
 
@@ -98,7 +98,9 @@ export default function ListingPage() {
   return (
     <>
       {loading ? (
-        <Alert status="info">Loading...</Alert>
+        <Box mx="6" my="4">
+          <Alert status="info">Loading...</Alert>
+        </Box>
       ) : (
         <Box px="6" py="4">
           <Stack spacing="4">

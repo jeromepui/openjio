@@ -1,4 +1,4 @@
-import { Box, Stack, Text, Wrap, WrapItem } from '@chakra-ui/react';
+import { Flex, Stack, Text, Wrap, WrapItem } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getAllOpenListings } from '../../utils/ListingUtils';
@@ -20,13 +20,19 @@ export default function Listings() {
   }, []);
 
   return (
-    <Wrap mx="4" p="2" spacing="40px">
+    <Wrap mx="4" p="2">
       {listings?.map((listing, index) => (
         <WrapItem key={index}>
           <Link to={`/listing/${listing.listing_id}`}>
-            <Box boxShadow="lg" w="200px" h="160px" p="2" rounded="lg">
+            <Flex
+              justifyContent={{ base: 'center', md: 'left' }}
+              boxShadow="lg"
+              minH="160px"
+              minW={{ base: '80vw', md: '200px' }}
+              p="2"
+              rounded="lg"
+            >
               <Stack
-                align={{ base: 'center', md: 'stretch' }}
                 textAlign={{ base: 'center', md: 'left' }}
                 mt={{ base: 4, md: 0 }}
               >
@@ -46,7 +52,7 @@ export default function Listings() {
                 </Text>
                 <Text color="gray.600">{listing.type}</Text>
               </Stack>
-            </Box>
+            </Flex>
           </Link>
         </WrapItem>
       ))}
