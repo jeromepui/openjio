@@ -20,13 +20,13 @@ export default function RequestsTab() {
   useEffect(() => {
     const getRequests = async () => {
       try {
-        const { data: requestsData, error: requestsError } = await supabase
+        const { data, error } = await supabase
           .from('requests')
           .select()
           .eq('listing_owner_id', auth.user.id);
-        if (requestsError) throw requestsError;
+        if (error) throw error;
 
-        setRequests(requestsData);
+        setRequests(data);
       } catch (error) {
         alert(error.message);
       }
@@ -42,7 +42,6 @@ export default function RequestsTab() {
         .from('requests')
         .delete()
         .eq('request_id', request.request_id);
-
       if (error) throw error;
     } catch (error) {
       alert(error.message);

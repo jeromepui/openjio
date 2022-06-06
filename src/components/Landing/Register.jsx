@@ -13,17 +13,28 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../../supabase';
 
-export default function Login() {
+export default function Register() {
   const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleSignIn = async e => {
+  const handleSignUp = async e => {
     e.preventDefault();
-    try {
-      const { error } = await supabase.auth.signIn({ email, password });
-      if (error) throw error;
-    } catch (error) {
-      alert(error.message);
+    if (password !== confirmPassword) {
+      alert('Passwords do not match!');
+    } else {
+      try {
+        const { error } = await supabase.auth.signUp(
+          { email, password },
+          { data: { username } }
+        );
+        if (error) throw error;
+      } catch (error) {
+        if (error.status === 500) {
+          alert('Username has been taken!');
+        }
+      }
     }
   };
 
@@ -41,8 +52,8 @@ export default function Login() {
           <Heading fontSize="3xl" textAlign="center">
             Welcome to OpenJio
           </Heading>
-          <Text>Login</Text>
-          <form onSubmit={handleSignIn}>
+          <Text>Register for an account below</Text>
+          <form onSubmit={handleSignUp}>
             <Stack>
               <FormControl id="email" isRequired>
                 <FormLabel>Email address</FormLabel>
@@ -50,6 +61,14 @@ export default function Login() {
                   onChange={e => setEmail(e.target.value)}
                   type="email"
                   value={email}
+                />
+              </FormControl>
+              <FormControl id="username" isRequired>
+                <FormLabel>Username</FormLabel>
+                <Input
+                  onChange={e => setUsername(e.target.value)}
+                  type="text"
+                  value={username}
                 />
               </FormControl>
               <FormControl id="password" isRequired>
@@ -60,10 +79,18 @@ export default function Login() {
                   value={password}
                 />
               </FormControl>
+              <FormControl id="confirmPassword" isRequired>
+                <FormLabel>Confirm Password</FormLabel>
+                <Input
+                  onChange={e => setConfirmPassword(e.target.value)}
+                  type="password"
+                  value={confirmPassword}
+                />
+              </FormControl>
               <Flex justifyContent="space-between">
-                <Text>Don't have an account?</Text>
-                <Link to="/register">
-                  <Text color="blue.500">Sign up</Text>
+                <Text>Already have an account?</Text>
+                <Link to="/login">
+                  <Text color="blue.500">Sign in</Text>
                 </Link>
               </Flex>
 
@@ -76,7 +103,7 @@ export default function Login() {
                 type="submit"
                 w="100%"
               >
-                Sign in
+                Sign up
               </Button>
             </Stack>
           </form>

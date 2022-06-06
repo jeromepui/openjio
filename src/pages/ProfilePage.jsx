@@ -11,10 +11,10 @@ export default function ProfilePage() {
   useEffect(() => {
     const getProfile = async () => {
       try {
-        const { userData, userError } = await getUserProfile(profileId);
-        if (userError) throw userError;
+        const { data, error } = await getUserProfile(profileId);
+        if (error) throw error;
 
-        setProfile(userData);
+        setProfile(data);
       } catch (error) {
         alert(error.message);
       }

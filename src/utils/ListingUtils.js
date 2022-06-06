@@ -2,12 +2,12 @@ import { supabase } from '../supabase';
 
 // Get single listing
 export const getListing = async listingId => {
-  const { data: listingData, error: listingError } = await supabase
+  const { data, error } = await supabase
     .from('listings')
     .select()
     .eq('listing_id', listingId)
     .single();
-  return { listingData, listingError };
+  return { data, error };
 };
 
 // Get all open listings
@@ -21,10 +21,10 @@ export const getAllOpenListings = async () => {
 
 // Get username of listing owner
 export const getListingOwnerUsername = async userId => {
-  const { data: userData } = await supabase
+  const { data, error } = await supabase
     .from('profiles')
-    .select('username')
+    .select()
     .eq('profile_id', userId)
     .single();
-  return userData;
+  return { data, error };
 };

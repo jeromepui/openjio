@@ -21,7 +21,7 @@ import { useAuth } from '../contexts/AuthContext';
 
 export default function SettingsPage() {
   const auth = useAuth();
-  const [avatarUrl, setAvatarUrl] = useState(null);
+  const [avatarUrl, setAvatarUrl] = useState('');
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
@@ -32,12 +32,12 @@ export default function SettingsPage() {
       try {
         setLoading(true);
 
-        const { userData, userError } = await getUserProfile(auth.user.id);
-        if (userError) throw userError;
+        const { data, error } = await getUserProfile(auth.user.id);
+        if (error) throw error;
 
-        if (userData) {
-          setUsername(userData.username);
-          setAvatarUrl(userData.avatar_url);
+        if (data) {
+          setAvatarUrl(data.avatar_url);
+          setUsername(data.username);
         }
       } catch (error) {
         alert(error.message);
@@ -47,7 +47,7 @@ export default function SettingsPage() {
     };
     getProfile();
     setUser(supabase.auth.user());
-  }, [auth.user.id]);
+  }, [auth.user.id, avatarUrl]);
 
   const updateProfile = async e => {
     e.preventDefault();
@@ -71,13 +71,11 @@ export default function SettingsPage() {
 
       const updateProfile = {
         profile_id: user.id,
-        updated_at: new Date(),
-        username,
+        username: username,
         avatar_url: avatarUrl,
       };
 
       const { error } = await supabase.from('profiles').upsert(updateProfile);
-
       if (error) throw error;
     } catch (error) {
       alert(error.message);
@@ -88,8 +86,10 @@ export default function SettingsPage() {
 
   const handleDeleteIcon = async () => {
     try {
+      setAvatarUrl('reload');
       const updateAvatar = {
         profile_id: user.id,
+        username: username,
         avatar_url: '',
       };
 
@@ -98,7 +98,7 @@ export default function SettingsPage() {
     } catch (error) {
       alert(error.message);
     } finally {
-      window.location.reload();
+      setAvatarUrl('');
     }
   };
 
@@ -148,18 +148,6 @@ export default function SettingsPage() {
                     </Center>
                   </Stack>
                 </FormControl>
-                <FormControl>
-                  <FormLabel>Email address</FormLabel>
-                  <Input isDisabled type="email" value={user.email} />
-                </FormControl>
-                <FormControl>
-                  <FormLabel>Username</FormLabel>
-                  <Input
-                    type="text"
-                    onChange={e => setUsername(e.target.value)}
-                    value={username}
-                  />
-                </FormControl>
                 <Button
                   bg="#02CECB"
                   color="white"
@@ -167,10 +155,18 @@ export default function SettingsPage() {
                     background: '#06837F',
                   }}
                   type="submit"
-                  width={['auto', '20%']}
+                  width={['auto', '30%']}
                 >
-                  Save Changes
+                  Upload Photo
                 </Button>
+                <FormControl>
+                  <FormLabel>Email address</FormLabel>
+                  <Input isDisabled type="email" value={user.email} />
+                </FormControl>
+                <FormControl>
+                  <FormLabel>Username</FormLabel>
+                  <Input isDisabled type="text" value={username} />
+                </FormControl>
               </>
             )}
           </Stack>

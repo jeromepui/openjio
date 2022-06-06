@@ -32,17 +32,19 @@ export default function ListingPage() {
       try {
         setLoading(true);
 
-        const { listingData, listingError } = await getListing(listingId);
+        const { data: listingData, error: listingError } = await getListing(
+          listingId
+        );
         if (listingError) throw listingError;
         setListing(listingData);
 
-        const userData = await getListingOwnerUsername(listingData.created_by);
+        const { data: userData, error: userError } =
+          await getListingOwnerUsername(listingData.created_by);
+        if (userError) throw userError;
         setUser(userData);
 
-        const { requestData, requestError } = await userJoinedListing(
-          listingData.listing_id,
-          auth.user.id
-        );
+        const { data: requestData, data: requestError } =
+          await userJoinedListing(listingData.listing_id, auth.user.id);
         if (requestError) throw requestError;
 
         if (requestData.length > 0) {
@@ -61,7 +63,9 @@ export default function ListingPage() {
     try {
       const requestId = uuidv4();
 
-      const { userData, userError } = await getUserProfile(auth.user.id);
+      const { data: userData, error: userError } = await getUserProfile(
+        auth.user.id
+      );
       if (userError) throw userError;
 
       const request = {
