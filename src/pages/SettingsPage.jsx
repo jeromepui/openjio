@@ -60,7 +60,6 @@ export default function SettingsPage() {
         const { data, error } = await supabase.storage
           .from('avatars')
           .upload(`${Date.now()}_${image.name}`, image);
-
         if (error) throw error;
 
         if (data) {
@@ -69,13 +68,10 @@ export default function SettingsPage() {
         }
       }
 
-      const updateProfile = {
-        profile_id: user.id,
-        username: username,
-        avatar_url: avatarUrl,
-      };
-
-      const { error } = await supabase.from('profiles').upsert(updateProfile);
+      const { error } = await supabase
+        .from('profiles')
+        .update({ avatar_url: avatarUrl })
+        .eq('profile_id', auth.user.id);
       if (error) throw error;
     } catch (error) {
       alert(error.message);
@@ -87,13 +83,11 @@ export default function SettingsPage() {
   const handleDeleteIcon = async () => {
     try {
       setAvatarUrl('reload');
-      const updateAvatar = {
-        profile_id: user.id,
-        username: username,
-        avatar_url: '',
-      };
 
-      const { error } = await supabase.from('profiles').upsert(updateAvatar);
+      const { error } = await supabase
+        .from('profiles')
+        .update({ avatar_url: '' })
+        .eq('profile_id', auth.user.id);
       if (error) throw error;
     } catch (error) {
       alert(error.message);
@@ -109,7 +103,7 @@ export default function SettingsPage() {
         <form onSubmit={updateProfile}>
           <Stack spacing="4">
             {loading ? (
-              <Box mx="6" my="4">
+              <Box my="4">
                 <Alert status="info">Loading...</Alert>
               </Box>
             ) : (
@@ -159,7 +153,7 @@ export default function SettingsPage() {
                   maxW="200px"
                   type="submit"
                 >
-                  Upload Photo
+                  Upload photo
                 </Button>
                 <FormControl>
                   <FormLabel>Email address</FormLabel>

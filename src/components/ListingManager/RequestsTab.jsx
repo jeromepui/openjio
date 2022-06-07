@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { supabase } from '../../supabase';
 import {
   Box,
@@ -34,7 +35,34 @@ export default function RequestsTab() {
     getRequests();
   }, [auth.user.id]);
 
-  const handleApprove = async request => {};
+  const handleApprove = async request => {
+    try {
+      const listingParticipantsId = uuidv4();
+
+      const listingParticipant = {
+        listing_participants_id: listingParticipantsId,
+        listing_id: request.listing_id,
+        participant_id: request.requester_id,
+        listing_title: request.listing_title,
+        participant_username: request.requester_username,
+      };
+
+      const { error: listingParticipantError } = await supabase
+        .from('listing_participants')
+        .insert(listingParticipant);
+      if (listingParticipantError) throw listingParticipantError;
+
+      const { error: requestError } = await supabase
+        .from('requests')
+        .delete()
+        .eq('request_id', request.request_id);
+      if (requestError) throw requestError;
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      window.location.reload();
+    }
+  };
 
   const handleDeny = async request => {
     try {

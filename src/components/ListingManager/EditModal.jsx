@@ -41,9 +41,10 @@ export default function EditModal({ isOpen, listing, onClose }) {
   });
 
   const onSubmit = async listingData => {
+    if (listingData.type === 'Bundle Deal') listingData.requiredSpend = '0';
+
     try {
       const listingUpdates = {
-        listing_id: listing.listing_id,
         title: listingData.title,
         website: listingData.website,
         type: listingData.type,
@@ -53,7 +54,10 @@ export default function EditModal({ isOpen, listing, onClose }) {
         status: listing.status,
       };
 
-      const { error } = await supabase.from('listings').upsert(listingUpdates);
+      const { error } = await supabase
+        .from('listings')
+        .update(listingUpdates)
+        .eq('listing_id', listing.listing_id);
       if (error) throw error;
 
       toast({

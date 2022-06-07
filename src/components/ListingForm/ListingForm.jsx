@@ -9,11 +9,14 @@ import SlotsField from './SlotsField';
 import TitleField from './TitleField';
 import TypeField from './TypeField';
 import WebsiteField from './WebsiteField';
+import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../supabase';
+import { getUserProfile } from '../../utils/UserUtils';
 
 export default function ListingForm() {
-  const toast = useToast();
+  const auth = useAuth();
   const navigate = useNavigate();
+  const toast = useToast();
   const [listingType, setListingType] = useState('');
 
   const {
@@ -30,14 +33,12 @@ export default function ListingForm() {
 
   const onSubmit = async listingData => {
     try {
-      const user = supabase.auth.user();
       const listingId = uuidv4();
 
       if (listingData.type === 'Bundle Deal') listingData.requiredSpend = '0';
 
       const listing = {
         listing_id: listingId,
-        created_by: user.id,
         description: listingData.description,
         required_spend: listingData.requiredSpend,
         slots: listingData.slots,
@@ -47,8 +48,30 @@ export default function ListingForm() {
         website: listingData.website,
       };
 
-      const { error } = await supabase.from('listings').insert(listing);
-      if (error) throw error;
+      const { error: listingError } = await supabase
+        .from('listings')
+        .insert(listing);
+      if (listingError) throw listingError;
+
+      const listingParticipantsId = uuidv4();
+
+      const { data: userData, error: userError } = await getUserProfile(
+        auth.user.id
+      );
+      if (userError) throw userError;
+
+      const listingParticipant = {
+        listing_participants_id: listingParticipantsId,
+        listing_id: listingId,
+        participant_id: auth.user.id,
+        listing_title: listingData.title,
+        participant_username: userData.username,
+      };
+
+      const { error: listingParticipantError } = await supabase
+        .from('listing_participants')
+        .insert(listingParticipant);
+      if (listingParticipantError) throw listingParticipantError;
     } catch (error) {
       alert(error.message);
     } finally {

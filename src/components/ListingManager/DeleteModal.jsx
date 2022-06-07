@@ -14,12 +14,29 @@ import { supabase } from '../../supabase';
 export default function DeleteModal({ isOpen, listing, onClose }) {
   const handleDelete = async () => {
     try {
-      const { error } = await supabase
+      const { error: listingError } = await supabase
         .from('listings')
         .delete()
         .eq('listing_id', listing.listing_id);
+      if (listingError) throw listingError;
 
-      if (error) throw error;
+      const { error: requestError } = await supabase
+        .from('requests')
+        .delete()
+        .eq('listing_id', listing.listing_id);
+      if (requestError) throw requestError;
+
+      const { error: messageError } = await supabase
+        .from('messages')
+        .delete()
+        .eq('listing_id', listing.listing_id);
+      if (messageError) throw messageError;
+
+      const { error: listingParticipantError } = await supabase
+        .from('listing_participants')
+        .delete()
+        .eq('listing_id', listing.listing_id);
+      if (listingParticipantError) throw listingParticipantError;
     } catch (error) {
       alert(error.message);
     } finally {
