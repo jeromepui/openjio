@@ -1,12 +1,4 @@
-import {
-  Alert,
-  Box,
-  Heading,
-  Link,
-  Stack,
-  Text,
-  useToast,
-} from '@chakra-ui/react';
+import { Alert, Box, Heading, Stack, Link, Text, useToast } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
@@ -16,6 +8,7 @@ import { supabase } from '../supabase';
 import { getListing, getListingOwnerUsername } from '../utils/ListingUtils';
 import { userJoinedListing } from '../utils/RequestUtils';
 import { getUserProfile } from '../utils/UserUtils';
+import { Link as RouterLink  } from 'react-router-dom';
 
 export default function ListingPage() {
   const auth = useAuth();
@@ -133,11 +126,13 @@ export default function ListingPage() {
                 : 'No description provided'}
             </Text>
             <Text fontWeight={'bold'}>Created by:</Text>{' '}
-            <Text>
-              {user?.username
-                ? user.username
-                : 'User has not created a username'}
-            </Text>
+            <RouterLink to={`/profile/${listing.created_by}`}>
+              <Text>
+                {user?.username
+                  ? user.username
+                  : 'User has not created a username'}
+              </Text>
+            </RouterLink>
             {listing.created_by !== auth.user.id && (
               <RequestButton
                 handleRequest={handleRequest}
