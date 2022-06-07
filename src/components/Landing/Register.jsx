@@ -33,6 +33,8 @@ export default function Register() {
       } catch (error) {
         if (error.status === 500) {
           alert('Username has been taken!');
+        } else {
+          alert(error.message);
         }
       }
     }

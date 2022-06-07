@@ -25,11 +25,13 @@ export default function ListingCardActionBar({ category, listing }) {
   const handleOpenListing = async () => {
     try {
       const openListing = {
-        listing_id: listing.listing_id,
         status: 'open',
       };
 
-      const { error } = await supabase.from('listings').upsert(openListing);
+      const { error } = await supabase
+        .from('listings')
+        .update(openListing)
+        .eq('listing_id', listing.listing_id);
       if (error) throw error;
     } catch (error) {
       alert(error.message);
@@ -41,11 +43,13 @@ export default function ListingCardActionBar({ category, listing }) {
   const handleCloseListing = async () => {
     try {
       const closeListing = {
-        listing_id: listing.listing_id,
         status: 'closed',
       };
 
-      const { error } = await supabase.from('listings').upsert(closeListing);
+      const { error } = await supabase
+        .from('listings')
+        .update(closeListing)
+        .eq('listing_id', listing.listing_id);
       if (error) throw error;
     } catch (error) {
       alert(error.message);

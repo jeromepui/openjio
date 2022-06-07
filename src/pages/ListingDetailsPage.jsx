@@ -19,6 +19,7 @@ export default function ListingPage() {
   const [listing, setListing] = useState(null);
   const [user, setUser] = useState(null);
   const [requested, setRequested] = useState(false);
+  const [joined, setJoined] = useState(false);
 
   useEffect(() => {
     const getListingData = async () => {
@@ -35,6 +36,17 @@ export default function ListingPage() {
           await getListingOwnerUsername(listingData.created_by);
         if (userError) throw userError;
         setUser(userData);
+
+        const { data: listingParticipantData, error: listingParticipantError } =
+          await supabase
+            .from('listing_participants')
+            .select()
+            .match({ listing_id: listingId, participant_id: auth.user.id });
+        if (listingParticipantError) throw listingParticipantError;
+
+        if (listingParticipantData.length > 0) {
+          setJoined(true);
+        }
 
         const { data: requestData, error: requestError } =
           await userJoinedListing(listingData.listing_id, auth.user.id);
@@ -136,6 +148,7 @@ export default function ListingPage() {
             {listing.created_by !== auth.user.id && (
               <RequestButton
                 handleRequest={handleRequest}
+                joined={joined}
                 requested={requested}
               />
             )}
