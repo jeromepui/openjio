@@ -19,6 +19,15 @@ export const getAllOpenListings = async () => {
   return { data, error };
 };
 
+// Get all open listings of a user
+export const getUserOpenListings = async (userId) => {
+  const { data, error } = await supabase
+    .from('listings')
+    .select()
+    .match({created_by: userId, status: 'open'});
+  return { data, error };
+};
+
 // Get username of listing owner
 export const getListingOwnerUsername = async userId => {
   const { data, error } = await supabase
