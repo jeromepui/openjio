@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getAllOpenListings } from '../../utils/ListingUtils';
 
+
 export default function Listings() {
   const [listings, setListings] = useState();
 

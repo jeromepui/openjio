@@ -1,5 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect} from 'react';
 import { useForm } from 'react-hook-form';
+import { useAuth } from '../../contexts/AuthContext';
+import { supabase } from '../../supabase';
+import { v4 as uuidv4 } from 'uuid';
+import { useParams } from 'react-router-dom';
+import { getUserProfile } from '../../utils/UserUtils';
+
 import {
   Modal,
   ModalBody,
@@ -15,16 +21,48 @@ import {
   Textarea,
 } from '@chakra-ui/react';
 
-export default function ReviewModal({ isOpen, onOpen, onClose }) {
+export default function ReviewModal({ isOpen, onOpen, onClose, setShouldRefresh }) {
+  const auth = useAuth();
+  const { id: userId } = useParams();
+  let username;
   const {
     register,
     handleSubmit,
     formState: { isSubmitSuccessful },
     reset,
   } = useForm();
-  const onSubmit = data => {
-    console.log(data);
+
+  const onSubmit = async reviewData => {
+    const reviewId = uuidv4();
+    try {
+      const { data, error } = await getUserProfile(auth.user.id);
+      if (error) throw error;
+      username = data.username
+    } catch (error) {
+      alert(error.message);
+    }
+
+    const review = {
+      review_id: reviewId,
+      created_by: auth.user.id,
+      reviewer_username: username,
+      created_for: userId,
+      rating: reviewData.rating,
+      content: reviewData.content,
+    };
+    try {
+      const { error: reviewError } = await supabase
+        .from('reviews')
+        .insert(review);
+      if (reviewError) throw reviewError;
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      onClose();
+      setShouldRefresh((prev) => !prev)
+    }
   };
+
   useEffect(() => {
     if (isSubmitSuccessful) {
       reset(null);
@@ -35,7 +73,7 @@ export default function ReviewModal({ isOpen, onOpen, onClose }) {
       <ModalOverlay />
       <ModalContent>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>Leave a review</ModalHeader>
           <ModalCloseButton />
 
           <ModalBody>
@@ -52,13 +90,13 @@ export default function ReviewModal({ isOpen, onOpen, onClose }) {
             <FormControl>
               <FormLabel>Review</FormLabel>
               <Textarea
-                {...register('review')}
+                {...register('content')}
                 placeholder="Leave a review..."
               />
             </FormControl>
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme="blue" type="submit" onClick={onClose}>
+            <Button colorScheme="blue" type="submit">
               Submit
             </Button>
             <Button variant="ghost" onClick={onClose}>
