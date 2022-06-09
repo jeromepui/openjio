@@ -1,12 +1,19 @@
 import { Flex } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import { supabase } from '../../supabase';
+import { useEffect, useRef, useState } from 'react';
 import ChatMessage from './ChatMessage';
 import { useAuth } from '../../contexts/AuthContext';
+import { supabase } from '../../supabase';
 
 export default function ChatBoxMessages({ listingId }) {
   const auth = useAuth();
+  const messagesRef = useRef(null);
   const [messages, setMessages] = useState(null);
+
+  const scrollToBottom = () => {
+    messagesRef.current.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(scrollToBottom, [messages]);
 
   useEffect(() => {
     const getMessages = async () => {
@@ -18,12 +25,32 @@ export default function ChatBoxMessages({ listingId }) {
       if (error) throw error;
 
       setMessages(data);
+
+      if (messagesRef.current) {
+        messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+      }
     };
     getMessages();
   }, [listingId]);
 
+  useEffect(() => {
+    const subscription = supabase
+      .from('messages')
+      .on('INSERT', payload => {
+        setMessages(prevMessages => [...prevMessages, payload.new]);
+        if (messagesRef.current) {
+          messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+        }
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeSubscription(subscription);
+    };
+  }, []);
+
   return (
-    <Flex w="100%" h="80%" overflowY="scroll" flexDirection="column" p="3">
+    <Flex direction="column" grow="1" overflowY="scroll" p="2" w="100%">
       {messages?.map((message, index) => {
         if (message.sender_id === auth.user.id) {
           return (
@@ -35,6 +62,7 @@ export default function ChatBoxMessages({ listingId }) {
           );
         }
       })}
+      <div ref={messagesRef}></div>
     </Flex>
   );
 }

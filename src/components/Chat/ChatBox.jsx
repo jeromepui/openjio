@@ -1,25 +1,19 @@
 import { Divider, Flex, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { supabase } from '../../supabase';
 import ChatBoxFooter from './ChatBoxFooter';
 import ChatBoxHeader from './ChatBoxHeader';
 import ChatBoxMessages from './ChatBoxMessages';
+import { getListing } from '../../utils/ListingUtils';
 
 export default function ChatBox({ listingId }) {
   const [listing, setListing] = useState(null);
 
   useEffect(() => {
     const getSelectedListing = async () => {
-      if (listingId === null) {
-        return;
-      }
+      if (listingId === null) return;
 
       try {
-        const { data, error } = await supabase
-          .from('listings')
-          .select()
-          .eq('listing_id', listingId)
-          .single();
+        const { data, error } = await getListing(listingId);
         if (error) throw error;
 
         setListing(data);
@@ -32,14 +26,14 @@ export default function ChatBox({ listingId }) {
 
   if (listingId === null) {
     return (
-      <Flex flexDir="column" w="60%">
-        <Text>No Chat Selected</Text>
+      <Flex align="center" justify="center" w="80%">
+        <Text>No chat selected</Text>
       </Flex>
     );
   }
 
   return (
-    <Flex flexDir="column" w="60%">
+    <Flex direction="column" w="60%">
       <ChatBoxHeader listingTitle={listing?.title} />
       <Divider />
       <ChatBoxMessages listingId={listingId} />

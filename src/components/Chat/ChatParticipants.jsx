@@ -8,9 +8,7 @@ export default function ChatParticipants({ listingId }) {
   useEffect(() => {
     const getParticipants = async () => {
       try {
-        if (listingId === null) {
-          return;
-        }
+        if (listingId === null) return;
 
         const { data, error } = await supabase
           .from('listing_participants')
@@ -27,17 +25,13 @@ export default function ChatParticipants({ listingId }) {
   }, [listingId]);
 
   if (listingId === null) {
-    return (
-      <Flex flexDir="column" w="20%">
-        <Text>No Chat Selected</Text>
-      </Flex>
-    );
+    return;
   }
 
   return (
-    <Flex flexDir="column" w="20%">
+    <Flex direction="column" w="20%">
       <Flex p="2">
-        <Text fontSize="lg" fontWeight="bold">
+        <Text fontSize="lg" fontWeight="500">
           Participants
         </Text>
       </Flex>

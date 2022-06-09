@@ -8,6 +8,7 @@ export default function RequestButton({ handleRequest, joined, requested }) {
       </Button>
     );
   }
+
   if (requested) {
     return (
       <Button isDisabled type="submit" width={['auto', '20%']}>
@@ -15,6 +16,7 @@ export default function RequestButton({ handleRequest, joined, requested }) {
       </Button>
     );
   }
+
   return (
     <Button
       bg="#02CECB"
@@ -22,9 +24,9 @@ export default function RequestButton({ handleRequest, joined, requested }) {
       _hover={{
         background: '#06837F',
       }}
+      maxW="300px"
       onClick={handleRequest}
       type="submit"
-      width={['auto', '20%']}
     >
       Request to join listing
     </Button>

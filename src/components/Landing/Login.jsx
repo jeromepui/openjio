@@ -29,11 +29,11 @@ export default function Login() {
 
   return (
     <Flex
-      alignItems="center"
+      align="center"
       bgGradient={'linear(to-l, #FED811, #FDC100)'}
       direction="column"
       h="100vh"
-      justifyContent="center"
+      justify="center"
       w={{ base: 'auto', md: '50%' }}
     >
       <Box bg="white" boxShadow="lg" p="8" rounded="lg">

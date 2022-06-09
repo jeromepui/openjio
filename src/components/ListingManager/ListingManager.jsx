@@ -12,14 +12,14 @@ import {
 import ListingManagerTab from './ListingManagerTab';
 import RequestsTab from './RequestsTab';
 
-export default function ListingManagerPage() {
+export default function ListingManager() {
   return (
-    <Tabs orientation="vertical" p="6" variant="soft-rounded">
+    <Tabs px="6" variant="enclosed">
       <TabList>
-        <Tab>Open</Tab>
-        <Tab>Closed</Tab>
-        <Tab>Requests</Tab>
-        <Tab>Joined</Tab>
+        <Tab _focus={{ boxShadow: 'none' }}>Open</Tab>
+        <Tab _focus={{ boxShadow: 'none' }}>Closed</Tab>
+        <Tab _focus={{ boxShadow: 'none' }}>Joined</Tab>
+        <Tab _focus={{ boxShadow: 'none' }}>Requests</Tab>
       </TabList>
       <TabPanels>
         <TabPanel>
@@ -29,9 +29,6 @@ export default function ListingManagerPage() {
           <ListingManagerTab category="closed" status="closed" />
         </TabPanel>
         <TabPanel>
-          <RequestsTab />
-        </TabPanel>
-        <TabPanel>
           <Alert borderRadius="10" status="info" w="50%">
             <AlertIcon />
             <AlertTitle>Coming soon.</AlertTitle>
@@ -39,6 +36,9 @@ export default function ListingManagerPage() {
               You will be able to join listings soon!
             </AlertDescription>
           </Alert>
+        </TabPanel>
+        <TabPanel>
+          <RequestsTab />
         </TabPanel>
       </TabPanels>
     </Tabs>

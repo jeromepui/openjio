@@ -1,14 +1,15 @@
 import {
-  Alert,
   Box,
+  Flex,
   Heading,
-  Stack,
   Link,
+  Spinner,
+  Stack,
   Text,
   useToast,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import RequestButton from '../components/ListingDetails/RequestButton';
 import { useAuth } from '../contexts/AuthContext';
@@ -16,7 +17,6 @@ import { supabase } from '../supabase';
 import { getListing, getListingOwnerUsername } from '../utils/ListingUtils';
 import { userJoinedListing } from '../utils/RequestUtils';
 import { getUserProfile } from '../utils/UserUtils';
-import { Link as RouterLink } from 'react-router-dom';
 
 export default function ListingPage() {
   const auth = useAuth();
@@ -109,65 +109,56 @@ export default function ListingPage() {
   };
 
   return (
-    <>
+    <Box px="6" py="4">
       {loading ? (
-        <Box mx="6" my="4">
-          <Alert status="info">Loading...</Alert>
-        </Box>
+        <Flex align="center" justify="center">
+          <Spinner size="xl" />
+        </Flex>
       ) : (
-        <Box px="6" py="4">
-          <Stack spacing="4">
-            <Heading fontWeight="700" fontSize="4xl">
-              {listing.title}
-            </Heading>
-            <Text fontSize="2xl" fontWeight="500">
-              Listing Details
-            </Text>
-            <Text fontWeight="bold">Website:</Text>{' '}
-            <Link
-              href={listing.website}
-              noOfLines="1"
-              textDecoration="underline solid"
-              textUnderlineOffset="auto"
-            >
-              {listing.website}
-            </Link>
-            <Text fontWeight="bold">Type:</Text>
-            <Text>{listing.type}</Text>
-            {listing.type === 'Min. Spend' && (
-              <>
-                <Text fontWeight="bold">
-                  Amount Required For Free Delivery:
-                </Text>
-                <Text>${listing.required_spend}</Text>
-              </>
-            )}
-            <Text fontWeight="bold">Slots Available:</Text>
-            <Text> {listing.slots}</Text>
-            <Text fontWeight="bold">Description:</Text>{' '}
+        <Stack spacing="4">
+          <Heading fontWeight="700" fontSize="4xl">
+            {listing.title}
+          </Heading>
+          <Text fontSize="2xl" fontWeight="500">
+            Listing Details
+          </Text>
+          <Text fontWeight="bold">Website:</Text>
+          <Link href={listing.website} noOfLines="1">
+            {listing.website}
+          </Link>
+          <Text fontWeight="bold">Type:</Text>
+          <Text>{listing.type}</Text>
+          {listing.type === 'Min. Spend' && (
+            <>
+              <Text fontWeight="bold">Amount Required For Free Delivery:</Text>
+              <Text>${listing.required_spend}</Text>
+            </>
+          )}
+          <Text fontWeight="bold">Slots Available:</Text>
+          <Text>{listing.slots}</Text>
+          <Text fontWeight="bold">Description:</Text>
+          <Text>
+            {listing.description
+              ? listing.description
+              : 'No description provided'}
+          </Text>
+          <Text fontWeight={'bold'}>Created by:</Text>
+          <RouterLink to={`/profile/${listing.created_by}`}>
             <Text>
-              {listing.description
-                ? listing.description
-                : 'No description provided'}
+              {user?.username
+                ? user.username
+                : 'User has not created a username'}
             </Text>
-            <Text fontWeight={'bold'}>Created by:</Text>{' '}
-            <RouterLink to={`/profile/${listing.created_by}`}>
-              <Text textDecoration="underline solid">
-                {user?.username
-                  ? user.username
-                  : 'User has not created a username'}
-              </Text>
-            </RouterLink>
-            {listing.created_by !== auth.user.id && (
-              <RequestButton
-                handleRequest={handleRequest}
-                joined={joined}
-                requested={requested}
-              />
-            )}
-          </Stack>
-        </Box>
+          </RouterLink>
+          {listing.created_by !== auth.user.id && (
+            <RequestButton
+              handleRequest={handleRequest}
+              joined={joined}
+              requested={requested}
+            />
+          )}
+        </Stack>
       )}
-    </>
+    </Box>
   );
 }

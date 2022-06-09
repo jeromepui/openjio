@@ -1,10 +1,9 @@
-import { Button, Divider, Flex, Heading, Text } from '@chakra-ui/react';
+import { Button, Divider, Flex, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../supabase';
-import ChatConversationsHeader from './ChatConversationsHeader';
 
-export default function ChatConversations({ handleSelectListing }) {
+export default function ChatConversations({ setListingId }) {
   const auth = useAuth();
   const [listings, setListings] = useState(null);
 
@@ -26,20 +25,20 @@ export default function ChatConversations({ handleSelectListing }) {
   }, [auth.user.id]);
 
   return (
-    <Flex bg="gray.100" flexDir="column" w="20%">
-      <ChatConversationsHeader />
+    <Flex direction="column" w="20%">
+      <Text fontSize="lg" fontWeight="500" p="2">
+        Chats
+      </Text>
       <Divider />
-      <Heading fontSize="lg" p="2">
-        Listing Chats
-      </Heading>
-      <Flex w="100%" h="80%" overflowY="scroll" flexDirection="column" p="2">
+      <Flex direction="column" grow="1" overflowY="scroll" p="2" w="100%">
         {listings?.map((listing, index) => {
           return (
             <Button
               key={index}
-              onClick={e => handleSelectListing(listing.listing_id)}
+              my="2"
+              onClick={e => setListingId(listing.listing_id)}
             >
-              <Flex justify="center" mb="2" p="2">
+              <Flex justify="center" p="4">
                 <Text fontSize="lg" fontWeight="bold">
                   {listing.listing_title}
                 </Text>
