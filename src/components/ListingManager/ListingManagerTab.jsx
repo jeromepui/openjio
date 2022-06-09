@@ -29,7 +29,7 @@ export default function ListingManager({ category, status }) {
   }, [auth.user.id, category, status]);
 
   return (
-    <Wrap mx="4" p="2" spacing="30px">
+    <Wrap spacing="30px">
       {listings?.length > 0 ? (
         listings?.map((listing, index) => (
           <ListingManagerCard

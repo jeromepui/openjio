@@ -1,7 +1,7 @@
-import { ChakraProvider, extendTheme } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { ChakraProvider, extendTheme, Flex } from '@chakra-ui/react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { supabase } from './supabase';
+import NavBar from './components/NavBar/NavBar';
+import { useAuth } from './contexts/AuthContext';
 import DashboardPage from './pages/DashboardPage';
 import HomePage from './pages/HomePage';
 import ListingFormPage from './pages/ListingFormPage';
@@ -11,7 +11,6 @@ import ProfilePage from './pages/ProfilePage';
 import RegisterPage from './pages/RegisterPage';
 import SettingsPage from './pages/SettingsPage';
 import ChatPage from './pages/ChatPage';
-import NavBar from './components/NavBar/NavBar';
 
 const theme = extendTheme({
   breakpoints: {
@@ -21,30 +20,28 @@ const theme = extendTheme({
     xl: '1200px',
     '2xl': '1536px',
   },
-  components: { Button: { baseStyle: { _focus: { boxShadow: 'none' } } } },
+  components: {
+    Button: { baseStyle: { _focus: { boxShadow: 'none' } } },
+  },
+  fonts: {
+    heading: `Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"`,
+    body: `Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"`,
+  },
 });
 
 export default function App() {
-  const [session, setSession] = useState(null);
-
-  useEffect(() => {
-    setSession(supabase.auth.session());
-
-    supabase.auth.onAuthStateChange((event, session) => {
-      setSession(session);
-    });
-  }, []);
+  const auth = useAuth();
 
   return (
     <ChakraProvider theme={theme}>
-      {!session ? (
+      {!auth.user ? (
         <Routes>
           <Route path="*" element={<Navigate to="/login" />} />
           <Route path="/login" element={<LoginPage />}></Route>
           <Route path="/register" element={<RegisterPage />}></Route>
         </Routes>
       ) : (
-        <>
+        <Flex direction="column" h="100vh">
           <NavBar />
           <Routes>
             <Route path="*" element={<Navigate to="/" />} />
@@ -56,7 +53,7 @@ export default function App() {
             <Route path="/profile/:id" element={<ProfilePage />} />
             <Route path="/settings" element={<SettingsPage />} />
           </Routes>
-        </>
+        </Flex>
       )}
     </ChakraProvider>
   );

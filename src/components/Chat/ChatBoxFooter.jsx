@@ -7,6 +7,8 @@ export default function ChatBoxFooter({ listingId }) {
   const [message, setMessage] = useState('');
 
   const handleSendMessage = async () => {
+    if (message === '') return;
+
     try {
       const messageId = uuidv4();
 
@@ -26,32 +28,26 @@ export default function ChatBoxFooter({ listingId }) {
   };
 
   return (
-    <Flex p="2" w="100%">
+    <Flex px="4" py="2" w="100%">
       <Input
-        placeholder="Type Something..."
         border="none"
         borderRadius="none"
-        _focus={{
-          border: '1px solid black',
-        }}
-        // onKeyPress={e => {
-        //   if (e.key === 'Enter') {
-        //     handleSendMessage();
-        //   }
-        // }}
-        value={message}
         onChange={e => setMessage(e.target.value)}
+        onKeyPress={e => {
+          if (e.key === 'Enter') {
+            handleSendMessage();
+          }
+        }}
+        placeholder="Type Something..."
+        value={message}
+        variant="flushed"
       />
       <Button
-        bg="black"
+        bg="#02CECB"
         color="white"
-        borderRadius="none"
         _hover={{
-          bg: 'white',
-          color: 'black',
-          border: '1px solid black',
+          background: '#06837F',
         }}
-        disabled={message.trim().length <= 0}
         onClick={handleSendMessage}
       >
         Send

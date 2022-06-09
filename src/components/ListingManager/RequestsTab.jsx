@@ -79,7 +79,7 @@ export default function RequestsTab() {
   };
 
   return (
-    <Wrap mx="4" p="2" spacing="30px">
+    <Wrap spacing="30px">
       {requests?.length > 0 ? (
         requests.map((request, index) => {
           return (

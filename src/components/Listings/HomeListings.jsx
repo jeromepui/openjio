@@ -1,4 +1,4 @@
-import { Flex, Stack, Text, Wrap, WrapItem } from '@chakra-ui/react';
+import { Box, Flex, Stack, SimpleGrid, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getAllOpenListings } from '../../utils/ListingUtils';
@@ -20,9 +20,9 @@ export default function Listings() {
   }, []);
 
   return (
-    <Wrap mx="4" p="2">
+    <SimpleGrid columns="4" mx="4" p="2" spacing="10">
       {listings?.map((listing, index) => (
-        <WrapItem key={index}>
+        <Box key={index}>
           <Link to={`/listing/${listing.listing_id}`}>
             <Flex
               justifyContent={{ base: 'center', md: 'left' }}
@@ -54,8 +54,8 @@ export default function Listings() {
               </Stack>
             </Flex>
           </Link>
-        </WrapItem>
+        </Box>
       ))}
-    </Wrap>
+    </SimpleGrid>
   );
 }
