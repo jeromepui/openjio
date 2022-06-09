@@ -1,6 +1,7 @@
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { useAuth } from "./contexts/AuthContext";
 import { supabase } from './supabase';
 import DashboardPage from './pages/DashboardPage';
 import HomePage from './pages/HomePage';
@@ -25,6 +26,7 @@ const theme = extendTheme({
 });
 
 export default function App() {
+  const auth = useAuth();
   const [session, setSession] = useState(null);
 
   useEffect(() => {
@@ -37,7 +39,7 @@ export default function App() {
 
   return (
     <ChakraProvider theme={theme}>
-      {!session ? (
+      {!auth.user ? (
         <Routes>
           <Route path="*" element={<Navigate to="/login" />} />
           <Route path="/login" element={<LoginPage />}></Route>
