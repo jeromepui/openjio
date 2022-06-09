@@ -19,8 +19,8 @@ export default function ChatMessage({ content, sender }) {
     );
   }
   return (
-    <Flex w="100%">
-      <Avatar name="" src="" bg="blue.300"></Avatar>
+    <Flex align="center" w="100%">
+      <Avatar name="" size="sm" src="" bg="blue.300"></Avatar>
       <Flex
         bg="gray.100"
         borderRadius="20"

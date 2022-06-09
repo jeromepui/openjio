@@ -37,7 +37,9 @@ export default function ChatBoxMessages({ listingId }) {
     const subscription = supabase
       .from('messages')
       .on('INSERT', payload => {
-        setMessages(prevMessages => [...prevMessages, payload.new]);
+        if (payload.new.listing_id === listingId) {
+          setMessages(prevMessages => [...prevMessages, payload.new]);
+        }
         if (messagesRef.current) {
           messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
         }
@@ -47,10 +49,10 @@ export default function ChatBoxMessages({ listingId }) {
     return () => {
       supabase.removeSubscription(subscription);
     };
-  }, []);
+  }, [listingId]);
 
   return (
-    <Flex direction="column" grow="1" overflowY="scroll" p="2" w="100%">
+    <Flex direction="column" h="76vh" overflowY="scroll" p="2" w="100%">
       {messages?.map((message, index) => {
         if (message.sender_id === auth.user.id) {
           return (

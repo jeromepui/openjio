@@ -144,7 +144,7 @@ export default function ListingPage() {
           </Text>
           <Text fontWeight={'bold'}>Created by:</Text>
           <RouterLink to={`/profile/${listing.created_by}`}>
-            <Text>
+            <Text _hover={{ textDecoration: 'underline' }}>
               {user?.username
                 ? user.username
                 : 'User has not created a username'}
