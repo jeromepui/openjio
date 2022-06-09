@@ -1,19 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { Text, Avatar, HStack, Stack } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
+import { getUserReviews } from '../../utils/ReviewUtils';
 
-const reviews = [];
+export default function UserReviews({ shouldRefresh }) {
+  const { id: userId } = useParams();
+  const [reviews, setReviews] = useState();
 
-export default function UserReviews() {
-  // const { id: userId } = useParams();
-  // const [ reviews, setReviews ] = useState();
+  useEffect(() => {
+    const getReviews = async () => {
+      try {
+        const { data, error } = await getUserReviews(userId);
+        if (error) throw error;
+        setReviews(data);
+      } catch (error) {
+        alert(error.message);
+      }
+    };
+    getReviews();
+  }, [ shouldRefresh, userId ]);
 
-  // useEffect(() =>
-  //   const getReviews = async () => {
-  //     try()
-  //   }
-
-  // )
   return (
     <Stack>
       {reviews?.map((review, index) => (
@@ -36,7 +42,7 @@ export default function UserReviews() {
                 fontWeight="bold"
                 noOfLines="1"
               >
-                {review.created_by}
+                {review.reviewer_username}
               </Text>
               <Text fontSize="md" noOfLines="1" display="inline-block">
                 rating: {review.rating}

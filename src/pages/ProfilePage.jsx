@@ -17,6 +17,7 @@ import UserListings from '../components/Profile/UserListings';
 export default function ProfilePage() {
   const { id: profileId } = useParams();
   const [profile, setProfile] = useState(null);
+  const [shouldRefresh, setShouldRefresh] = useState(true);
 
   useEffect(() => {
     const getProfile = async () => {
@@ -36,16 +37,20 @@ export default function ProfilePage() {
     <>
       <TitleBar backButton={true} text="Profile" />
       <HStack align="flex-start">
-        <UserInfo profile={profile} />
+        <UserInfo
+          profile={profile}
+          setShouldRefresh={setShouldRefresh}
+          shouldRefresh={shouldRefresh}
+        />
         <Tabs w="70%">
           <TabList>
             <Tab>Reviews</Tab>
             <Tab>Listings</Tab>
           </TabList>
 
-          <TabPanels marginLeft={{base: "-1.5rem"}}>
+          <TabPanels marginLeft={{ base: '-1.5rem' }}>
             <TabPanel>
-              <UserReviews />
+              <UserReviews shouldRefresh={shouldRefresh} />
             </TabPanel>
             <TabPanel>
               <UserListings />

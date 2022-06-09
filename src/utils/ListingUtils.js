@@ -37,3 +37,9 @@ export const getListingOwnerUsername = async userId => {
     .single();
   return { data, error };
 };
+
+// Get number of available slots for specified listing  
+
+// Decrease available slots for specified listing by 1 
+
+// Increase available slots for specified listing by 1 
