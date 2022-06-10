@@ -3,7 +3,11 @@ import DeleteModal from './DeleteModal';
 import EditModal from './EditModal';
 import { supabase } from '../../supabase';
 
-export default function ListingCardActionBar({ category, listing }) {
+export default function ListingCardActionBar({
+  category,
+  listing,
+  setShouldRefresh,
+}) {
   const {
     isOpen: isClosedDeleteOpen,
     onOpen: onClosedDeleteOpen,
@@ -36,7 +40,7 @@ export default function ListingCardActionBar({ category, listing }) {
     } catch (error) {
       alert(error.message);
     } finally {
-      window.location.reload(false);
+      setShouldRefresh(prev => !prev);
     }
   };
 
@@ -54,7 +58,7 @@ export default function ListingCardActionBar({ category, listing }) {
     } catch (error) {
       alert(error.message);
     } finally {
-      window.location.reload(false);
+      setShouldRefresh(prev => !prev);
     }
   };
 
@@ -81,11 +85,13 @@ export default function ListingCardActionBar({ category, listing }) {
               isOpen={isOpenDeleteOpen}
               listing={listing}
               onClose={onOpenDeleteClose}
+              setShouldRefresh={setShouldRefresh}
             />
             <EditModal
               isOpen={isEditOpen}
               listing={listing}
               onClose={onEditClose}
+              setShouldRefresh={setShouldRefresh}
             />
           </HStack>
         );

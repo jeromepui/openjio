@@ -20,7 +20,7 @@ import TypeField from '../ListingForm/TypeField';
 import WebsiteField from '../ListingForm/WebsiteField';
 import { supabase } from '../../supabase';
 
-export default function EditModal({ isOpen, listing, onClose }) {
+export default function EditModal({ isOpen, listing, onClose, setShouldRefresh }) {
   const toast = useToast();
   const [listingType, setListingType] = useState(listing.type);
 
@@ -52,6 +52,7 @@ export default function EditModal({ isOpen, listing, onClose }) {
         slots: listingData.slots,
         description: listingData.description,
         status: listing.status,
+        remaining_slots: listing.remaining_slots
       };
 
       const { error } = await supabase
@@ -70,7 +71,7 @@ export default function EditModal({ isOpen, listing, onClose }) {
     } catch (error) {
       alert(error.message);
     } finally {
-      window.location.reload();
+      setShouldRefresh((prev) => !prev)
       onClose();
     }
   };
@@ -99,7 +100,7 @@ export default function EditModal({ isOpen, listing, onClose }) {
               {listingType === 'Min. Spend' && (
                 <MinSpendField errors={errors} register={register} />
               )}
-              <SlotsField errors={errors} register={register} />
+              <SlotsField errors={errors} register={register} isDisabled={true}/>
               <DescriptionField register={register} />
             </Stack>
           </ModalBody>

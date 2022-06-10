@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { supabase } from '../../supabase';
 import {
@@ -10,14 +10,56 @@ import {
   Text,
   Wrap,
   WrapItem,
+  useDisclosure,
+  Badge,
 } from '@chakra-ui/react';
 import { useAuth } from '../../contexts/AuthContext';
 import { Link } from 'react-router-dom';
+import {
+  checkSlotsAvailability,
+  decreaseSlots,
+  getListing,
+} from '../../utils/ListingUtils';
+import DeleteRequestDialog from './DeleteRequestDialog';
+import { deleteRequest } from '../../utils/RequestUtils';
 
-export default function RequestsTab() {
+export default function RequestsTab({ shouldRefresh, setShouldRefresh }) {
   const auth = useAuth();
   const [requests, setRequests] = useState(null);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef();
 
+  const renderBadge = async listingId => {
+    try {
+      const { data: listingData, error: listingDataError } = await getListing(
+        listingId
+      );
+      if (listingDataError) throw listingDataError;
+      return listingData.remaining_slots > 0 ? (
+        <Badge
+          colorScheme="green"
+          justifyContent="center"
+          variant="subtle"
+          display="flex"
+        >
+          {listingData.remaining_slots} slots remaining{' '}
+        </Badge>
+      ) : (
+        <Badge
+          colorScheme="red"
+          justifyContent="center"
+          variant="subtle"
+          display="flex"
+          w="10"
+        >
+          {' '}
+          FULL{' '}
+        </Badge>
+      );
+    } catch (error) {
+      alert(error.message);
+    }
+  };
   useEffect(() => {
     const getRequests = async () => {
       try {
@@ -32,49 +74,61 @@ export default function RequestsTab() {
         alert(error.message);
       }
     };
+
     getRequests();
-  }, [auth.user.id]);
+  }, [auth.user.id, shouldRefresh]);
 
   const handleApprove = async request => {
     try {
-      const listingParticipantsId = uuidv4();
+      const { result: isSlotAvailable, error: slotsError } =
+        await checkSlotsAvailability(request.listing_id);
+      if (slotsError) throw slotsError;
 
-      const listingParticipant = {
-        listing_participants_id: listingParticipantsId,
-        listing_id: request.listing_id,
-        participant_id: request.requester_id,
-        listing_title: request.listing_title,
-        participant_username: request.requester_username,
-      };
+      if (!isSlotAvailable) {
+        onOpen();
+      } else {
+        const listingParticipantsId = uuidv4();
 
-      const { error: listingParticipantError } = await supabase
-        .from('listing_participants')
-        .insert(listingParticipant);
-      if (listingParticipantError) throw listingParticipantError;
+        const listingParticipant = {
+          listing_participants_id: listingParticipantsId,
+          listing_id: request.listing_id,
+          participant_id: request.requester_id,
+          listing_title: request.listing_title,
+          participant_username: request.requester_username,
+        };
 
-      const { error: requestError } = await supabase
-        .from('requests')
-        .delete()
-        .eq('request_id', request.request_id);
-      if (requestError) throw requestError;
+        const { error: listingParticipantError } = await supabase
+          .from('listing_participants')
+          .insert(listingParticipant);
+        if (listingParticipantError) throw listingParticipantError;
+
+        const { error: deleteRequestError } = await deleteRequest(
+          request.request_id
+        );
+        if (deleteRequestError) throw deleteRequestError;
+
+        const { error: decrementError } = await decreaseSlots(
+          listingParticipant.listing_id
+        );
+        if (decrementError) throw decrementError;
+      }
     } catch (error) {
       alert(error.message);
     } finally {
-      window.location.reload();
+      setShouldRefresh(prev => !prev);
     }
   };
 
   const handleDeny = async request => {
     try {
-      const { error } = await supabase
-        .from('requests')
-        .delete()
-        .eq('request_id', request.request_id);
-      if (error) throw error;
+      const { error: deleteRequestError } = await deleteRequest(
+        request.request_id
+      );
+      if (deleteRequestError) throw deleteRequestError;
     } catch (error) {
       alert(error.message);
     } finally {
-      window.location.reload();
+      setShouldRefresh(prev => !prev);
     }
   };
 
@@ -102,6 +156,7 @@ export default function RequestsTab() {
                   <Text fontSize="md" my="1" noOfLines="1">
                     {request.requester_username}
                   </Text>
+                  {renderBadge(request.listingId)}
                   <HStack justify="flex-start">
                     <Button
                       bg="#02CECB"
@@ -113,6 +168,14 @@ export default function RequestsTab() {
                     >
                       Approve
                     </Button>
+                    <DeleteRequestDialog
+                      isOpen={isOpen}
+                      onOpen={onOpen}
+                      onClose={onClose}
+                      cancelRef={cancelRef}
+                      request={request}
+                      setShouldRefresh={setShouldRefresh}
+                    />
                     <Button
                       colorScheme="red"
                       onClick={() => handleDeny(request)}

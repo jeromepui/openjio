@@ -4,7 +4,7 @@ import ListingManagerCard from './ListingManagerCard';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../supabase';
 
-export default function ListingManager({ category, status }) {
+export default function ListingManager({ category, status, shouldRefresh, setShouldRefresh }) {
   const auth = useAuth();
   const [listings, setListings] = useState(null);
 
@@ -26,7 +26,7 @@ export default function ListingManager({ category, status }) {
       }
     };
     getListings();
-  }, [auth.user.id, category, status]);
+  }, [auth.user.id, category, status, shouldRefresh]);
 
   return (
     <Wrap spacing="30px">
@@ -36,6 +36,7 @@ export default function ListingManager({ category, status }) {
             category={category}
             key={index}
             listing={listing}
+            setShouldRefresh={setShouldRefresh}
           ></ListingManagerCard>
         ))
       ) : (
