@@ -1,9 +1,9 @@
 import { FormControl, FormLabel, Input, Text } from '@chakra-ui/react';
 import { ErrorMessage } from '@hookform/error-message';
 
-export default function SlotsField({ errors, register }) {
+export default function SlotsField({ errors, register, isDisabled  }) {
   return (
-    <FormControl isRequired>
+    <FormControl isRequired  isDisabled={isDisabled}>
       <FormLabel>Slots Available</FormLabel>
       <Input
         id="slots"

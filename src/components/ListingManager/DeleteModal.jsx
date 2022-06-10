@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react';
 import { supabase } from '../../supabase';
 
-export default function DeleteModal({ isOpen, listing, onClose }) {
+export default function DeleteModal({ isOpen, listing, onClose, setShouldRefresh }) {
   const handleDelete = async () => {
     try {
       const { error: listingError } = await supabase
@@ -41,7 +41,7 @@ export default function DeleteModal({ isOpen, listing, onClose }) {
       alert(error.message);
     } finally {
       onClose();
-      window.location.reload();
+      setShouldRefresh((prev) => !prev)
     }
   };
 

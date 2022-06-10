@@ -1,7 +1,7 @@
 import { FormControl, FormLabel, Input, Text } from '@chakra-ui/react';
 import { ErrorMessage } from '@hookform/error-message';
 
-export default function TitleField({ errors, register, value }) {
+export default function TitleField({ errors, register, value}) {
   return (
     <FormControl isRequired>
       <FormLabel>Listing Title</FormLabel>

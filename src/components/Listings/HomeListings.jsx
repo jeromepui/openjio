@@ -1,8 +1,7 @@
-import { Box, Flex, Stack, SimpleGrid, Text } from '@chakra-ui/react';
+import { Box, Flex, Stack, SimpleGrid, Text, Badge } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getAllOpenListings } from '../../utils/ListingUtils';
-
 
 export default function Listings() {
   const [listings, setListings] = useState();
@@ -48,9 +47,27 @@ export default function Listings() {
                 <Text fontSize="md" fontWeight="500" noOfLines="1">
                   {listing.website}
                 </Text>
-                <Text fontSize="md" fontWeight="500">
-                  Slots: {listing.slots}
-                </Text>
+                {listing.remaining_slots > 0 ? (
+                  <Badge
+                    colorScheme="green"
+                    justifyContent="center"
+                    variant='subtle' 
+                    display="flex"
+                  >
+                    {listing.remaining_slots} slots remaining{' '}
+                  </Badge>
+                ) : (
+                  <Badge
+                    colorScheme="red"
+                    justifyContent="center"
+                    variant='subtle' 
+                    display="flex"
+                    w="10"
+                  >
+                    {' '}
+                    FULL{' '}
+                  </Badge>
+                )}
                 <Text color="gray.600">{listing.type}</Text>
               </Stack>
             </Flex>
