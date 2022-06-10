@@ -1,7 +1,11 @@
-import { Box, Stack, Text, WrapItem } from '@chakra-ui/react';
+import { Box, Stack, Text, WrapItem, Badge } from '@chakra-ui/react';
 import ListingCardActions from './ListingCardActions';
 
-export default function ManagerListingCard({ category, listing }) {
+export default function ManagerListingCard({
+  category,
+  listing,
+  setShouldRefresh,
+}) {
   return (
     <WrapItem>
       <Box w="300px" h="200px" boxShadow="lg" p="2" rounded="lg">
@@ -16,13 +20,36 @@ export default function ManagerListingCard({ category, listing }) {
           <Text fontSize="md" fontWeight="500" my="1" noOfLines="1">
             {listing.website}
           </Text>
-          <Text fontSize="md" fontWeight="500" my="1">
-            Slots: {listing.slots}
-          </Text>
+          {listing.remaining_slots > 0 ? (
+            <Badge
+              colorScheme="green"
+              justifyContent="center"
+              variant="subtle"
+              display="flex"
+              w="50%"
+            >
+              {listing.remaining_slots} slot(s) remaining{' '}
+            </Badge>
+          ) : (
+            <Badge
+              colorScheme="red"
+              justifyContent="center"
+              variant="subtle"
+              display="flex"
+              w="10"
+            >
+              {' '}
+              FULL{' '}
+            </Badge>
+          )}
           <Text color="gray.500" my="2">
             {listing.type}
           </Text>
-          <ListingCardActions category={category} listing={listing} />
+          <ListingCardActions
+            category={category}
+            listing={listing}
+            setShouldRefresh={setShouldRefresh}
+          />
         </Stack>
       </Box>
     </WrapItem>

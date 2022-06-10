@@ -1,6 +1,11 @@
 import { Button } from '@chakra-ui/react';
 
-export default function RequestButton({ handleRequest, joined, requested }) {
+export default function RequestButton({
+  handleRequest,
+  joined,
+  requested,
+  isFull,
+}) {
   if (joined) {
     return (
       <Button isDisabled type="submit" width={['auto', '20%']}>
@@ -13,6 +18,14 @@ export default function RequestButton({ handleRequest, joined, requested }) {
     return (
       <Button isDisabled type="submit" width={['auto', '20%']}>
         Requested
+      </Button>
+    );
+  }
+
+  if (isFull) {
+    return (
+      <Button isDisabled type="submit" width={['auto', '20%']}>
+        No slots remaining
       </Button>
     );
   }

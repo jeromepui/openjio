@@ -28,6 +28,7 @@ export default function ListingPage() {
   const [user, setUser] = useState(null);
   const [requested, setRequested] = useState(false);
   const [joined, setJoined] = useState(false);
+  const [isFull, setIsFull] = useState(false)
 
   useEffect(() => {
     const getListingData = async () => {
@@ -44,6 +45,10 @@ export default function ListingPage() {
           await getListingOwnerUsername(listingData.created_by);
         if (userError) throw userError;
         setUser(userData);
+
+        if (listingData.remaining_slots <= 0) {
+          setIsFull(true)
+        }
 
         const { data: listingParticipantData, error: listingParticipantError } =
           await supabase
@@ -155,6 +160,7 @@ export default function ListingPage() {
               handleRequest={handleRequest}
               joined={joined}
               requested={requested}
+              isFull={isFull}
             />
           )}
         </Stack>

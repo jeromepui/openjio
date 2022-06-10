@@ -42,6 +42,7 @@ export default function ListingForm() {
         description: listingData.description,
         required_spend: listingData.requiredSpend,
         slots: listingData.slots,
+        remaining_slots: listingData.slots,
         status: 'open',
         title: listingData.title,
         type: listingData.type,
