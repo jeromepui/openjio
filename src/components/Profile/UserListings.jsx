@@ -1,30 +1,30 @@
-import { Stack, Wrap, WrapItem, Flex, Text } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import { Badge, Box, SimpleGrid, Stack, Flex, Text } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { getUserOpenListings } from '../../utils/ListingUtils';
+import { getUserListings } from '../../utils/ListingUtils';
 
 export default function UserListings() {
   const { id: userId } = useParams();
-  const [ listings, setListings ] = useState();
+  const [listings, setListings] = useState();
 
   useEffect(() => {
-    const getUserListings = async () => {
+    const getListings = async () => {
       try {
-        const { data, error } = await getUserOpenListings(userId);
+        const { data, error } = await getUserListings(userId, 'open');
         if (error) throw error;
+
         setListings(data);
       } catch (error) {
         alert(error.message);
       }
     };
-
-    getUserListings();
+    getListings();
   }, [userId]);
 
   return (
-    <Wrap mx="4" p="2">
+    <SimpleGrid columns="4" mx="4" p="2" spacing="10">
       {listings?.map((listing, index) => (
-        <WrapItem key={index}>
+        <Box key={index}>
           <Link to={`/listing/${listing.listing_id}`}>
             <Flex
               justifyContent={{ base: 'center', md: 'left' }}
@@ -49,15 +49,35 @@ export default function UserListings() {
                 <Text fontSize="md" fontWeight="500" noOfLines="1">
                   {listing.website}
                 </Text>
-                <Text fontSize="md" fontWeight="500">
-                  Slots: {listing.slots}
-                </Text>
+                {listing.remaining_slots > 0 ? (
+                  <Badge
+                    colorScheme="green"
+                    justifyContent="center"
+                    variant="subtle"
+                    display="flex"
+                  >
+                    {listing.remaining_slots === 1
+                      ? '1 slot remaining'
+                      : `${listing.remaining_slots} slots remaining`}
+                  </Badge>
+                ) : (
+                  <Badge
+                    colorScheme="red"
+                    justifyContent="center"
+                    variant="subtle"
+                    display="flex"
+                    w="10"
+                  >
+                    {' '}
+                    FULL{' '}
+                  </Badge>
+                )}
                 <Text color="gray.600">{listing.type}</Text>
               </Stack>
             </Flex>
           </Link>
-        </WrapItem>
+        </Box>
       ))}
-    </Wrap>
+    </SimpleGrid>
   );
 }

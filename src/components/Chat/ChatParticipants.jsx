@@ -1,20 +1,17 @@
 import { Divider, Flex, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { supabase } from '../../supabase';
+import { getParticipantsByListing } from '../../utils/ListingParticipantUtils';
 
 export default function ChatParticipants({ listingId }) {
   const [participants, setParticipants] = useState(null);
 
   useEffect(() => {
+    if (listingId === null) return;
+
     const getParticipants = async () => {
       try {
-        if (listingId === null) return;
-
-        const { data, error } = await supabase
-          .from('listing_participants')
-          .select()
-          .eq('listing_id', listingId);
+        const { data, error } = await getParticipantsByListing(listingId);
         if (error) throw error;
 
         setParticipants(data);
@@ -25,9 +22,7 @@ export default function ChatParticipants({ listingId }) {
     getParticipants();
   }, [listingId]);
 
-  if (listingId === null) {
-    return;
-  }
+  if (listingId === null) return;
 
   return (
     <Flex direction="column" w="20%">
@@ -37,15 +32,13 @@ export default function ChatParticipants({ listingId }) {
         </Text>
       </Flex>
       <Divider />
-      {participants?.map((participant, index) => {
-        return (
-          <Link key={index} to={`/profile/${participant.participant_id}`}>
-            <Text _hover={{ textDecoration: 'underline' }} fontSize="lg" p="2">
-              {participant.participant_username}
-            </Text>
-          </Link>
-        );
-      })}
+      {participants?.map((participant, index) => (
+        <Link key={index} to={`/profile/${participant.participant_id}`}>
+          <Text _hover={{ textDecoration: 'underline' }} fontSize="lg" p="2">
+            {participant.participant_username}
+          </Text>
+        </Link>
+      ))}
     </Flex>
   );
 }

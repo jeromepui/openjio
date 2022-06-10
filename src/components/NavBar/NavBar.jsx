@@ -6,7 +6,7 @@ import SearchBar from './SearchBar';
 import ChatButton from './ChatButton';
 import ProfileButton from './ProfileButton';
 
-export default function TopNavBar() {
+export default function NavBar() {
   return (
     <Box w="100vw">
       <Flex align="center" bgColor="#FED811" justify="space-between">
@@ -36,7 +36,6 @@ export default function TopNavBar() {
           </ButtonGroup>
         </Flex>
         <SearchBar />
-
         <HStack px="4" py="2" spacing="4">
           <Link to="/add-listing">
             <Button

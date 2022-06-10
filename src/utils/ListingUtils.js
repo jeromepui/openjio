@@ -20,11 +20,11 @@ export const getAllOpenListings = async () => {
 };
 
 // Get all open listings of a user
-export const getUserOpenListings = async userId => {
+export const getUserListings = async (userId, status) => {
   const { data, error } = await supabase
     .from('listings')
     .select()
-    .match({ created_by: userId, status: 'open' });
+    .match({ created_by: userId, status: status });
   return { data, error };
 };
 
@@ -38,7 +38,31 @@ export const getListingOwnerUsername = async userId => {
   return { data, error };
 };
 
-// Check slots availability for a listing - returns true or false
+// Insert listing
+export const addListing = async listing => {
+  const { error } = await supabase.from('listings').insert(listing);
+  return { error };
+};
+
+// Update listing
+export const updateListing = async (listingId, listingUpdates) => {
+  const { error } = await supabase
+    .from('listings')
+    .update(listingUpdates)
+    .eq('listing_id', listingId);
+  return { error };
+};
+
+// Delete listing
+export const deleteListing = async listingId => {
+  const { error } = await supabase
+    .from('listings')
+    .delete()
+    .eq('listing_id', listingId);
+  return { error };
+};
+
+// Check if a listing has remaining slots
 export const checkSlotsAvailability = async listingId => {
   const { data, error } = await supabase
     .from('listings')
@@ -49,16 +73,15 @@ export const checkSlotsAvailability = async listingId => {
   return { result, error };
 };
 
-// Decrease available slots for specified listing by 1
+// Increase available slots for specified listing by 1
 export const increaseSlots = async listingId => {
   const { data, error } = await supabase.rpc('increment', {
     row_id: listingId,
   });
-
   return { data, error };
 };
 
-// Increase available slots for specified listing by 1
+// Decrease available slots for specified listing by 1
 export const decreaseSlots = async listingId => {
   const { data, error } = await supabase.rpc('decrement', {
     row_id: listingId,

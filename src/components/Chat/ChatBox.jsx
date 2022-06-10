@@ -9,18 +9,18 @@ export default function ChatBox({ listingId }) {
   const [listingTitle, setListingTitle] = useState(null);
 
   useEffect(() => {
-    const getListingChat = async () => {
+    const getListingTitle = async () => {
       if (listingId === null) return;
+
       try {
         const { data, error } = await getListing(listingId);
         if (error) throw error;
-
         setListingTitle(data.title);
       } catch (error) {
         alert(error.message);
       }
     };
-    getListingChat();
+    getListingTitle();
   }, [listingId]);
 
   if (listingId === null) {

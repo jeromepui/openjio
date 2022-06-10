@@ -8,6 +8,7 @@ import {
   AlertDialogOverlay,
   Button,
   useToast,
+  ButtonGroup,
 } from '@chakra-ui/react';
 import { deleteRequest } from '../../utils/RequestUtils';
 
@@ -16,7 +17,7 @@ export default function DeleteRequestDialog({
   onClose,
   cancelRef,
   request,
-  setShouldRefresh
+  setShouldRefresh,
 }) {
   const toast = useToast();
 
@@ -30,13 +31,13 @@ export default function DeleteRequestDialog({
       alert(error.message);
     } finally {
       toast({
-        title: 'Request deleted.',
+        title: 'Request deleted!',
         description: `We've deleted ${request.requester_username}'s request`,
         status: 'success',
-        duration: 5000,
+        duration: 4000,
         isClosable: true,
       });
-      setShouldRefresh((prev) => !prev)
+      setShouldRefresh(prev => !prev);
       onClose();
     }
   };
@@ -50,20 +51,21 @@ export default function DeleteRequestDialog({
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Maximum Slots Reached
+              Slots Filled
             </AlertDialogHeader>
-
             <AlertDialogBody>
-              No slot left! Delete this request instead?
+              Your listing does not have any slot left! Delete this request
+              instead?
             </AlertDialogBody>
-
             <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={onClose}>
-                Cancel
-              </Button>
-              <Button colorScheme="red" onClick={handleDelete} ml={3}>
-                Delete
-              </Button>
+              <ButtonGroup>
+                <Button ref={cancelRef} onClick={onClose}>
+                  Cancel
+                </Button>
+                <Button colorScheme="red" onClick={handleDelete} ml={3}>
+                  Delete
+                </Button>
+              </ButtonGroup>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialogOverlay>

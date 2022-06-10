@@ -2,15 +2,15 @@ import { Button, Flex, Input } from '@chakra-ui/react';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useAuth } from '../../contexts/AuthContext';
-import { supabase } from '../../supabase';
+import { sendMessage } from '../../utils/MessageUtils';
 import { getUserProfile } from '../../utils/UserUtils';
 
 export default function ChatBoxFooter({ listingId }) {
   const auth = useAuth();
-  const [message, setMessage] = useState('');
+  const [content, setContent] = useState('');
 
   const handleSendMessage = async () => {
-    if (message === '') return;
+    if (content === '') return;
 
     try {
       const messageId = uuidv4();
@@ -18,33 +18,33 @@ export default function ChatBoxFooter({ listingId }) {
       const { data, error: userError } = await getUserProfile(auth.user.id);
       if (userError) throw userError;
 
-      const newMessage = {
+      const message = {
         message_id: messageId,
         listing_id: listingId,
-        content: message,
         sender_username: data.username,
+        content: content,
       };
 
-      const { error } = await supabase.from('messages').insert(newMessage);
-      if (error) throw error;
+      const { error: messageError } = await sendMessage(message);
+      if (messageError) throw messageError;
     } catch (error) {
       alert(error.message);
     } finally {
-      setMessage('');
+      setContent('');
     }
   };
 
   return (
     <Flex align="center" grow="1" justify="center" px="4" w="100%">
       <Input
-        onChange={e => setMessage(e.target.value)}
+        onChange={e => setContent(e.target.value)}
         onKeyPress={e => {
           if (e.key === 'Enter') {
             handleSendMessage();
           }
         }}
-        placeholder="Type Something..."
-        value={message}
+        placeholder="Type something..."
+        value={content}
         variant="flushed"
       />
       <Button

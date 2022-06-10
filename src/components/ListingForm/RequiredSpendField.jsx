@@ -31,7 +31,7 @@ export default function RequiredSpendField({ errors, register }) {
       <ErrorMessage
         errors={errors}
         name="target"
-        render={({ message }) => <Text color="red.500">{message}</Text>}
+        render={({ message }) => <Text color="red.400">{message}</Text>}
       />
     </FormControl>
   );

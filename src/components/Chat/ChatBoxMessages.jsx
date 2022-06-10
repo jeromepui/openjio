@@ -2,6 +2,7 @@ import { Flex, Spinner } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 import ChatMessage from './ChatMessage';
 import { supabase } from '../../supabase';
+import { getMessagesByListing } from '../../utils/MessageUtils';
 
 export default function ChatBoxMessages({ listingId }) {
   const messagesRef = useRef(null);
@@ -18,14 +19,11 @@ export default function ChatBoxMessages({ listingId }) {
     const getMessages = async () => {
       try {
         setLoading(true);
-        const { data, error } = await supabase
-          .from('messages')
-          .select()
-          .eq('listing_id', listingId)
-          .order('created_at');
+
+        const { data, error } = await getMessagesByListing(listingId);
+        if (error) throw error;
 
         setMessages(data);
-        if (error) throw error;
       } catch (error) {
         alert(error.message);
       } finally {

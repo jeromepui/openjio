@@ -10,8 +10,9 @@ import TitleField from './TitleField';
 import TypeField from './TypeField';
 import WebsiteField from './WebsiteField';
 import { useAuth } from '../../contexts/AuthContext';
-import { supabase } from '../../supabase';
 import { getUserProfile } from '../../utils/UserUtils';
+import { addListing } from '../../utils/ListingUtils';
+import { addParticipant } from '../../utils/ListingParticipantUtils';
 
 export default function ListingForm() {
   const auth = useAuth();
@@ -34,24 +35,24 @@ export default function ListingForm() {
   const onSubmit = async listingData => {
     try {
       const listingId = uuidv4();
+      const { title, website, type, requiredSpend, slots, description } =
+        listingData;
 
       if (listingData.type === 'Bundle Deal') listingData.requiredSpend = '0';
 
       const listing = {
         listing_id: listingId,
-        description: listingData.description,
-        required_spend: listingData.requiredSpend,
-        slots: listingData.slots,
-        remaining_slots: listingData.slots,
+        title: title,
+        website: website,
+        type: type,
+        required_spend: requiredSpend,
+        slots: slots,
+        remaining_slots: slots,
         status: 'open',
-        title: listingData.title,
-        type: listingData.type,
-        website: listingData.website,
+        description: description,
       };
 
-      const { error: listingError } = await supabase
-        .from('listings')
-        .insert(listing);
+      const { error: listingError } = await addListing(listing);
       if (listingError) throw listingError;
 
       const listingParticipantsId = uuidv4();
@@ -61,18 +62,17 @@ export default function ListingForm() {
       );
       if (userError) throw userError;
 
-      const listingParticipant = {
+      const participant = {
         listing_participants_id: listingParticipantsId,
         listing_id: listingId,
         participant_id: auth.user.id,
-        listing_title: listingData.title,
+        listing_title: title,
         participant_username: userData.username,
+        is_owner: true,
       };
 
-      const { error: listingParticipantError } = await supabase
-        .from('listing_participants')
-        .insert(listingParticipant);
-      if (listingParticipantError) throw listingParticipantError;
+      const { error: participantError } = await addParticipant(participant);
+      if (participantError) throw participantError;
     } catch (error) {
       alert(error.message);
     } finally {
@@ -88,7 +88,7 @@ export default function ListingForm() {
   };
 
   return (
-    <Box p="6" w={{ base: 'auto', md: '50%' }}>
+    <Box px="6" py="4" w={{ sm: '100%', md: '50%' }}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <SimpleGrid columns="2" spacing="4">
           <GridItem colSpan="2">
@@ -115,15 +115,7 @@ export default function ListingForm() {
           <GridItem colSpan="2">
             <DescriptionField register={register} />
           </GridItem>
-          <Button
-            bg="#02CECB"
-            color="white"
-            _hover={{
-              background: '#06837F',
-            }}
-            type="submit"
-            maxW="200px"
-          >
+          <Button type="submit" maxW="200px">
             Submit
           </Button>
         </SimpleGrid>
