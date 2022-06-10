@@ -1,49 +1,60 @@
-import { Heading, SimpleGrid } from '@chakra-ui/react';
+import { Flex, Heading, SimpleGrid, Spinner } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import ListingManagerCard from './ListingManagerCard';
 import { useAuth } from '../../contexts/AuthContext';
-import { supabase } from '../../supabase';
+import { getUserListings } from '../../utils/ListingUtils';
 
-export default function ListingManager({ category, status, shouldRefresh, setShouldRefresh }) {
+export default function ListingManager({
+  category,
+  status,
+  shouldRefresh,
+  setShouldRefresh,
+}) {
   const auth = useAuth();
+  const [loading, setLoading] = useState(false);
   const [listings, setListings] = useState(null);
 
   useEffect(() => {
     const getListings = async () => {
       try {
-        if (category === 'open' || category === 'closed') {
-          const { data, error } = await supabase
-            .from('listings')
-            .select()
-            .eq('created_by', auth.user.id)
-            .eq('status', status);
-          if (error) throw error;
+        setLoading(true);
+        const { data, error } = await getUserListings(auth.user.id, status);
+        if (error) throw error;
 
-          setListings(data);
-        }
+        setListings(data);
       } catch (error) {
         alert(error.message);
+      } finally {
+        setLoading(false);
       }
     };
     getListings();
   }, [auth.user.id, category, status, shouldRefresh]);
 
   return (
-    <SimpleGrid columns="4" spacing="10">
-      {listings?.length > 0 ? (
-        listings?.map((listing, index) => (
-          <ListingManagerCard
-            category={category}
-            key={index}
-            listing={listing}
-            setShouldRefresh={setShouldRefresh}
-          ></ListingManagerCard>
-        ))
+    <>
+      {loading ? (
+        <Flex grow="1" justify="center">
+          <Spinner size="xl" />
+        </Flex>
       ) : (
-        <Heading fontSize="2xl">
-          You do not have any {category} listings.
-        </Heading>
+        <SimpleGrid columns="4" spacing="8">
+          {listings?.length > 0 ? (
+            listings?.map((listing, index) => (
+              <ListingManagerCard
+                category={category}
+                key={index}
+                listing={listing}
+                setShouldRefresh={setShouldRefresh}
+              ></ListingManagerCard>
+            ))
+          ) : (
+            <Heading fontSize="2xl">
+              You do not have any {category} listings.
+            </Heading>
+          )}
+        </SimpleGrid>
       )}
-    </SimpleGrid>
+    </>
   );
 }

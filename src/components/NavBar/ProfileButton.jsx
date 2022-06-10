@@ -12,11 +12,15 @@ import { useAuth } from '../../contexts/AuthContext';
 
 export default function ProfileButton() {
   const auth = useAuth();
+
   return (
     <Box>
       <Menu>
         <MenuButton as={IconButton} borderRadius="50%" icon={<MdPerson />} />
         <MenuList>
+          <Link to={`/profile/${auth.user.id}`}>
+            <MenuItem>View Profile</MenuItem>
+          </Link>
           <Link to="/settings">
             <MenuItem>Settings</MenuItem>
           </Link>

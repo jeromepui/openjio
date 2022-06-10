@@ -18,11 +18,17 @@ import SlotsField from '../ListingForm/SlotsField';
 import TitleField from '../ListingForm/TitleField';
 import TypeField from '../ListingForm/TypeField';
 import WebsiteField from '../ListingForm/WebsiteField';
-import { supabase } from '../../supabase';
+import { updateListing } from '../../utils/ListingUtils';
 
-export default function EditModal({ isOpen, listing, onClose, setShouldRefresh }) {
+export default function EditModal({
+  isOpen,
+  listing,
+  onClose,
+  setShouldRefresh,
+}) {
   const toast = useToast();
-  const [listingType, setListingType] = useState(listing.type);
+  const { listing_id, type } = listing;
+  const [listingType, setListingType] = useState(type);
 
   const {
     handleSubmit,
@@ -41,24 +47,31 @@ export default function EditModal({ isOpen, listing, onClose, setShouldRefresh }
   });
 
   const onSubmit = async listingData => {
-    if (listingData.type === 'Bundle Deal') listingData.requiredSpend = '0';
+    let {
+      title,
+      website,
+      type,
+      requiredSpend,
+      slots,
+      description,
+      status,
+      remaining_slots,
+    } = listingData;
+    if (type === 'Bundle Deal') requiredSpend = '0';
 
     try {
       const listingUpdates = {
-        title: listingData.title,
-        website: listingData.website,
-        type: listingData.type,
-        required_spend: listingData.requiredSpend,
-        slots: listingData.slots,
-        description: listingData.description,
-        status: listing.status,
-        remaining_slots: listing.remaining_slots
+        title: title,
+        website: website,
+        type: type,
+        required_spend: requiredSpend,
+        slots: slots,
+        description: description,
+        status: status,
+        remaining_slots: remaining_slots,
       };
 
-      const { error } = await supabase
-        .from('listings')
-        .update(listingUpdates)
-        .eq('listing_id', listing.listing_id);
+      const { error } = await updateListing(listing_id, listingUpdates);
       if (error) throw error;
 
       toast({
@@ -71,7 +84,7 @@ export default function EditModal({ isOpen, listing, onClose, setShouldRefresh }
     } catch (error) {
       alert(error.message);
     } finally {
-      setShouldRefresh((prev) => !prev)
+      setShouldRefresh(prev => !prev);
       onClose();
     }
   };
@@ -100,7 +113,11 @@ export default function EditModal({ isOpen, listing, onClose, setShouldRefresh }
               {listingType === 'Min. Spend' && (
                 <MinSpendField errors={errors} register={register} />
               )}
-              <SlotsField errors={errors} register={register} isDisabled={true}/>
+              <SlotsField
+                errors={errors}
+                register={register}
+                isDisabled={true}
+              />
               <DescriptionField register={register} />
             </Stack>
           </ModalBody>

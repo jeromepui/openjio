@@ -1,5 +1,6 @@
 import {
   Button,
+  ButtonGroup,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -9,39 +10,39 @@ import {
   ModalOverlay,
   Text,
 } from '@chakra-ui/react';
-import { supabase } from '../../supabase';
+import { deleteParticipantsByListing } from '../../utils/ListingParticipantUtils';
+import { deleteListing } from '../../utils/ListingUtils';
+import { deleteMessagesByListing } from '../../utils/MessageUtils';
+import { deleteRequestsByListing } from '../../utils/RequestUtils';
 
-export default function DeleteModal({ isOpen, listing, onClose, setShouldRefresh }) {
+export default function DeleteModal({
+  isOpen,
+  listing,
+  onClose,
+  setShouldRefresh,
+}) {
+  const { listing_id } = listing;
+
   const handleDelete = async () => {
     try {
-      const { error: listingError } = await supabase
-        .from('listings')
-        .delete()
-        .eq('listing_id', listing.listing_id);
+      const { error: listingError } = await deleteListing(listing_id);
       if (listingError) throw listingError;
 
-      const { error: requestError } = await supabase
-        .from('requests')
-        .delete()
-        .eq('listing_id', listing.listing_id);
+      const { error: requestError } = await deleteRequestsByListing(listing_id);
       if (requestError) throw requestError;
 
-      const { error: messageError } = await supabase
-        .from('messages')
-        .delete()
-        .eq('listing_id', listing.listing_id);
+      const { error: messageError } = await deleteMessagesByListing(listing_id);
       if (messageError) throw messageError;
 
-      const { error: listingParticipantError } = await supabase
-        .from('listing_participants')
-        .delete()
-        .eq('listing_id', listing.listing_id);
-      if (listingParticipantError) throw listingParticipantError;
+      const { error: participantError } = await deleteParticipantsByListing(
+        listing_id
+      );
+      if (participantError) throw participantError;
     } catch (error) {
       alert(error.message);
     } finally {
       onClose();
-      setShouldRefresh((prev) => !prev)
+      setShouldRefresh(prev => !prev);
     }
   };
 
@@ -62,10 +63,12 @@ export default function DeleteModal({ isOpen, listing, onClose, setShouldRefresh
         </ModalBody>
 
         <ModalFooter>
-          <Button colorScheme="red" mr="3" onClick={handleDelete}>
-            Delete
-          </Button>
-          <Button onClick={onClose}>Cancel</Button>
+          <ButtonGroup>
+            <Button onClick={onClose}>Cancel</Button>
+            <Button colorScheme="red" mr="3" onClick={handleDelete}>
+              Delete
+            </Button>
+          </ButtonGroup>
         </ModalFooter>
       </ModalContent>
     </Modal>

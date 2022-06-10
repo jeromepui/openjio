@@ -6,7 +6,7 @@ export default function TitleBar({ backButton, text }) {
   const navigate = useNavigate();
 
   return (
-    <Flex px="6" py="4">
+    <Flex align="center" px="6" py="4">
       {backButton && (
         <IconButton
           borderRadius="50%"

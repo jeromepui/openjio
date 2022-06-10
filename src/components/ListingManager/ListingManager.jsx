@@ -1,15 +1,6 @@
-import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  AlertTitle,
-  Tab,
-  TabList,
-  Tabs,
-  TabPanels,
-  TabPanel,
-} from '@chakra-ui/react';
+import { Tab, Tabs, TabList, TabPanels, TabPanel } from '@chakra-ui/react';
 import { useState } from 'react';
+import JoinedTab from './JoinedTab';
 import ListingManagerTab from './ListingManagerTab';
 import RequestsTab from './RequestsTab';
 
@@ -41,13 +32,10 @@ export default function ListingManager() {
           />
         </TabPanel>
         <TabPanel>
-          <Alert borderRadius="10" status="info" w="50%">
-            <AlertIcon />
-            <AlertTitle>Coming soon.</AlertTitle>
-            <AlertDescription>
-              You will be able to join listings soon!
-            </AlertDescription>
-          </Alert>
+          <JoinedTab
+            shouldRefresh={shouldRefresh}
+            setShouldRefresh={setShouldRefresh}
+          />
         </TabPanel>
         <TabPanel>
           <RequestsTab

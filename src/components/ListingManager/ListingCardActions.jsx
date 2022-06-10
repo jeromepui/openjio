@@ -1,13 +1,14 @@
-import { Button, HStack, useDisclosure } from '@chakra-ui/react';
+import { Button, ButtonGroup, useDisclosure } from '@chakra-ui/react';
 import DeleteModal from './DeleteModal';
 import EditModal from './EditModal';
-import { supabase } from '../../supabase';
+import { updateListing } from '../../utils/ListingUtils';
 
 export default function ListingCardActionBar({
   category,
   listing,
   setShouldRefresh,
 }) {
+  const { listing_id } = listing;
   const {
     isOpen: isClosedDeleteOpen,
     onOpen: onClosedDeleteOpen,
@@ -32,10 +33,7 @@ export default function ListingCardActionBar({
         status: 'open',
       };
 
-      const { error } = await supabase
-        .from('listings')
-        .update(openListing)
-        .eq('listing_id', listing.listing_id);
+      const { error } = await updateListing(listing_id, openListing);
       if (error) throw error;
     } catch (error) {
       alert(error.message);
@@ -50,10 +48,7 @@ export default function ListingCardActionBar({
         status: 'closed',
       };
 
-      const { error } = await supabase
-        .from('listings')
-        .update(closeListing)
-        .eq('listing_id', listing.listing_id);
+      const { error } = await updateListing(listing_id, closeListing);
       if (error) throw error;
     } catch (error) {
       alert(error.message);
@@ -66,28 +61,30 @@ export default function ListingCardActionBar({
     switch (category) {
       case 'open':
         return (
-          <HStack justify="flex-start">
-            <Button
-              bg="#02CECB"
-              color="white"
-              _hover={{
-                background: '#02CECB',
-              }}
-              onClick={onEditOpen}
-            >
-              Edit
-            </Button>
-            <Button
-              bg="red.500"
-              color="white"
-              _hover={{
-                background: 'red',
-              }}
-              onClick={onOpenDeleteOpen}
-            >
-              Delete
-            </Button>
-            <Button onClick={handleCloseListing}>Close Listing</Button>
+          <>
+            <ButtonGroup>
+              <Button
+                bg="#02CECB"
+                color="white"
+                _hover={{
+                  background: '#02CECB',
+                }}
+                onClick={onEditOpen}
+              >
+                Edit
+              </Button>
+              <Button
+                bg="red.500"
+                color="white"
+                _hover={{
+                  background: 'red',
+                }}
+                onClick={onOpenDeleteOpen}
+              >
+                Delete
+              </Button>
+              <Button onClick={handleCloseListing}>Close Listing</Button>
+            </ButtonGroup>
             <DeleteModal
               isOpen={isOpenDeleteOpen}
               listing={listing}
@@ -100,63 +97,24 @@ export default function ListingCardActionBar({
               onClose={onEditClose}
               setShouldRefresh={setShouldRefresh}
             />
-          </HStack>
+          </>
         );
 
       case 'closed':
         return (
-          <HStack justify="flex-start">
-            <Button colorScheme="red" onClick={onClosedDeleteOpen}>
-              Delete
-            </Button>
-            <Button onClick={handleOpenListing}>Reopen Listing</Button>
+          <>
+            <ButtonGroup>
+              <Button colorScheme="red" onClick={onClosedDeleteOpen}>
+                Delete
+              </Button>
+              <Button onClick={handleOpenListing}>Reopen Listing</Button>
+            </ButtonGroup>
             <DeleteModal
               isOpen={isClosedDeleteOpen}
               listing={listing}
               onClose={onClosedDeleteClose}
             />
-          </HStack>
-        );
-
-      case 'requests':
-        return (
-          <HStack justify="flex-start">
-            <Button
-              bg="#02CECB"
-              color="white"
-              _hover={{
-                background: '#02CECB',
-              }}
-              onClick={onEditOpen}
-            >
-              Edit{' '}
-            </Button>
-            <Button
-              bg="red"
-              color="white"
-              _hover={{
-                background: 'red',
-              }}
-              onClick={onOpenDeleteOpen}
-            >
-              Delete
-            </Button>
-          </HStack>
-        );
-
-      case 'joined':
-        return (
-          <HStack justify="flex-start">
-            <Button>Unjoin</Button>
-          </HStack>
-        );
-
-      case 'followed':
-        return (
-          <HStack justify="flex-start">
-            <Button>Unfollow</Button>
-            <Button>Join Listing</Button>
-          </HStack>
+          </>
         );
 
       default:

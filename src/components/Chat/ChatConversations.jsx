@@ -1,19 +1,16 @@
 import { Button, Divider, Flex, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
-import { supabase } from '../../supabase';
+import { getListingsByParticipant } from '../../utils/ListingParticipantUtils';
 
 export default function ChatConversations({ setListingId }) {
   const auth = useAuth();
   const [listings, setListings] = useState(null);
 
   useEffect(() => {
-    const getListingsInvolved = async () => {
+    const getListings = async () => {
       try {
-        const { data, error } = await supabase
-          .from('listing_participants')
-          .select()
-          .eq('participant_id', auth.user.id);
+        const { data, error } = await getListingsByParticipant(auth.user.id);
         if (error) throw error;
 
         setListings(data);
@@ -21,7 +18,7 @@ export default function ChatConversations({ setListingId }) {
         alert(error.message);
       }
     };
-    getListingsInvolved();
+    getListings();
   }, [auth.user.id]);
 
   return (
@@ -31,22 +28,20 @@ export default function ChatConversations({ setListingId }) {
       </Text>
       <Divider />
       <Flex direction="column" grow="1" overflowY="scroll" p="2" w="100%">
-        {listings?.map((listing, index) => {
-          return (
-            <Flex align="center" justify="center" key={index} my="2">
-              <Button
-                color="black"
-                my="2"
-                onClick={e => setListingId(listing.listing_id)}
-                variant="link"
-              >
-                <Text fontSize="lg" fontWeight="bold">
-                  {listing.listing_title}
-                </Text>
-              </Button>
-            </Flex>
-          );
-        })}
+        {listings?.map((listing, index) => (
+          <Flex align="center" justify="center" key={index} my="2">
+            <Button
+              color="black"
+              my="2"
+              onClick={e => setListingId(listing.listing_id)}
+              variant="link"
+            >
+              <Text fontSize="lg" fontWeight="bold">
+                {listing.listing_title}
+              </Text>
+            </Button>
+          </Flex>
+        ))}
       </Flex>
     </Flex>
   );

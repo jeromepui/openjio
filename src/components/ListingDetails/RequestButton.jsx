@@ -8,7 +8,7 @@ export default function RequestButton({
 }) {
   if (joined) {
     return (
-      <Button isDisabled type="submit" width={['auto', '20%']}>
+      <Button isDisabled maxW="300px" type="submit">
         Joined
       </Button>
     );
@@ -16,7 +16,7 @@ export default function RequestButton({
 
   if (requested) {
     return (
-      <Button isDisabled type="submit" width={['auto', '20%']}>
+      <Button isDisabled maxW="300px" type="submit">
         Requested
       </Button>
     );
@@ -24,7 +24,7 @@ export default function RequestButton({
 
   if (isFull) {
     return (
-      <Button isDisabled type="submit" width={['auto', '20%']}>
+      <Button isDisabled maxW="300px" type="submit">
         No slots remaining
       </Button>
     );

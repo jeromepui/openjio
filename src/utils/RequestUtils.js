@@ -1,5 +1,14 @@
 import { supabase } from '../supabase';
 
+// Get requests by listing owner
+export const getRequestsByListingOwner = async ownerId => {
+  const { data, error } = await supabase
+    .from('requests')
+    .select()
+    .eq('listing_owner_id', ownerId);
+  return { data, error };
+};
+
 // Check if user requested to join listing
 export const userJoinedListing = async (listingId, userId) => {
   const { data, error } = await supabase.from('requests').select().match({
@@ -9,11 +18,20 @@ export const userJoinedListing = async (listingId, userId) => {
   return { data, error };
 };
 
-// Delete a request 
-export const deleteRequest = async (requestId) => {
+// Delete request
+export const deleteRequest = async requestId => {
   const { data, error } = await supabase
-  .from('requests')
-  .delete()
-  .eq('request_id', requestId);
-  return { data, error }
-}
+    .from('requests')
+    .delete()
+    .eq('request_id', requestId);
+  return { data, error };
+};
+
+// Delete requests by listing
+export const deleteRequestsByListing = async listingId => {
+  const { error } = await supabase
+    .from('requests')
+    .delete()
+    .eq('listing_id', listingId);
+  return { error };
+};

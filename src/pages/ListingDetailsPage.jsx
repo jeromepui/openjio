@@ -1,7 +1,6 @@
 import {
   Box,
   Flex,
-  Heading,
   Link,
   Spinner,
   Stack,
@@ -12,6 +11,7 @@ import { useEffect, useState } from 'react';
 import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import RequestButton from '../components/ListingDetails/RequestButton';
+import TitleBar from '../components/TitleBar/TitleBar';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../supabase';
 import { getListing, getListingOwnerUsername } from '../utils/ListingUtils';
@@ -28,7 +28,7 @@ export default function ListingPage() {
   const [user, setUser] = useState(null);
   const [requested, setRequested] = useState(false);
   const [joined, setJoined] = useState(false);
-  const [isFull, setIsFull] = useState(false)
+  const [isFull, setIsFull] = useState(false);
 
   useEffect(() => {
     const getListingData = async () => {
@@ -47,7 +47,7 @@ export default function ListingPage() {
         setUser(userData);
 
         if (listingData.remaining_slots <= 0) {
-          setIsFull(true)
+          setIsFull(true);
         }
 
         const { data: listingParticipantData, error: listingParticipantError } =
@@ -114,55 +114,59 @@ export default function ListingPage() {
   };
 
   return (
-    <Box px="6" py="4">
+    <>
       {loading ? (
-        <Flex align="center" justify="center">
+        <Flex grow="1" justify="center" mt="8">
           <Spinner size="xl" />
         </Flex>
       ) : (
-        <Stack spacing="4">
-          <Heading fontWeight="700" fontSize="4xl">
-            {listing.title}
-          </Heading>
-          <Text fontSize="2xl" fontWeight="500">
-            Listing Details
-          </Text>
-          <Text fontWeight="bold">Website:</Text>
-          <Link href={listing.website} noOfLines="1">
-            {listing.website}
-          </Link>
-          <Text fontWeight="bold">Type:</Text>
-          <Text>{listing.type}</Text>
-          {listing.type === 'Min. Spend' && (
-            <>
-              <Text fontWeight="bold">Amount Required For Free Delivery:</Text>
-              <Text>${listing.required_spend}</Text>
-            </>
-          )}
-          <Text fontWeight="bold">Slots Available:</Text>
-          <Text>{listing.slots}</Text>
-          <Text fontWeight="bold">Description:</Text>
-          <Text>
-            {listing.description
-              ? listing.description
-              : 'No description provided'}
-          </Text>
-          <Text fontWeight={'bold'}>Created by:</Text>
-          <RouterLink to={`/profile/${listing.created_by}`}>
-            <Text _hover={{ textDecoration: 'underline' }}>
-              {user?.username}
-            </Text>
-          </RouterLink>
-          {listing.created_by !== auth.user.id && (
-            <RequestButton
-              handleRequest={handleRequest}
-              joined={joined}
-              requested={requested}
-              isFull={isFull}
-            />
-          )}
-        </Stack>
+        <>
+          <TitleBar backButton={true} text={listing.title} />
+          <Box px="6" py="4">
+            <Stack spacing="4">
+              <Text fontSize="2xl" fontWeight="500">
+                Listing Details
+              </Text>
+              <Text fontWeight="bold">Website:</Text>
+              <Link href={listing.website} noOfLines="1">
+                {listing.website}
+              </Link>
+              <Text fontWeight="bold">Type:</Text>
+              <Text>{listing.type}</Text>
+              {listing.type === 'Min. Spend' && (
+                <>
+                  <Text fontWeight="bold">
+                    Amount Required For Free Delivery:
+                  </Text>
+                  <Text>${listing.required_spend}</Text>
+                </>
+              )}
+              <Text fontWeight="bold">Slots Available:</Text>
+              <Text>{listing.slots}</Text>
+              <Text fontWeight="bold">Description:</Text>
+              <Text>
+                {listing.description
+                  ? listing.description
+                  : 'No description provided'}
+              </Text>
+              <Text fontWeight={'bold'}>Created by:</Text>
+              <RouterLink to={`/profile/${listing.created_by}`}>
+                <Text _hover={{ textDecoration: 'underline' }}>
+                  {user?.username}
+                </Text>
+              </RouterLink>
+              {listing.created_by !== auth.user.id && (
+                <RequestButton
+                  handleRequest={handleRequest}
+                  joined={joined}
+                  requested={requested}
+                  isFull={isFull}
+                />
+              )}
+            </Stack>
+          </Box>
+        </>
       )}
-    </Box>
+    </>
   );
 }
