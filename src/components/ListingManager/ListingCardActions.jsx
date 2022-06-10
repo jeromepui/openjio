@@ -71,13 +71,20 @@ export default function ListingCardActionBar({
               bg="#02CECB"
               color="white"
               _hover={{
-                background: '#06837F',
+                background: '#02CECB',
               }}
               onClick={onEditOpen}
             >
               Edit
             </Button>
-            <Button colorScheme="red" onClick={onOpenDeleteOpen}>
+            <Button
+              bg="red.500"
+              color="white"
+              _hover={{
+                background: 'red',
+              }}
+              onClick={onOpenDeleteOpen}
+            >
               Delete
             </Button>
             <Button onClick={handleCloseListing}>Close Listing</Button>
@@ -118,13 +125,20 @@ export default function ListingCardActionBar({
               bg="#02CECB"
               color="white"
               _hover={{
-                background: '#06837F',
+                background: '#02CECB',
               }}
               onClick={onEditOpen}
             >
-              Edit
+              Edit{' '}
             </Button>
-            <Button colorScheme="red" onClick={onOpenDeleteOpen}>
+            <Button
+              bg="red"
+              color="white"
+              _hover={{
+                background: 'red',
+              }}
+              onClick={onOpenDeleteOpen}
+            >
               Delete
             </Button>
           </HStack>
@@ -144,6 +158,7 @@ export default function ListingCardActionBar({
             <Button>Join Listing</Button>
           </HStack>
         );
+
       default:
     }
   };

@@ -6,22 +6,21 @@ import ChatBoxMessages from './ChatBoxMessages';
 import { getListing } from '../../utils/ListingUtils';
 
 export default function ChatBox({ listingId }) {
-  const [listing, setListing] = useState(null);
+  const [listingTitle, setListingTitle] = useState(null);
 
   useEffect(() => {
-    const getSelectedListing = async () => {
+    const getListingChat = async () => {
       if (listingId === null) return;
-
       try {
         const { data, error } = await getListing(listingId);
         if (error) throw error;
 
-        setListing(data);
+        setListingTitle(data.title);
       } catch (error) {
         alert(error.message);
       }
     };
-    getSelectedListing();
+    getListingChat();
   }, [listingId]);
 
   if (listingId === null) {
@@ -34,7 +33,7 @@ export default function ChatBox({ listingId }) {
 
   return (
     <Flex direction="column" w="60%">
-      <ChatBoxHeader listingTitle={listing?.title} />
+      <ChatBoxHeader listingTitle={listingTitle} />
       <Divider />
       <ChatBoxMessages listingId={listingId} />
       <Divider />

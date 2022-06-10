@@ -1,12 +1,11 @@
-import { Flex } from '@chakra-ui/react';
+import { Flex, Spinner } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 import ChatMessage from './ChatMessage';
-import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../supabase';
 
 export default function ChatBoxMessages({ listingId }) {
-  const auth = useAuth();
   const messagesRef = useRef(null);
+  const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState(null);
 
   const scrollToBottom = () => {
@@ -17,17 +16,20 @@ export default function ChatBoxMessages({ listingId }) {
 
   useEffect(() => {
     const getMessages = async () => {
-      const { data, error } = await supabase
-        .from('messages')
-        .select()
-        .eq('listing_id', listingId)
-        .order('created_at');
-      if (error) throw error;
+      try {
+        setLoading(true);
+        const { data, error } = await supabase
+          .from('messages')
+          .select()
+          .eq('listing_id', listingId)
+          .order('created_at');
 
-      setMessages(data);
-
-      if (messagesRef.current) {
-        messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+        setMessages(data);
+        if (error) throw error;
+      } catch (error) {
+        alert(error.message);
+      } finally {
+        setLoading(false);
       }
     };
     getMessages();
@@ -35,14 +37,9 @@ export default function ChatBoxMessages({ listingId }) {
 
   useEffect(() => {
     const subscription = supabase
-      .from('messages')
+      .from(`messages:listing_id=eq.${listingId}`)
       .on('INSERT', payload => {
-        if (payload.new.listing_id === listingId) {
-          setMessages(prevMessages => [...prevMessages, payload.new]);
-        }
-        if (messagesRef.current) {
-          messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
-        }
+        setMessages(prevMessages => [...prevMessages, payload.new]);
       })
       .subscribe();
 
@@ -52,19 +49,24 @@ export default function ChatBoxMessages({ listingId }) {
   }, [listingId]);
 
   return (
-    <Flex direction="column" h="76vh" overflowY="scroll" p="2" w="100%">
-      {messages?.map((message, index) => {
-        if (message.sender_id === auth.user.id) {
-          return (
-            <ChatMessage content={message.content} key={index} sender="me" />
-          );
-        } else {
-          return (
-            <ChatMessage content={message.content} key={index} sender="other" />
-          );
-        }
-      })}
-      <div ref={messagesRef}></div>
-    </Flex>
+    <>
+      {loading ? (
+        <Flex align="center" h="78vh" justify="center">
+          <Spinner size="xl" />
+        </Flex>
+      ) : (
+        <Flex direction="column" h="78vh" overflowY="scroll" p="2">
+          {messages?.map((message, index) => (
+            <ChatMessage
+              content={message.content}
+              key={index}
+              senderId={message.sender_id}
+              senderUsername={message.sender_username}
+            />
+          ))}
+          <div ref={messagesRef}></div>
+        </Flex>
+      )}
+    </>
   );
 }

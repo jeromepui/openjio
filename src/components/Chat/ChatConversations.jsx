@@ -33,17 +33,18 @@ export default function ChatConversations({ setListingId }) {
       <Flex direction="column" grow="1" overflowY="scroll" p="2" w="100%">
         {listings?.map((listing, index) => {
           return (
-            <Button
-              key={index}
-              my="2"
-              onClick={e => setListingId(listing.listing_id)}
-            >
-              <Flex justify="center" p="4">
+            <Flex align="center" justify="center" key={index} my="2">
+              <Button
+                color="black"
+                my="2"
+                onClick={e => setListingId(listing.listing_id)}
+                variant="link"
+              >
                 <Text fontSize="lg" fontWeight="bold">
                   {listing.listing_title}
                 </Text>
-              </Flex>
-            </Button>
+              </Button>
+            </Flex>
           );
         })}
       </Flex>

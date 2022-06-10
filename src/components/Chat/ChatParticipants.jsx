@@ -1,5 +1,6 @@
 import { Divider, Flex, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { supabase } from '../../supabase';
 
 export default function ChatParticipants({ listingId }) {
@@ -32,15 +33,17 @@ export default function ChatParticipants({ listingId }) {
     <Flex direction="column" w="20%">
       <Flex p="2">
         <Text fontSize="lg" fontWeight="500">
-          Participants
+          Shopping Group
         </Text>
       </Flex>
       <Divider />
       {participants?.map((participant, index) => {
         return (
-          <Text fontSize="lg" key={index} p="2">
-            {participant.participant_username}
-          </Text>
+          <Link key={index} to={`/profile/${participant.participant_id}`}>
+            <Text _hover={{ textDecoration: 'underline' }} fontSize="lg" p="2">
+              {participant.participant_username}
+            </Text>
+          </Link>
         );
       })}
     </Flex>

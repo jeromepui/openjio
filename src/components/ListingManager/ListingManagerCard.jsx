@@ -1,14 +1,13 @@
-import { Box, Stack, Text, WrapItem, Badge } from '@chakra-ui/react';
+import { Badge, Flex, Stack, Text } from '@chakra-ui/react';
 import ListingCardActions from './ListingCardActions';
 
-export default function ManagerListingCard({
+export default function ListingManagerCard({
   category,
   listing,
   setShouldRefresh,
 }) {
   return (
-    <WrapItem>
-      <Box w="300px" h="200px" boxShadow="lg" p="2" rounded="lg">
+    <Flex w="auto" h="200px" boxShadow="lg" p="4" rounded="lg">
         <Stack
           align={{ base: 'center', md: 'stretch' }}
           textAlign={{ base: 'center', md: 'left' }}
@@ -39,7 +38,7 @@ export default function ManagerListingCard({
               w="10"
             >
               {' '}
-              FULL{' '}
+              Full{' '}
             </Badge>
           )}
           <Text color="gray.500" my="2">
@@ -51,7 +50,6 @@ export default function ManagerListingCard({
             setShouldRefresh={setShouldRefresh}
           />
         </Stack>
-      </Box>
-    </WrapItem>
+      </Flex>
   );
 }

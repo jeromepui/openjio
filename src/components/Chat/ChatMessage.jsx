@@ -1,7 +1,27 @@
-import { Avatar, Flex, Text } from '@chakra-ui/react';
+import { Avatar, Flex, Text, VStack } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
+import { useAuth } from '../../contexts/AuthContext';
+import { getUserProfile } from '../../utils/UserUtils';
 
-export default function ChatMessage({ content, sender }) {
-  if (sender === 'me') {
+export default function ChatMessage({ content, senderId, senderUsername }) {
+  const auth = useAuth();
+  const [avatarUrl, setAvatarUrl] = useState(null);
+
+  useEffect(() => {
+    const getUserAvatar = async () => {
+      try {
+        const { data, error } = await getUserProfile(senderId);
+        if (error) throw error;
+
+        setAvatarUrl(data.avatar_url);
+      } catch (error) {
+        alert(error.message);
+      }
+    };
+    getUserAvatar();
+  });
+
+  if (senderId === auth.user.id) {
     return (
       <Flex w="100%" justify="flex-end">
         <Flex
@@ -20,7 +40,16 @@ export default function ChatMessage({ content, sender }) {
   }
   return (
     <Flex align="center" w="100%">
-      <Avatar name="" size="sm" src="" bg="blue.300"></Avatar>
+      <Avatar
+        name=""
+        size="sm"
+        src={
+          avatarUrl
+            ? `https://mtwxkbwufcrhoaevfoxk.supabase.co/storage/v1/object/public/${avatarUrl}`
+            : ''
+        }
+        bg="blue.300"
+      ></Avatar>
       <Flex
         bg="gray.100"
         borderRadius="20"
@@ -31,7 +60,12 @@ export default function ChatMessage({ content, sender }) {
         px="4"
         py="2"
       >
-        <Text>{content}</Text>
+        <VStack align="left">
+          <Text color="#06837F" fontSize="sm">
+            {senderUsername}
+          </Text>
+          <Text>{content}</Text>
+        </VStack>
       </Flex>
     </Flex>
   );

@@ -27,23 +27,13 @@ export function AuthProvider({ children }) {
     };
   }, []);
 
-  const login = async email => {
-    const { error: loginError } = await supabase.auth.signIn(
-      { email },
-      {
-        redirectTo: window.location.origin,
-      }
-    );
-    return { loginError };
-  };
-
   const logout = async () => {
     const { error: logoutError } = await supabase.auth.signOut();
     if (logoutError) alert(logoutError.message);
     setUser(null);
   };
 
-  const value = { login, logout, user };
+  const value = { logout, user };
 
   return (
     <AuthContext.Provider value={value}>
