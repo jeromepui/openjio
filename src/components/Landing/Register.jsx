@@ -10,10 +10,11 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '../../supabase';
 
 export default function Register() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -36,25 +37,27 @@ export default function Register() {
         } else {
           alert(error.message);
         }
+      } finally {
+        alert('Check your email to confirm your sign up!');
+        navigate('/login');
       }
     }
   };
 
   return (
     <Flex
-      alignItems="center"
+      align="center"
       bgGradient={'linear(to-l, #FED811, #FDC100)'}
       direction="column"
-      h="100vh"
-      justifyContent="center"
-      w={{ base: 'auto', md: '50%' }}
+      h={{ base: '100vh' }}
+      justify="center"
+      w={{ base: '100vw', md: '50%' }}
     >
       <Box bg="white" boxShadow="lg" p="8" rounded="lg">
         <Stack spacing="4">
-          <Heading fontSize="3xl" textAlign="center">
-            Welcome to OpenJio
+          <Heading fontSize="2xl" textAlign="center">
+            Sign Up
           </Heading>
-          <Text>Register for an account below</Text>
           <form onSubmit={handleSignUp}>
             <Stack>
               <FormControl id="email" isRequired>
@@ -92,7 +95,7 @@ export default function Register() {
               <Flex justifyContent="space-between">
                 <Text>Already have an account?</Text>
                 <Link to="/login">
-                  <Text color="blue.500">Sign in</Text>
+                  <Text color="blue.600">Sign in</Text>
                 </Link>
               </Flex>
 

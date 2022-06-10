@@ -4,7 +4,7 @@ import Login from '../components/Landing/Login';
 
 export default function LoginPage() {
   return (
-    <Stack direction={{ base: 'column', md: 'row' }} spacing="0" w="auto">
+    <Stack direction="row" spacing="0" w="auto">
       <Hero />
       <Login />
     </Stack>

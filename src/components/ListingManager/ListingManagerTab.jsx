@@ -1,5 +1,5 @@
+import { Heading, SimpleGrid } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { Heading, Wrap } from '@chakra-ui/react';
 import ListingManagerCard from './ListingManagerCard';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../supabase';
@@ -29,7 +29,7 @@ export default function ListingManager({ category, status }) {
   }, [auth.user.id, category, status]);
 
   return (
-    <Wrap spacing="30px">
+    <SimpleGrid columns="4" spacing="10">
       {listings?.length > 0 ? (
         listings?.map((listing, index) => (
           <ListingManagerCard
@@ -43,6 +43,6 @@ export default function ListingManager({ category, status }) {
           You do not have any {category} listings.
         </Heading>
       )}
-    </Wrap>
+    </SimpleGrid>
   );
 }

@@ -31,17 +31,16 @@ export default function Login() {
     <Flex
       align="center"
       bgGradient={'linear(to-l, #FED811, #FDC100)'}
+      h={{ base: '100vh' }}
       direction="column"
-      h="100vh"
       justify="center"
-      w={{ base: 'auto', md: '50%' }}
+      w={{ base: '100vw', md: '50%' }}
     >
       <Box bg="white" boxShadow="lg" p="8" rounded="lg">
         <Stack spacing="4">
-          <Heading fontSize="3xl" textAlign="center">
+          <Heading fontSize="2xl" textAlign="center">
             Welcome to OpenJio
           </Heading>
-          <Text>Login</Text>
           <form onSubmit={handleSignIn}>
             <Stack>
               <FormControl id="email" isRequired>
@@ -63,7 +62,7 @@ export default function Login() {
               <Flex justifyContent="space-between">
                 <Text>Don't have an account?</Text>
                 <Link to="/register">
-                  <Text color="blue.500">Sign up</Text>
+                  <Text color="blue.600">Sign up</Text>
                 </Link>
               </Flex>
 

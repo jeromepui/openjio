@@ -4,7 +4,7 @@ import Register from '../components/Landing/Register';
 
 export default function LoginPage() {
   return (
-    <Stack direction={{ base: 'column', md: 'row' }} spacing="0" w="auto">
+    <Stack direction="row" spacing="0" w="auto">
       <Hero />
       <Register />
     </Stack>
