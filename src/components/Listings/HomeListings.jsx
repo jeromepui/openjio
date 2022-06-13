@@ -45,7 +45,7 @@ export default function Listings() {
           <Spinner size="xl" />
         </Flex>
       ) : (
-        <SimpleGrid columns="4" mx="4" p="2" spacing="10">
+        <SimpleGrid columns={{ sm: '1', md: '4' }} mx="4" p="2" spacing="10">
           {listings?.map((listing, index) => (
             <Box key={index}>
               <Link to={`/listing/${listing.listing_id}`}>

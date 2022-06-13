@@ -41,7 +41,7 @@ export default function App() {
           <Route path="/register" element={<RegisterPage />}></Route>
         </Routes>
       ) : (
-        <Flex direction="column" h="100vh">
+        <Flex direction="column">
           <NavBar />
           <Routes>
             <Route path="*" element={<Navigate to="/" />} />

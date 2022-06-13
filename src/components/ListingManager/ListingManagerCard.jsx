@@ -9,7 +9,7 @@ export default function ListingManagerCard({
   const { title, website, remaining_slots, type } = listing;
 
   return (
-    <Box boxShadow="lg" h="200px" p="4" rounded="lg">
+    <Box boxShadow="lg" p="4" rounded="lg">
       <Stack
         align={{ base: 'center', md: 'stretch' }}
         textAlign={{ base: 'center', md: 'left' }}
