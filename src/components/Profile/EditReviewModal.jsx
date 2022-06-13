@@ -1,10 +1,6 @@
-import React, { useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useAuth } from '../../contexts/AuthContext';
-import { supabase } from '../../supabase';
-import { v4 as uuidv4 } from 'uuid';
-import { useParams } from 'react-router-dom';
-import { getUserProfile } from '../../utils/UserUtils';
+import { updateReview } from '../../utils/ReviewUtils';
 
 import {
   Modal,
@@ -21,45 +17,46 @@ import {
   Textarea,
 } from '@chakra-ui/react';
 
-export default function ReviewModal({ isOpen, onOpen, onClose, setShouldRefresh }) {
-  const auth = useAuth();
-  const { id: userId } = useParams();
-  let username;
+export default function EditReviewModal({
+  isOpen,
+  onClose,
+  setShouldRefresh,
+  review,
+}) {
   const {
     register,
     handleSubmit,
     formState: { isSubmitSuccessful },
     reset,
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      rating: review.rating,
+      content: review.content,
+    },
+    mode: 'onTouched',
+  });
 
   const onSubmit = async reviewData => {
-    const reviewId = uuidv4();
-    try {
-      const { data, error } = await getUserProfile(auth.user.id);
-      if (error) throw error;
-      username = data.username
-    } catch (error) {
-      alert(error.message);
-    }
-
-    const review = {
-      review_id: reviewId,
-      created_by: auth.user.id,
-      reviewer_username: username,
-      created_for: userId,
+    const updatedReview = {
+      review_id: review.review_id,
+      created_by: review.created_by,
+      reviewer_username: review.reviewer_username,
+      created_for: review.userId,
       rating: reviewData.rating,
       content: reviewData.content,
     };
+
     try {
-      const { error: reviewError } = await supabase
-        .from('reviews')
-        .insert(review);
-      if (reviewError) throw reviewError;
+      const { error: updateError } = await updateReview(
+        review.review_id,
+        updatedReview
+      );
+      if (updateError) throw updateError;
     } catch (error) {
       alert(error.message);
     } finally {
       onClose();
-      setShouldRefresh((prev) => !prev)
+      setShouldRefresh(prev => !prev);
     }
   };
 
@@ -73,7 +70,7 @@ export default function ReviewModal({ isOpen, onOpen, onClose, setShouldRefresh 
       <ModalOverlay />
       <ModalContent>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <ModalHeader>Leave a review</ModalHeader>
+          <ModalHeader>Edit review</ModalHeader>
           <ModalCloseButton />
 
           <ModalBody>

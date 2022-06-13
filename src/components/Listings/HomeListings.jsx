@@ -6,10 +6,15 @@ import {
   SimpleGrid,
   Text,
   Spinner,
+  HStack,
+  Avatar,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getAllOpenListings } from '../../utils/ListingUtils';
+import {
+  getAllOpenListings,
+  getListingOwnerUsername,
+} from '../../utils/ListingUtils';
 
 export default function Listings() {
   const [listings, setListings] = useState();
