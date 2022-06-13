@@ -7,6 +7,10 @@ export default function UserReviews({ shouldRefresh }) {
   const { id: userId } = useParams();
   const [reviews, setReviews] = useState([]);
 
+  const renderAvatar = () => {
+
+  }
+
   useEffect(() => {
     const getReviews = async () => {
       try {
@@ -22,13 +26,13 @@ export default function UserReviews({ shouldRefresh }) {
   }, [shouldRefresh, userId]);
 
   return (
-    <Stack>
-      {reviews ? (
+    <Stack w="50vw" spacing="2em">
+      {!reviews ? (
         <Text>No reviews</Text>
       ) : (
         reviews?.map((review, index) => (
-          <HStack boxShadow="lg" key={index} rounded="lg">
-            <Avatar name="testing" />
+          <HStack boxShadow="lg" key={index} rounded="lg" padding="1em">
+            <Avatar name={review.reviewer_username} />
             <Stack
               textAlign={{ base: 'center', md: 'left' }}
               mt={{ base: 4, md: 0 }}
