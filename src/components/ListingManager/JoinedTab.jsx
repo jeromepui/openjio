@@ -61,7 +61,7 @@ export default function ListingManager({ shouldRefresh, setShouldRefresh }) {
           <Spinner size="xl" />
         </Flex>
       ) : (
-        <SimpleGrid columns="4" spacing="8">
+        <SimpleGrid columns={{ sm: '1', md: '4' }} spacing="8">
           {listings?.length > 0 ? (
             listings.map((listing, index) => (
               <Box boxShadow="lg" h="100px" key={index} p="4" rounded="lg">

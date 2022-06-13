@@ -10,10 +10,13 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { useState } from 'react';
+import { FcGoogle } from 'react-icons/fc';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../supabase';
 
 export default function Login() {
+  const auth = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -21,6 +24,16 @@ export default function Login() {
     e.preventDefault();
     try {
       const { error } = await supabase.auth.signIn({ email, password });
+      if (error) throw error;
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  const handleSignInWithGoogle = async e => {
+    e.preventDefault();
+    try {
+      const { error } = await auth.signInWithGoogle();
       if (error) throw error;
     } catch (error) {
       alert(error.message);
@@ -42,7 +55,7 @@ export default function Login() {
             Welcome to OpenJio
           </Heading>
           <form onSubmit={handleSignIn}>
-            <Stack>
+            <Stack spacing="4">
               <FormControl id="email" isRequired>
                 <FormLabel>Email address</FormLabel>
                 <Input
@@ -65,7 +78,6 @@ export default function Login() {
                   <Text color="blue.600">Sign up</Text>
                 </Link>
               </Flex>
-
               <Button
                 bg="#02CECB"
                 color="white"
@@ -79,6 +91,13 @@ export default function Login() {
               </Button>
             </Stack>
           </form>
+          <Button
+            leftIcon={<FcGoogle />}
+            onClick={handleSignInWithGoogle}
+            w="100%"
+          >
+            Sign in with Google
+          </Button>
         </Stack>
       </Box>
     </Flex>

@@ -35,10 +35,10 @@ export default function ListingForm() {
   const onSubmit = async listingData => {
     try {
       const listingId = uuidv4();
-      const { title, website, type, requiredSpend, slots, description } =
+      let { title, website, type, requiredSpend, slots, description } =
         listingData;
 
-      if (listingData.type === 'Bundle Deal') listingData.requiredSpend = '0';
+      if (type === 'Bundle Deal') requiredSpend = '0';
 
       const listing = {
         listing_id: listingId,

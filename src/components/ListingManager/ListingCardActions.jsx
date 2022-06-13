@@ -2,6 +2,7 @@ import { Button, ButtonGroup, useDisclosure } from '@chakra-ui/react';
 import DeleteModal from './DeleteModal';
 import EditModal from './EditModal';
 import { updateListing } from '../../utils/ListingUtils';
+import ManageModal from './ManageModal';
 
 export default function ListingCardActionBar({
   category,
@@ -9,31 +10,40 @@ export default function ListingCardActionBar({
   setShouldRefresh,
 }) {
   const { listing_id } = listing;
-  const {
-    isOpen: isClosedDeleteOpen,
-    onOpen: onClosedDeleteOpen,
-    onClose: onClosedDeleteClose,
-  } = useDisclosure();
 
+  // Open listings - Delete
   const {
     isOpen: isOpenDeleteOpen,
     onOpen: onOpenDeleteOpen,
     onClose: onOpenDeleteClose,
   } = useDisclosure();
 
+  // Open listings - Edit
   const {
     isOpen: isEditOpen,
     onOpen: onEditOpen,
     onClose: onEditClose,
   } = useDisclosure();
 
+  // Closed listings - Delete
+  const {
+    isOpen: isClosedDeleteOpen,
+    onOpen: onClosedDeleteOpen,
+    onClose: onClosedDeleteClose,
+  } = useDisclosure();
+
+  // Open listings - Manage participants
+  const {
+    isOpen: isOpenManageOpen,
+    onOpen: onOpenManageOpen,
+    onClose: onOpenManageClose,
+  } = useDisclosure();
+
   const handleOpenListing = async () => {
     try {
-      const openListing = {
+      const { error } = await updateListing(listing_id, {
         status: 'open',
-      };
-
-      const { error } = await updateListing(listing_id, openListing);
+      });
       if (error) throw error;
     } catch (error) {
       alert(error.message);
@@ -44,11 +54,9 @@ export default function ListingCardActionBar({
 
   const handleCloseListing = async () => {
     try {
-      const closeListing = {
+      const { error } = await updateListing(listing_id, {
         status: 'closed',
-      };
-
-      const { error } = await updateListing(listing_id, closeListing);
+      });
       if (error) throw error;
     } catch (error) {
       alert(error.message);
@@ -83,18 +91,26 @@ export default function ListingCardActionBar({
               >
                 Delete
               </Button>
+
               <Button onClick={handleCloseListing}>Close Listing</Button>
             </ButtonGroup>
+            <Button onClick={onOpenManageOpen}>Manage Participants</Button>
+            <EditModal
+              isOpen={isEditOpen}
+              listing={listing}
+              onClose={onEditClose}
+              setShouldRefresh={setShouldRefresh}
+            />
             <DeleteModal
               isOpen={isOpenDeleteOpen}
               listing={listing}
               onClose={onOpenDeleteClose}
               setShouldRefresh={setShouldRefresh}
             />
-            <EditModal
-              isOpen={isEditOpen}
+            <ManageModal
+              isOpen={isOpenManageOpen}
               listing={listing}
-              onClose={onEditClose}
+              onClose={onOpenManageClose}
               setShouldRefresh={setShouldRefresh}
             />
           </>

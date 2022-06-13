@@ -108,7 +108,7 @@ export default function RequestsTab({ shouldRefresh, setShouldRefresh }) {
           <Spinner size="xl" />
         </Flex>
       ) : (
-        <SimpleGrid columns="4" spacing="8">
+        <SimpleGrid columns={{ sm: '1', md: '4' }} spacing="8">
           {requests?.length > 0 ? (
             requests.map((request, index) => {
               return (

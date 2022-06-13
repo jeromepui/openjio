@@ -38,7 +38,7 @@ export default function ListingManager({
           <Spinner size="xl" />
         </Flex>
       ) : (
-        <SimpleGrid columns="4" spacing="8">
+        <SimpleGrid columns={{ sm: '1', md: '4' }} spacing="6">
           {listings?.length > 0 ? (
             listings?.map((listing, index) => (
               <ListingManagerCard
