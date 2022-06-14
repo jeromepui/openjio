@@ -9,11 +9,12 @@ import { MdSearch } from 'react-icons/md';
 
 export default function SearchBar() {
   return (
-    <InputGroup w="40%">
+    <InputGroup>
       <Input
         bg="white"
         borderRadius="10"
         placeholder="Search for listings (Work in Progress)"
+        w="500px"
       />
       <InputLeftElement children={<MdSearch />} />
       <InputRightElement

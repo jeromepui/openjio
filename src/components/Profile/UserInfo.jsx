@@ -35,7 +35,6 @@ export default function UserInfo({
   const [reviewsBy, setReviewsBy] = useState([]);
 
   const renderEditReviewButton = () => {
-    console.log(userId === auth.user.id);
     if (userId === auth.user.id) {
       return <></>;
     } else {
@@ -45,9 +44,7 @@ export default function UserInfo({
           label="You haven't created any reviews for this user."
           fontSize="sm"
         >
-          <Button  disabled>
-            Edit review(s)
-          </Button>
+          <Button disabled>Edit review(s)</Button>
         </Tooltip>
       ) : (
         <>
