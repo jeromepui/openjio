@@ -1,4 +1,4 @@
-import { Button } from '@chakra-ui/react';
+import { Button, Flex } from '@chakra-ui/react';
 
 export default function RequestButton({
   handleRequest,
@@ -8,40 +8,48 @@ export default function RequestButton({
 }) {
   if (joined) {
     return (
-      <Button isDisabled maxW="300px" type="submit">
-        Joined
-      </Button>
+      <Flex justify="center">
+        <Button isDisabled w="400px" type="submit">
+          Joined
+        </Button>
+      </Flex>
     );
   }
 
   if (requested) {
     return (
-      <Button isDisabled maxW="300px" type="submit">
-        Requested
-      </Button>
+      <Flex justify="center">
+        <Button isDisabled w="400px" type="submit">
+          Requested
+        </Button>
+      </Flex>
     );
   }
 
   if (isFull) {
     return (
-      <Button isDisabled maxW="300px" type="submit">
-        No slots remaining
-      </Button>
+      <Flex justify="center">
+        <Button isDisabled w="400px" type="submit">
+          No slots remaining
+        </Button>
+      </Flex>
     );
   }
 
   return (
-    <Button
-      bg="#02CECB"
-      color="white"
-      _hover={{
-        background: '#06837F',
-      }}
-      maxW="300px"
-      onClick={handleRequest}
-      type="submit"
-    >
-      Request to join listing
-    </Button>
+    <Flex justify="center">
+      <Button
+        bg="#02CECB"
+        color="white"
+        _hover={{
+          background: '#06837F',
+        }}
+        w="400px"
+        onClick={handleRequest}
+        type="submit"
+      >
+        Request to join listing
+      </Button>
+    </Flex>
   );
 }

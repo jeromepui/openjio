@@ -1,8 +1,19 @@
-import { Button, ButtonGroup, useDisclosure } from '@chakra-ui/react';
+import {
+  Button,
+  ButtonGroup,
+  useDisclosure,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  IconButton,
+  Flex,
+} from '@chakra-ui/react';
 import DeleteModal from './DeleteModal';
 import EditModal from './EditModal';
 import { updateListing } from '../../utils/ListingUtils';
 import ManageModal from './ManageModal';
+import { BsThreeDotsVertical } from 'react-icons/bs';
 
 export default function ListingCardActionBar({
   category,
@@ -70,31 +81,28 @@ export default function ListingCardActionBar({
       case 'open':
         return (
           <>
-            <ButtonGroup>
-              <Button
-                bg="#02CECB"
-                color="white"
-                _hover={{
-                  background: '#02CECB',
-                }}
-                onClick={onEditOpen}
-              >
-                Edit
-              </Button>
-              <Button
-                bg="red.500"
-                color="white"
-                _hover={{
-                  background: 'red',
-                }}
-                onClick={onOpenDeleteOpen}
-              >
-                Delete
-              </Button>
+            <Flex align="flex-end" justify="flex-end">
+              <Menu>
+                <MenuButton
+                  as={IconButton}
+                  icon={<BsThreeDotsVertical />}
+                  variant="ghost"
+                  w="5px"
+                />
 
-              <Button onClick={handleCloseListing}>Close Listing</Button>
-            </ButtonGroup>
-            <Button onClick={onOpenManageOpen}>Manage Participants</Button>
+                <MenuList>
+                  <MenuItem onClick={onEditOpen}> Edit</MenuItem>
+                  <MenuItem onClick={onOpenDeleteOpen}>Delete</MenuItem>
+                  <MenuItem onClick={handleCloseListing}>
+                    Close Listing
+                  </MenuItem>
+                  <MenuItem onClick={onOpenManageOpen}>
+                    Manage Participants
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            </Flex>
+
             <EditModal
               isOpen={isEditOpen}
               listing={listing}
@@ -119,12 +127,23 @@ export default function ListingCardActionBar({
       case 'closed':
         return (
           <>
-            <ButtonGroup>
-              <Button onClick={handleOpenListing}>Reopen Listing</Button>
-              <Button colorScheme="red" onClick={onClosedDeleteOpen}>
-                Delete
-              </Button>
-            </ButtonGroup>
+            <Flex align="flex-end" justify="flex-end">
+              <Menu>
+                <MenuButton
+                  as={IconButton}
+                  icon={<BsThreeDotsVertical />}
+                  variant="ghost"
+                  w="5px"
+                />
+
+                <MenuList>
+                  <MenuItem onClick={onClosedDeleteOpen}>Delete</MenuItem>
+                  <MenuItem onClick={handleOpenListing}>
+                    Reopen Listing
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            </Flex>
             <DeleteModal
               isOpen={isClosedDeleteOpen}
               listing={listing}
