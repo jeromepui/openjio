@@ -122,7 +122,7 @@ export default function ListingPage() {
       ) : (
         <>
           <TitleBar backButton={true} text={listing.title} />
-          <Box px="6" py="4">
+          <Box px="6" py="4" border="solid black" margin="50px" marginTop="0" borderRadius="10px" >
             <Stack spacing="4">
               <Text fontSize="2xl" fontWeight="500">
                 Listing Details

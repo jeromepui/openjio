@@ -108,7 +108,7 @@ export default function RequestsTab({ shouldRefresh, setShouldRefresh }) {
           <Spinner size="xl" />
         </Flex>
       ) : (
-        <SimpleGrid columns={{ sm: '1', md: '4' }} spacing="8">
+        <SimpleGrid columns={{ sm: '1', md: '4' }} spacing="5">
           {requests?.length > 0 ? (
             requests.map((request, index) => {
               return (
@@ -117,40 +117,54 @@ export default function RequestsTab({ shouldRefresh, setShouldRefresh }) {
                     align={{ base: 'center', md: 'stretch' }}
                     textAlign={{ base: 'center', md: 'left' }}
                     mt={{ base: 4, md: 0 }}
+                    spacing="0.5"
                   >
-                    <Text color="teal.500" fontSize="lg" fontWeight="bold">
-                      Request to join
+                    <Text fontSize="sm" noOfLines="1">
+                      Request to join: 
                     </Text>
-                    <Text fontSize="md" fontWeight="500" my="1" noOfLines="1">
+
+                    <Text
+                      color="black"
+                      fontSize="lg"
+                      fontWeight="bold"
+                      noOfLines="2"
+                      maxW="80%"
+                    >
                       {request.listing_title}
                     </Text>
-                    <Text fontSize="md" fontWeight="500" my="1" noOfLines="1">
+                    <Text fontSize="sm" fontWeight="500" noOfLines="1">
                       Requested by:
                     </Text>
-                    <Text fontSize="md" my="1" noOfLines="1">
+                    <Text fontSize="sm" fontWeight="500" noOfLines="1">
                       {request.requester_username}
                     </Text>
-                    <ButtonGroup>
-                      <Button
-                        bg="#02CECB"
-                        color="white"
-                        _hover={{
-                          background: '#06837F',
-                        }}
-                        onClick={() => handleApprove(request)}
-                      >
-                        Accept
-                      </Button>
-                      <Button
-                        colorScheme="red"
-                        onClick={() => handleDeny(request)}
-                      >
-                        Decline
-                      </Button>
+                    <Stack justify="center" align="center">
+                      <Flex justify="center" gap="2">
+                        <Button
+                          bg="#02CECB"
+                          color="white"
+                          _hover={{
+                            background: '#06837F',
+                          }}
+                          onClick={() => handleApprove(request)}
+                          size="sm"
+                        >
+                          Accept
+                        </Button>
+                        <Button
+                          colorScheme="red"
+                          onClick={() => handleDeny(request)}
+                          size="sm"
+                        >
+                          Decline
+                        </Button>
+                      </Flex>
                       <Link to={`/profile/${request.requester_id}`}>
-                        <Button>View Profile</Button>
+                        <Button size="sm" w="160px">
+                          View Profile
+                        </Button>
                       </Link>
-                    </ButtonGroup>
+                    </Stack>
                     <DeleteRequestDialog
                       isOpen={isOpen}
                       onOpen={onOpen}

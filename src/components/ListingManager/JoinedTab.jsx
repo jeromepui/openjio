@@ -8,6 +8,8 @@ import {
   Spinner,
   Stack,
   Text,
+  HStack,
+  Avatar
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -70,6 +72,23 @@ export default function ListingManager({ shouldRefresh, setShouldRefresh }) {
                   textAlign={{ base: 'center', md: 'left' }}
                   mt={{ base: 4, md: 0 }}
                 >
+                <HStack>
+                      <Avatar
+                        name={listing.username}
+                        src={`https://mtwxkbwufcrhoaevfoxk.supabase.co/storage/v1/object/public/${listing.avatarUrl}`}
+                        size="xs"
+                      />
+                      <Text fontSize="xs">{listing.username}</Text>
+                    </HStack>
+                    <Text
+                      color="black"
+                      fontSize="lg"
+                      fontWeight="bold"
+                      noOfLines="1"
+                    >
+                      {listing.title}
+                    </Text>
+
                   <Text color="teal.500" fontSize="lg" fontWeight="bold">
                     {listing.listing_title}
                   </Text>
