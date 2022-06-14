@@ -1,4 +1,4 @@
-import { Badge, Box, Stack, Text } from '@chakra-ui/react';
+import { Badge, Box, Stack, Text,} from '@chakra-ui/react';
 import ListingCardActions from './ListingCardActions';
 
 export default function ListingManagerCard({
@@ -9,25 +9,31 @@ export default function ListingManagerCard({
   const { title, website, remaining_slots, type } = listing;
 
   return (
-    <Box boxShadow="lg" p="4" rounded="lg">
+    <Box _hover={{boxShadow: "lg"}} p="3" rounded="lg" h="200px">
       <Stack
         align={{ base: 'center', md: 'stretch' }}
         textAlign={{ base: 'center', md: 'left' }}
         mt={{ base: 4, md: 0 }}
+        h="80%"
+        w={{ base: '70vw', md: '200px' }}
       >
-        <Text color="teal.500" fontSize="lg" fontWeight="bold" noOfLines="1">
+        <Text
+          color="black"
+          fontSize="lg"
+          fontWeight="bold"
+          noOfLines="2"
+          maxW="80%"
+        >
           {title}
         </Text>
-        <Text fontSize="md" fontWeight="500" my="1" noOfLines="1">
-          {website}
-        </Text>
+
         {remaining_slots > 0 ? (
           <Badge
             colorScheme="green"
             justifyContent="center"
             variant="subtle"
             display="flex"
-            w="50%"
+            w="140px"
           >
             {remaining_slots === 1
               ? '1 slot remaining'
@@ -45,15 +51,20 @@ export default function ListingManagerCard({
             Full{' '}
           </Badge>
         )}
-        <Text color="gray.500" my="2">
+        <Text fontSize="sm" fontWeight="500" noOfLines="1">
+          {website}
+        </Text>
+
+        <Text fontSize="xs" color="gray.600">
           {type}
         </Text>
-        <ListingCardActions
-          category={category}
-          listing={listing}
-          setShouldRefresh={setShouldRefresh}
-        />
       </Stack>
+
+      <ListingCardActions
+        category={category}
+        listing={listing}
+        setShouldRefresh={setShouldRefresh}
+      />
     </Box>
   );
 }
