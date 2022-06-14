@@ -3,7 +3,6 @@ import {
   AvatarBadge,
   Box,
   Button,
-  Center,
   Flex,
   FormControl,
   FormLabel,
@@ -11,7 +10,6 @@ import {
   Input,
   Spinner,
   Stack,
-  VStack,
 } from '@chakra-ui/react';
 import { SmallCloseIcon } from '@chakra-ui/icons';
 import { useState, useEffect } from 'react';
@@ -110,58 +108,58 @@ export default function SettingsPage() {
             <Stack spacing="4">
               <FormControl>
                 <FormLabel>Profile photo</FormLabel>
-                <Stack direction={['column', 'row']} spacing={6}>
-                  <Center>
-                    <Avatar
-                      alt={avatarUrl ? 'Avatar' : 'No image'}
-                      size="xl"
-                      src={
-                        avatarUrl
-                          ? `https://mtwxkbwufcrhoaevfoxk.supabase.co/storage/v1/object/public/${avatarUrl}`
-                          : ''
-                      }
-                    >
-                      <AvatarBadge
-                        as={IconButton}
-                        colorScheme="red"
-                        icon={<SmallCloseIcon />}
-                        onClick={handleDeleteIcon}
-                        rounded="full"
-                        size="sm"
-                        top="-10px"
-                      />
-                    </Avatar>
-                  </Center>
-                  <Center>
-                    <VStack>
-                      <Input
-                        accept="image/jpeg image/png"
-                        size="sm"
-                        type="file"
-                        onChange={e => setImage(e.target.files[0])}
-                      />
-                    </VStack>
-                  </Center>
+                <Stack direction="column" spacing={6}>
+                  <Avatar
+                    alt={avatarUrl ? 'Avatar' : 'No image'}
+                    size="xl"
+                    src={
+                      avatarUrl
+                        ? `https://mtwxkbwufcrhoaevfoxk.supabase.co/storage/v1/object/public/${avatarUrl}`
+                        : ''
+                    }
+                  >
+                    <AvatarBadge
+                      as={IconButton}
+                      colorScheme="red"
+                      icon={<SmallCloseIcon />}
+                      onClick={handleDeleteIcon}
+                      rounded="full"
+                      size="sm"
+                      top="-10px"
+                    />
+                  </Avatar>
+                  <Input
+                    accept="image/jpeg image/png"
+                    maxW="300px"
+                    size="sm"
+                    type="file"
+                    onChange={e => setImage(e.target.files[0])}
+                  />
+                  <Button
+                    bg="#02CECB"
+                    color="white"
+                    _hover={{
+                      background: '#06837F',
+                    }}
+                    maxW="300px"
+                    type="submit"
+                  >
+                    Upload photo
+                  </Button>
                 </Stack>
               </FormControl>
-              <Button
-                bg="#02CECB"
-                color="white"
-                _hover={{
-                  background: '#06837F',
-                }}
-                maxW="200px"
-                type="submit"
-              >
-                Upload photo
-              </Button>
               <FormControl>
                 <FormLabel>Email address</FormLabel>
-                <Input isDisabled type="email" value={user.email} />
+                <Input
+                  isDisabled
+                  maxW="300px"
+                  type="email"
+                  value={user.email}
+                />
               </FormControl>
               <FormControl>
                 <FormLabel>Username</FormLabel>
-                <Input isDisabled type="text" value={username} />
+                <Input isDisabled maxW="300px" type="text" value={username} />
               </FormControl>
             </Stack>
           </form>

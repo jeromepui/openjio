@@ -18,7 +18,7 @@ import {
   leaveListing,
 } from '../../utils/ListingParticipantUtils';
 
-export default function ListingManager({ shouldRefresh, setShouldRefresh }) {
+export default function JoinedTab({ shouldRefresh, setShouldRefresh }) {
   const auth = useAuth();
   const [loading, setLoading] = useState(false);
   const [listings, setListings] = useState(null);

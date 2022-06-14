@@ -120,10 +120,10 @@ export default function ListingCardActionBar({
         return (
           <>
             <ButtonGroup>
+              <Button onClick={handleOpenListing}>Reopen Listing</Button>
               <Button colorScheme="red" onClick={onClosedDeleteOpen}>
                 Delete
               </Button>
-              <Button onClick={handleOpenListing}>Reopen Listing</Button>
             </ButtonGroup>
             <DeleteModal
               isOpen={isClosedDeleteOpen}
