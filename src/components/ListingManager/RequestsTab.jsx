@@ -108,38 +108,30 @@ export default function RequestsTab({ shouldRefresh, setShouldRefresh }) {
           <Spinner size="xl" />
         </Flex>
       ) : (
-        <SimpleGrid columns={{ sm: '1', md: '4' }} spacing="5">
+        <SimpleGrid columns={{ sm: '1', md: '4' }} spacing="4">
           {requests?.length > 0 ? (
             requests.map((request, index) => {
               return (
-                <Box boxShadow="lg" h="200px" key={index} p="4" rounded="lg">
-                  <Stack
-                    align={{ base: 'center', md: 'stretch' }}
-                    textAlign={{ base: 'center', md: 'left' }}
-                    mt={{ base: 4, md: 0 }}
-                    spacing="0.5"
-                  >
-                    <Text fontSize="sm" noOfLines="1">
-                      Request to join: 
-                    </Text>
-
-                    <Text
-                      color="black"
-                      fontSize="lg"
-                      fontWeight="bold"
-                      noOfLines="2"
-                      maxW="80%"
-                    >
-                      {request.listing_title}
-                    </Text>
-                    <Text fontSize="sm" fontWeight="500" noOfLines="1">
-                      Requested by:
-                    </Text>
-                    <Text fontSize="sm" fontWeight="500" noOfLines="1">
-                      {request.requester_username}
-                    </Text>
-                    <Stack justify="center" align="center">
-                      <Flex justify="center" gap="2">
+                <Box key={index}>
+                  <Flex boxShadow="lg" h="200px" p="4" rounded="lg">
+                    <Stack alignContent="left">
+                      <Text fontSize="md" noOfLines="1">
+                        Request to join:
+                      </Text>
+                      <Text
+                        color="black"
+                        fontSize="xl"
+                        fontWeight="700"
+                        noOfLines="1"
+                        maxW="140px"
+                      >
+                        {request.listing_title}
+                      </Text>
+                      <Text fontSize="md">Requested by:</Text>
+                      <Text fontSize="xl" fontWeight="700">
+                        {request.requester_username}
+                      </Text>
+                      <ButtonGroup>
                         <Button
                           bg="#02CECB"
                           color="white"
@@ -158,22 +150,20 @@ export default function RequestsTab({ shouldRefresh, setShouldRefresh }) {
                         >
                           Decline
                         </Button>
-                      </Flex>
-                      <Link to={`/profile/${request.requester_id}`}>
-                        <Button size="sm" w="160px">
-                          View Profile
-                        </Button>
-                      </Link>
+                        <Link to={`/profile/${request.requester_id}`}>
+                          <Button size="sm">View Profile</Button>
+                        </Link>
+                      </ButtonGroup>
+                      <DeleteRequestDialog
+                        cancelRef={cancelRef}
+                        isOpen={isOpen}
+                        onOpen={onOpen}
+                        onClose={onClose}
+                        request={request}
+                        setShouldRefresh={setShouldRefresh}
+                      />
                     </Stack>
-                    <DeleteRequestDialog
-                      isOpen={isOpen}
-                      onOpen={onOpen}
-                      onClose={onClose}
-                      cancelRef={cancelRef}
-                      request={request}
-                      setShouldRefresh={setShouldRefresh}
-                    />
-                  </Stack>
+                  </Flex>
                 </Box>
               );
             })

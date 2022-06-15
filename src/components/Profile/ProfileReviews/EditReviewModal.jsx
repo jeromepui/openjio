@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { updateReview } from '../../utils/ReviewUtils';
-
 import {
+  Button,
+  FormControl,
+  FormLabel,
   Modal,
   ModalBody,
   ModalContent,
@@ -10,18 +9,18 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalFooter,
-  Button,
   Select,
-  FormControl,
-  FormLabel,
   Textarea,
 } from '@chakra-ui/react';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { updateReview } from '../../../utils/ReviewUtils';
 
 export default function EditReviewModal({
   isOpen,
   onClose,
-  setShouldRefresh,
   review,
+  setShouldRefresh,
 }) {
   const {
     register,
@@ -38,12 +37,12 @@ export default function EditReviewModal({
 
   const onSubmit = async reviewData => {
     const updatedReview = {
-      review_id: review.review_id,
+      content: reviewData.content,
       created_by: review.created_by,
-      reviewer_username: review.reviewer_username,
       created_for: review.userId,
       rating: reviewData.rating,
-      content: reviewData.content,
+      review_id: review.review_id,
+      reviewer_username: review.reviewer_username,
     };
 
     try {
@@ -72,11 +71,10 @@ export default function EditReviewModal({
         <form onSubmit={handleSubmit(onSubmit)}>
           <ModalHeader>Edit review</ModalHeader>
           <ModalCloseButton />
-
           <ModalBody>
             <FormControl isRequired>
               <FormLabel>Rating</FormLabel>
-              <Select {...register('rating')} placeholder="Rate">
+              <Select {...register('rating')} placeholder="Select rating">
                 <option value={1}>1</option>
                 <option value={2}>2</option>
                 <option value={3}>3</option>
@@ -96,7 +94,7 @@ export default function EditReviewModal({
             <Button colorScheme="blue" type="submit">
               Submit
             </Button>
-            <Button variant="ghost" onClick={onClose}>
+            <Button onClick={onClose} variant="ghost">
               Cancel
             </Button>
           </ModalFooter>

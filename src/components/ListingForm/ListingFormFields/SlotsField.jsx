@@ -10,16 +10,13 @@ export default function SlotsField({ errors, isDisabled, register }) {
         type="number"
         {...register('slots', {
           required: {
-            value: true,
             message: 'Please enter a number (maximum 10).',
+            value: true,
           },
-          min: {
-            value: 0,
-            message: 'Must be more than 0',
-          },
+          min: { message: 'Must be more than 0', value: 0 },
           max: {
-            value: 10,
             message: `Cannot be more than 10.`,
+            value: 10,
           },
         })}
       />

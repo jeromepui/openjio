@@ -10,8 +10,8 @@ export default function WebsiteField({ errors, register }) {
         type="url"
         {...register('website', {
           required: {
+            message: 'Please provide a URL to the deal.',
             value: true,
-            message: 'Please enter a link.',
           },
           pattern: {
             value:

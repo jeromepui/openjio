@@ -3,15 +3,14 @@ import { useEffect, useState } from 'react';
 import ChatBoxFooter from './ChatBoxFooter';
 import ChatBoxHeader from './ChatBoxHeader';
 import ChatBoxMessages from './ChatBoxMessages';
-import { getListing } from '../../utils/ListingUtils';
+import { getListing } from '../../../utils/ListingUtils';
 
 export default function ChatBox({ listingId }) {
   const [listingTitle, setListingTitle] = useState(null);
 
   useEffect(() => {
+    if (listingId === null) return;
     const getListingTitle = async () => {
-      if (listingId === null) return;
-
       try {
         const { data, error } = await getListing(listingId);
         if (error) throw error;

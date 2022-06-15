@@ -3,12 +3,12 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import DescriptionField from './DescriptionField';
-import MinSpendField from './RequiredSpendField';
-import SlotsField from './SlotsField';
-import TitleField from './TitleField';
-import TypeField from './TypeField';
-import WebsiteField from './WebsiteField';
+import DescriptionField from './ListingFormFields/DescriptionField';
+import MinSpendField from './ListingFormFields/RequiredSpendField';
+import SlotsField from './ListingFormFields/SlotsField';
+import TitleField from './ListingFormFields/TitleField';
+import TypeField from './ListingFormFields/TypeField';
+import WebsiteField from './ListingFormFields/WebsiteField';
 import { useAuth } from '../../contexts/AuthContext';
 import { getUserProfile } from '../../utils/UserUtils';
 import { addListing } from '../../utils/ListingUtils';
@@ -35,21 +35,21 @@ export default function ListingForm() {
   const onSubmit = async listingData => {
     try {
       const listingId = uuidv4();
-      let { title, website, type, requiredSpend, slots, description } =
+      let { description, requiredSpend, slots, title, type, website } =
         listingData;
 
       if (type === 'Bundle Deal') requiredSpend = '0';
 
       const listing = {
+        description: description,
         listing_id: listingId,
-        title: title,
-        website: website,
-        type: type,
+        remaining_slots: slots,
         required_spend: requiredSpend,
         slots: slots,
-        remaining_slots: slots,
         status: 'open',
-        description: description,
+        title: title,
+        type: type,
+        website: website,
       };
 
       const { error: listingError } = await addListing(listing);
@@ -63,12 +63,12 @@ export default function ListingForm() {
       if (userError) throw userError;
 
       const participant = {
-        listing_participants_id: listingParticipantsId,
-        listing_id: listingId,
-        participant_id: auth.user.id,
-        listing_title: title,
-        participant_username: userData.username,
         is_owner: true,
+        listing_id: listingId,
+        listing_participants_id: listingParticipantsId,
+        listing_title: title,
+        participant_id: auth.user.id,
+        participant_username: userData.username,
       };
 
       const { error: participantError } = await addParticipant(participant);
@@ -79,9 +79,9 @@ export default function ListingForm() {
       toast({
         title: 'Success!',
         description: 'Your new listing has been added!',
-        status: 'success',
         duration: 4000,
         isClosable: true,
+        status: 'success',
       });
       navigate('/dashboard');
     }

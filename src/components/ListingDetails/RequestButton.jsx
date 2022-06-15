@@ -39,14 +39,14 @@ export default function RequestButton({
   return (
     <Flex justify="center">
       <Button
-        bg="#02CECB"
-        color="white"
         _hover={{
           background: '#06837F',
         }}
-        w="400px"
+        bg="#02CECB"
+        color="white"
         onClick={handleRequest}
         type="submit"
+        w="400px"
       >
         Request to join listing
       </Button>

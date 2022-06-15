@@ -61,11 +61,10 @@ export default function DeleteModal({
           <Text>Are you sure you want to delete this listing?</Text>
           <Text fontWeight="500">This action cannot be undone.</Text>
         </ModalBody>
-
         <ModalFooter>
           <ButtonGroup>
             <Button onClick={onClose}>Cancel</Button>
-            <Button colorScheme="red" mr="3" onClick={handleDelete}>
+            <Button colorScheme="red" onClick={handleDelete}>
               Delete
             </Button>
           </ButtonGroup>

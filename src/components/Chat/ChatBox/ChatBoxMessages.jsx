@@ -1,28 +1,24 @@
 import { Flex, Spinner } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 import ChatMessage from './ChatMessage';
-import { supabase } from '../../supabase';
-import { getMessagesByListing } from '../../utils/MessageUtils';
+import { supabase } from '../../../supabase';
+import { getMessagesByListing } from '../../../utils/MessageUtils';
 
 export default function ChatBoxMessages({ listingId }) {
   const messagesRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState(null);
 
-  const scrollToBottom = () => {
+  useEffect(() => {
     messagesRef.current.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  useEffect(scrollToBottom, [messages]);
+  }, [messages]);
 
   useEffect(() => {
     const getMessages = async () => {
       try {
         setLoading(true);
-
         const { data, error } = await getMessagesByListing(listingId);
         if (error) throw error;
-
         setMessages(data);
       } catch (error) {
         alert(error.message);
@@ -49,11 +45,11 @@ export default function ChatBoxMessages({ listingId }) {
   return (
     <>
       {loading ? (
-        <Flex align="center" h="78vh" justify="center">
+        <Flex align="center" h="80vh" justify="center">
           <Spinner size="xl" />
         </Flex>
       ) : (
-        <Flex direction="column" h="78vh" overflowY="scroll" p="2">
+        <Flex direction="column" h="80vh" overflowY="scroll" p="2">
           {messages?.map((message, index) => (
             <ChatMessage
               content={message.content}

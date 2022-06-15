@@ -1,13 +1,13 @@
 import {
+  Avatar,
   Badge,
   Box,
   Flex,
-  Stack,
-  SimpleGrid,
-  Text,
-  Spinner,
   HStack,
-  Avatar,
+  SimpleGrid,
+  Spinner,
+  Stack,
+  Text,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -33,6 +33,7 @@ export default function Listings() {
             listing.created_by
           );
           if (userError) throw userError;
+
           const boostedListing = {
             ...listing,
             avatarUrl: user.avatar_url,
@@ -59,47 +60,39 @@ export default function Listings() {
           <Spinner size="xl" />
         </Flex>
       ) : (
-        <SimpleGrid columns={{ sm: '2', md: '4' }} mx="4" p="2" spacing="5">
+        <SimpleGrid columns={{ sm: '1', md: '4' }} mx="4" p="2" spacing="6">
           {listings?.map((listing, index) => (
             <Box key={index}>
               <Link to={`/listing/${listing.listing_id}`}>
                 <Flex
-                  justifyContent={{ base: 'center', md: 'left' }}
-                  _hover={{ boxShadow: 'lg' }}
+                  boxShadow="lg"
                   h="200px"
-                  w={{ base: '70vw', md: '200px' }}
-                  p="2"
+                  justifyContent={{ sm: 'center', md: 'start' }}
+                  p="4"
                   rounded="lg"
                 >
-                  <Stack
-                    textAlign={{ base: 'center', md: 'left' }}
-                    mt={{ base: 4, md: 0 }}
-                  >
+                  <Stack alignContent="left">
                     <HStack>
                       <Avatar
                         name={listing.username}
+                        size="sm"
                         src={`https://mtwxkbwufcrhoaevfoxk.supabase.co/storage/v1/object/public/${listing.avatarUrl}`}
-                        size="xs"
                       />
-                      <Text fontSize="xs">{listing.username}</Text>
+                      <Text fontSize="md">{listing.username}</Text>
                     </HStack>
                     <Text
-                      color="black"
-                      fontSize="lg"
-                      fontWeight="bold"
-                      noOfLines="2"
-                      maxW="90%"
-                      textOverflow="ellipsis"
+                      fontSize="2xl"
+                      fontWeight="700"
+                      noOfLines="1"
+                      w="200px"
                     >
                       {listing.title}
                     </Text>
-
                     {listing.remaining_slots > 0 ? (
                       <Badge
                         colorScheme="green"
-                        justifyContent="center"
-                        variant="subtle"
                         display="flex"
+                        justifyContent="center"
                         w="140px"
                       >
                         {listing.remaining_slots === 1
@@ -109,20 +102,17 @@ export default function Listings() {
                     ) : (
                       <Badge
                         colorScheme="red"
-                        justifyContent="center"
-                        variant="subtle"
                         display="flex"
-                        w="10"
+                        justifyContent="center"
+                        w="40px"
                       >
-                        {' '}
-                        FULL{' '}
+                        Full
                       </Badge>
                     )}
-
-                    <Text fontSize="sm" fontWeight="500" noOfLines="1">
+                    <Text fontSize="md" fontWeight="500" noOfLines="1">
                       {listing.website}
                     </Text>
-                    <Text fontSize="xs" color="gray.600">
+                    <Text fontSize="md" color="gray.600">
                       {listing.type}
                     </Text>
                   </Stack>

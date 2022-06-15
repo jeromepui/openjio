@@ -8,8 +8,6 @@ import {
   Spinner,
   Stack,
   Text,
-  HStack,
-  Avatar
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -66,44 +64,39 @@ export default function JoinedTab({ shouldRefresh, setShouldRefresh }) {
         <SimpleGrid columns={{ sm: '1', md: '4' }} spacing="8">
           {listings?.length > 0 ? (
             listings.map((listing, index) => (
-              <Box boxShadow="lg" h="100px" key={index} p="4" rounded="lg">
-                <Stack
-                  align={{ base: 'center', md: 'stretch' }}
-                  textAlign={{ base: 'center', md: 'left' }}
-                  mt={{ base: 4, md: 0 }}
-                >
-                <HStack>
-                      <Avatar
-                        name={listing.username}
-                        src={`https://mtwxkbwufcrhoaevfoxk.supabase.co/storage/v1/object/public/${listing.avatarUrl}`}
-                        size="xs"
-                      />
-                      <Text fontSize="xs">{listing.username}</Text>
-                    </HStack>
+              <Box key={index}>
+                <Flex boxShadow="lg" h="120px" p="4" rounded="lg">
+                  <Stack alignContent="left">
                     <Text
-                      color="black"
-                      fontSize="lg"
-                      fontWeight="bold"
+                      fontSize="2xl"
+                      fontWeight="700"
                       noOfLines="1"
+                      w="200px"
                     >
                       {listing.title}
                     </Text>
 
-                  <Text color="teal.500" fontSize="lg" fontWeight="bold">
-                    {listing.listing_title}
-                  </Text>
-                  <ButtonGroup>
-                    <Link to={`/listing/${listing.listing_id}`}>
-                      <Button>View Listing</Button>
-                    </Link>
-                    <Button
-                      colorScheme="red"
-                      onClick={() => handleLeave(listing.listing_id)}
+                    <Text
+                      fontSize="2xl"
+                      fontWeight="700"
+                      noOfLines="1"
+                      w="200px"
                     >
-                      Leave Listing
-                    </Button>
-                  </ButtonGroup>
-                </Stack>
+                      {listing.listing_title}
+                    </Text>
+                    <ButtonGroup>
+                      <Link to={`/listing/${listing.listing_id}`}>
+                        <Button>View Listing</Button>
+                      </Link>
+                      <Button
+                        colorScheme="red"
+                        onClick={() => handleLeave(listing.listing_id)}
+                      >
+                        Leave Listing
+                      </Button>
+                    </ButtonGroup>
+                  </Stack>
+                </Flex>
               </Box>
             ))
           ) : (

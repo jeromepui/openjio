@@ -1,4 +1,4 @@
-import { Badge, Box, Stack, Text,} from '@chakra-ui/react';
+import { Badge, Flex, Stack, Text } from '@chakra-ui/react';
 import ListingCardActions from './ListingCardActions';
 
 export default function ListingManagerCard({
@@ -9,30 +9,16 @@ export default function ListingManagerCard({
   const { title, website, remaining_slots, type } = listing;
 
   return (
-    <Box _hover={{boxShadow: "lg"}} p="3" rounded="lg" h="200px">
-      <Stack
-        align={{ base: 'center', md: 'stretch' }}
-        textAlign={{ base: 'center', md: 'left' }}
-        mt={{ base: 4, md: 0 }}
-        h="80%"
-        w={{ base: '70vw', md: '200px' }}
-      >
-        <Text
-          color="black"
-          fontSize="lg"
-          fontWeight="bold"
-          noOfLines="2"
-          maxW="80%"
-        >
+    <Flex boxShadow="lg" h="200px" justify="space-between" p="4" rounded="lg">
+      <Stack alignContent="left">
+        <Text fontSize="2xl" fontWeight="700" noOfLines="1" w="200px">
           {title}
         </Text>
-
         {remaining_slots > 0 ? (
           <Badge
             colorScheme="green"
-            justifyContent="center"
-            variant="subtle"
             display="flex"
+            justifyContent="center"
             w="140px"
           >
             {remaining_slots === 1
@@ -42,29 +28,25 @@ export default function ListingManagerCard({
         ) : (
           <Badge
             colorScheme="red"
-            justifyContent="center"
-            variant="subtle"
             display="flex"
-            w="10"
+            justifyContent="center"
+            w="40px"
           >
-            {' '}
-            Full{' '}
+            Full
           </Badge>
         )}
-        <Text fontSize="sm" fontWeight="500" noOfLines="1">
+        <Text fontSize="md" fontWeight="500" noOfLines="1">
           {website}
         </Text>
-
-        <Text fontSize="xs" color="gray.600">
+        <Text color="gray.600" fontSize="md">
           {type}
         </Text>
       </Stack>
-
       <ListingCardActions
         category={category}
         listing={listing}
         setShouldRefresh={setShouldRefresh}
       />
-    </Box>
+    </Flex>
   );
 }

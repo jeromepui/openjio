@@ -7,7 +7,7 @@ import RequestsTab from './RequestsTab';
 export default function ListingManager() {
   const [shouldRefresh, setShouldRefresh] = useState(false);
   return (
-    <Tabs px="6" variant="enclosed">
+    <Tabs mx="6" variant="enclosed">
       <TabList>
         <Tab _focus={{ boxShadow: 'none' }}>Open</Tab>
         <Tab _focus={{ boxShadow: 'none' }}>Closed</Tab>

@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   AlertDialog,
   AlertDialogBody,
@@ -7,15 +6,15 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
   Button,
-  useToast,
   ButtonGroup,
+  useToast,
 } from '@chakra-ui/react';
 import { deleteRequest } from '../../utils/RequestUtils';
 
 export default function DeleteRequestDialog({
+  cancelRef,
   isOpen,
   onClose,
-  cancelRef,
   request,
   setShouldRefresh,
 }) {
@@ -31,45 +30,43 @@ export default function DeleteRequestDialog({
       alert(error.message);
     } finally {
       toast({
-        title: 'Request deleted!',
         description: `We've deleted ${request.requester_username}'s request`,
-        status: 'success',
         duration: 4000,
         isClosable: true,
+        status: 'success',
+        title: 'Request deleted!',
       });
       setShouldRefresh(prev => !prev);
       onClose();
     }
   };
   return (
-    <>
-      <AlertDialog
-        isOpen={isOpen}
-        leastDestructiveRef={cancelRef}
-        onClose={onClose}
-      >
-        <AlertDialogOverlay>
-          <AlertDialogContent>
-            <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Slots Filled
-            </AlertDialogHeader>
-            <AlertDialogBody>
-              Your listing does not have any slot left! Delete this request
-              instead?
-            </AlertDialogBody>
-            <AlertDialogFooter>
-              <ButtonGroup>
-                <Button ref={cancelRef} onClick={onClose}>
-                  Cancel
-                </Button>
-                <Button colorScheme="red" onClick={handleDelete} ml={3}>
-                  Delete
-                </Button>
-              </ButtonGroup>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialogOverlay>
-      </AlertDialog>
-    </>
+    <AlertDialog
+      isOpen={isOpen}
+      leastDestructiveRef={cancelRef}
+      onClose={onClose}
+    >
+      <AlertDialogOverlay>
+        <AlertDialogContent>
+          <AlertDialogHeader fontSize="lg" fontWeight="bold">
+            Slots Filled
+          </AlertDialogHeader>
+          <AlertDialogBody>
+            Your listing does not have any slots left! Delete this request
+            instead?
+          </AlertDialogBody>
+          <AlertDialogFooter>
+            <ButtonGroup>
+              <Button onClick={onClose} ref={cancelRef}>
+                Cancel
+              </Button>
+              <Button colorScheme="red" onClick={handleDelete}>
+                Delete
+              </Button>
+            </ButtonGroup>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialogOverlay>
+    </AlertDialog>
   );
 }

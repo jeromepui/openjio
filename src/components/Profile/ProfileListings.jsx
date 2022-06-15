@@ -22,39 +22,28 @@ export default function UserListings() {
   }, [userId]);
 
   return (
-    <SimpleGrid columns="4" mx="4" p="2" spacing="10">
+    <SimpleGrid columns={{ sm: '1', md: '4' }} p="2" spacing="6">
       {listings?.map((listing, index) => (
         <Box key={index}>
           <Link to={`/listing/${listing.listing_id}`}>
             <Flex
-              justifyContent={{ base: 'center', md: 'left' }}
               boxShadow="lg"
-              minH="160px"
-              minW={{ base: '80vw', md: '200px' }}
-              p="2"
+              h="200px"
+              justifyContent={{ sm: 'center', md: 'start' }}
+              p="4"
               rounded="lg"
             >
-              <Stack
-                textAlign={{ base: 'center', md: 'left' }}
-                mt={{ base: 4, md: 0 }}
-              >
-                <Text
-                  color="teal.500"
-                  fontSize="lg"
-                  fontWeight="bold"
-                  noOfLines="1"
-                >
+              <Stack alignContent="left">
+                <Text fontSize="2xl" fontWeight="700" noOfLines="1" w="200px">
                   {listing.title}
                 </Text>
-                <Text fontSize="md" fontWeight="500" noOfLines="1">
-                  {listing.website}
-                </Text>
+
                 {listing.remaining_slots > 0 ? (
                   <Badge
                     colorScheme="green"
-                    justifyContent="center"
-                    variant="subtle"
                     display="flex"
+                    justifyContent="center"
+                    w="140px"
                   >
                     {listing.remaining_slots === 1
                       ? '1 slot remaining'
@@ -63,15 +52,16 @@ export default function UserListings() {
                 ) : (
                   <Badge
                     colorScheme="red"
-                    justifyContent="center"
-                    variant="subtle"
                     display="flex"
-                    w="10"
+                    justifyContent="center"
+                    w="40px"
                   >
-                    {' '}
-                    FULL{' '}
+                    FULL
                   </Badge>
                 )}
+                <Text fontSize="md" fontWeight="500" noOfLines="1">
+                  {listing.website}
+                </Text>
                 <Text color="gray.600">{listing.type}</Text>
               </Stack>
             </Flex>

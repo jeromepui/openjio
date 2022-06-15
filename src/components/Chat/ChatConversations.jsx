@@ -12,7 +12,6 @@ export default function ChatConversations({ setListingId }) {
       try {
         const { data, error } = await getListingsByParticipant(auth.user.id);
         if (error) throw error;
-
         setListings(data);
       } catch (error) {
         alert(error.message);
@@ -27,20 +26,16 @@ export default function ChatConversations({ setListingId }) {
         Chats
       </Text>
       <Divider />
-      <Flex direction="column" grow="1" overflowY="scroll" p="2" w="100%">
+      <Flex direction="column" h="80vh" overflowY="scroll" p="2">
         {listings?.map((listing, index) => (
-          <Flex align="center" justify="center" key={index} my="2">
-            <Button
-              color="black"
-              my="2"
-              onClick={e => setListingId(listing.listing_id)}
-              variant="link"
-            >
-              <Text fontSize="lg" fontWeight="bold">
-                {listing.listing_title}
-              </Text>
-            </Button>
-          </Flex>
+          <Button
+            key={index}
+            mb="4"
+            onClick={e => setListingId(listing.listing_id)}
+            size="lg"
+          >
+            {listing.listing_title}
+          </Button>
         ))}
       </Flex>
     </Flex>

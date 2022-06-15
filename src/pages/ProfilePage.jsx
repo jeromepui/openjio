@@ -1,8 +1,3 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { getUserProfile } from '../utils/UserUtils';
-import TitleBar from '../components/TitleBar/TitleBar';
-import UserInfo from '../components/Profile/UserInfo';
 import {
   Flex,
   Tab,
@@ -11,8 +6,13 @@ import {
   TabList,
   TabPanels,
 } from '@chakra-ui/react';
-import UserReviews from '../components/Profile/UserReviews';
-import UserListings from '../components/Profile/UserListings';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import TitleBar from '../components/TitleBar/TitleBar';
+import ProfileInfo from '../components/Profile/ProfileInfo';
+import ProfileReviews from '../components/Profile/ProfileReviews/ProfileReviews';
+import ProfileListings from '../components/Profile/ProfileListings';
+import { getUserProfile } from '../utils/UserUtils';
 
 export default function ProfilePage() {
   const { id: profileId } = useParams();
@@ -38,8 +38,8 @@ export default function ProfilePage() {
   return (
     <>
       <TitleBar backButton={true} text="Profile" />
-      <Flex direction="row" grow="1" mx="4">
-        <UserInfo
+      <Flex direction={{ sm: 'column', md: 'row' }} mx="4">
+        <ProfileInfo
           avatarUrl={avatarUrl}
           setShouldRefresh={setShouldRefresh}
           shouldRefresh={shouldRefresh}
@@ -52,10 +52,10 @@ export default function ProfilePage() {
           </TabList>
           <TabPanels>
             <TabPanel>
-              <UserReviews shouldRefresh={shouldRefresh} />
+              <ProfileReviews shouldRefresh={shouldRefresh} />
             </TabPanel>
             <TabPanel>
-              <UserListings />
+              <ProfileListings />
             </TabPanel>
           </TabPanels>
         </Tabs>

@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react';
 import {
   Avatar,
-  Text,
-  Stack,
   Button,
-  useDisclosure,
+  Stack,
+  Text,
   Tooltip,
+  useDisclosure,
 } from '@chakra-ui/react';
-import CreateReviewModal from './CreateReviewModal.jsx';
-import { useAuth } from '../../contexts/AuthContext';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import CreateReviewModal from './ProfileReviews/CreateReviewModal.jsx';
+import EditReviewsDrawer from './ProfileReviews/EditReviewsDrawer.jsx';
+import { useAuth } from '../../contexts/AuthContext';
 import { getReviewsBy, getUserRatings } from '../../utils/ReviewUtils.js';
-import EditReviewsOverviewDrawer from './EditReviewsOverviewDrawer.jsx';
 
-export default function UserInfo({
+export default function ProfileInfo({
   avatarUrl,
   setShouldRefresh,
   shouldRefresh,
@@ -21,16 +21,19 @@ export default function UserInfo({
 }) {
   const auth = useAuth();
   const { id: userId } = useParams();
+
   const {
     isOpen: isCreateOpen,
     onOpen: onCreateOpen,
     onClose: onCreateClose,
   } = useDisclosure();
+
   const {
     isOpen: isOverviewOpen,
     onOpen: onOverviewOpen,
     onClose: onOverviewClose,
   } = useDisclosure();
+
   const [rating, setRating] = useState(0);
   const [reviewsBy, setReviewsBy] = useState([]);
 
@@ -44,17 +47,17 @@ export default function UserInfo({
           label="You haven't created any reviews for this user."
           fontSize="sm"
         >
-          <Button disabled>Edit review(s)</Button>
+          <Button disabled>Edit reviews</Button>
         </Tooltip>
       ) : (
         <>
-          <Button onClick={onOverviewOpen}>Edit review</Button>
-          <EditReviewsOverviewDrawer
-            onClose={onOverviewClose}
+          <Button onClick={onOverviewOpen}>Edit reviews</Button>
+          <EditReviewsDrawer
             isOpen={isOverviewOpen}
+            onClose={onOverviewClose}
+            reviews={reviewsBy}
             setShouldRefresh={setShouldRefresh}
             username={username}
-            reviews={reviewsBy}
           />
         </>
       );
@@ -66,7 +69,9 @@ export default function UserInfo({
       try {
         const { data, error, count } = await getUserRatings(userId);
         if (error) throw error;
+
         let ratingSum = 0;
+
         if (count !== 0) {
           for (const e of data) {
             ratingSum += e['rating'];
@@ -87,12 +92,13 @@ export default function UserInfo({
         alert(error.message);
       }
     };
+
     getRatings();
     getReviews();
   }, [userId, auth.user.id, shouldRefresh]);
 
   return (
-    <Stack align="center" p="4" w="20%">
+    <Stack align="center" p="4">
       <Avatar
         name={username}
         src={

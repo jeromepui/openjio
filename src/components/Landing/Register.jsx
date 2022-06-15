@@ -49,7 +49,7 @@ export default function Register() {
       align="center"
       bgGradient={'linear(to-l, #FED811, #FDC100)'}
       direction="column"
-      h={{ base: '100vh' }}
+      h="100vh"
       justify="center"
       w={{ base: '100vw', md: '50%' }}
     >

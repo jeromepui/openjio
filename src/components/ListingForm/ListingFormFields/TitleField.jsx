@@ -11,12 +11,12 @@ export default function TitleField({ errors, register, value }) {
         value={value}
         {...register('title', {
           required: {
-            value: true,
             message: 'Please enter a title.',
+            value: true,
           },
           maxLength: {
-            value: 64,
             message: 'Title is too long',
+            value: 64,
           },
         })}
       />

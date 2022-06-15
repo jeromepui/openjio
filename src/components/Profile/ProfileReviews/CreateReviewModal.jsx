@@ -1,12 +1,7 @@
-import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { useAuth } from '../../contexts/AuthContext';
-import { supabase } from '../../supabase';
-import { v4 as uuidv4 } from 'uuid';
-import { useParams } from 'react-router-dom';
-import { getUserProfile } from '../../utils/UserUtils';
-
 import {
+  Button,
+  FormControl,
+  FormLabel,
   Modal,
   ModalBody,
   ModalContent,
@@ -14,12 +9,16 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalFooter,
-  Button,
   Select,
-  FormControl,
-  FormLabel,
   Textarea,
 } from '@chakra-ui/react';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
+import { useAuth } from '../../../contexts/AuthContext';
+import { supabase } from '../../../supabase';
+import { getUserProfile } from '../../../utils/UserUtils';
 
 export default function CreateReviewModal({
   isOpen,
@@ -47,12 +46,12 @@ export default function CreateReviewModal({
     }
 
     const review = {
-      review_id: reviewId,
+      content: reviewData.content,
       created_by: auth.user.id,
-      reviewer_username: username,
       created_for: userId,
       rating: reviewData.rating,
-      content: reviewData.content,
+      review_id: reviewId,
+      reviewer_username: username,
     };
     try {
       const { error: reviewError } = await supabase
@@ -79,11 +78,10 @@ export default function CreateReviewModal({
         <form onSubmit={handleSubmit(onSubmit)}>
           <ModalHeader>Leave a review</ModalHeader>
           <ModalCloseButton />
-
           <ModalBody>
             <FormControl isRequired>
               <FormLabel>Rating</FormLabel>
-              <Select {...register('rating')} placeholder="Rate">
+              <Select {...register('rating')} placeholder="Select rating">
                 <option value={1}>1</option>
                 <option value={2}>2</option>
                 <option value={3}>3</option>
@@ -103,7 +101,7 @@ export default function CreateReviewModal({
             <Button colorScheme="blue" type="submit">
               Submit
             </Button>
-            <Button variant="ghost" onClick={onClose}>
+            <Button onClick={onClose} variant="ghost">
               Cancel
             </Button>
           </ModalFooter>

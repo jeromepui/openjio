@@ -35,6 +35,15 @@ export const addParticipant = async participant => {
   return { error };
 };
 
+// Update listing participant
+export const updateParticipant = async (listingId, updates) => {
+  const { error } = await supabase
+    .from('listing_participants')
+    .update(updates)
+    .eq('listing_id', listingId);
+  return { error };
+};
+
 // Leave listing
 export const leaveListing = async (listingId, participantId) => {
   const { error } = await supabase

@@ -8,12 +8,10 @@ export default function ChatParticipants({ listingId }) {
 
   useEffect(() => {
     if (listingId === null) return;
-
     const getParticipants = async () => {
       try {
         const { data, error } = await getParticipantsByListing(listingId);
         if (error) throw error;
-
         setParticipants(data);
       } catch (error) {
         alert(error.message);

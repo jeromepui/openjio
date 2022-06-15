@@ -19,8 +19,8 @@ export default function RequiredSpendField({ errors, register }) {
           type="number"
           {...register('requiredSpend', {
             required: {
-              value: true,
               message: 'Please enter a number.',
+              value: true,
             },
             validate: {
               positive: v => parseInt(v) > 0 || 'Should be greater than 0',

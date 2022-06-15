@@ -12,13 +12,14 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import DescriptionField from '../ListingForm/DescriptionField';
-import MinSpendField from '../ListingForm/RequiredSpendField';
-import SlotsField from '../ListingForm/SlotsField';
-import TitleField from '../ListingForm/TitleField';
-import TypeField from '../ListingForm/TypeField';
-import WebsiteField from '../ListingForm/WebsiteField';
+import DescriptionField from '../ListingForm/ListingFormFields/DescriptionField';
+import MinSpendField from '../ListingForm/ListingFormFields/RequiredSpendField';
+import SlotsField from '../ListingForm/ListingFormFields/SlotsField';
+import TitleField from '../ListingForm/ListingFormFields/TitleField';
+import TypeField from '../ListingForm/ListingFormFields/TypeField';
+import WebsiteField from '../ListingForm/ListingFormFields/WebsiteField';
 import { updateListing } from '../../utils/ListingUtils';
+import { updateParticipant } from '../../utils/ListingParticipantUtils';
 
 export default function EditModal({
   isOpen,
@@ -27,7 +28,15 @@ export default function EditModal({
   setShouldRefresh,
 }) {
   const toast = useToast();
-  const { listing_id, type } = listing;
+  const {
+    description,
+    listing_id,
+    required_spend,
+    slots,
+    title,
+    type,
+    website,
+  } = listing;
   const [listingType, setListingType] = useState(type);
 
   const {
@@ -36,26 +45,26 @@ export default function EditModal({
     formState: { errors },
   } = useForm({
     defaultValues: {
-      description: listing.description,
-      website: listing.website,
-      requiredSpend: listing.required_spend,
-      slots: listing.slots,
-      title: listing.title,
-      type: listing.type,
+      description: description,
+      requiredSpend: required_spend,
+      slots: slots,
+      title: title,
+      type: type,
+      website: website,
     },
     mode: 'onTouched',
   });
 
   const onSubmit = async listingData => {
     let {
-      title,
-      website,
-      type,
-      requiredSpend,
-      slots,
       description,
-      status,
+      requiredSpend,
       remaining_slots,
+      slots,
+      status,
+      title,
+      type,
+      website,
     } = listingData;
     if (type === 'Bundle Deal') requiredSpend = '0';
 
@@ -71,15 +80,23 @@ export default function EditModal({
         remaining_slots: remaining_slots,
       };
 
-      const { error } = await updateListing(listing_id, listingUpdates);
-      if (error) throw error;
+      const { error: listingError } = await updateListing(
+        listing_id,
+        listingUpdates
+      );
+      if (listingError) throw listingError;
+
+      const { error: participantError } = await updateParticipant(listing_id, {
+        listing_title: title,
+      });
+      if (participantError) throw participantError;
 
       toast({
-        title: 'Success!',
         description: 'Your listing has been updated!',
-        status: 'success',
         duration: 4000,
         isClosable: true,
+        status: 'success',
+        title: 'Success!',
       });
     } catch (error) {
       alert(error.message);
@@ -113,21 +130,17 @@ export default function EditModal({
               {listingType === 'Min. Spend' && (
                 <MinSpendField errors={errors} register={register} />
               )}
-              <SlotsField
-                errors={errors}
-                register={register}
-                isDisabled={true}
-              />
+              <SlotsField isDisabled errors={errors} register={register} />
               <DescriptionField register={register} />
             </Stack>
           </ModalBody>
           <ModalFooter>
             <Button
-              bg="#02CECB"
-              color="white"
               _hover={{
                 background: '#06837F',
               }}
+              bg="#02CECB"
+              color="white"
               type="submit"
             >
               Save Changes

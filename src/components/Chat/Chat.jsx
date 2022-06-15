@@ -1,6 +1,6 @@
 import { Flex } from '@chakra-ui/react';
 import { useState } from 'react';
-import ChatBox from './ChatBox';
+import ChatBox from './ChatBox/ChatBox';
 import ChatConversations from './ChatConversations';
 import ChatParticipants from './ChatParticipants';
 

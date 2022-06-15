@@ -1,5 +1,5 @@
-import React from 'react';
 import {
+  Button,
   Modal,
   ModalBody,
   ModalContent,
@@ -8,15 +8,14 @@ import {
   ModalCloseButton,
   ModalFooter,
   Text,
-  Button,
 } from '@chakra-ui/react';
-import { deleteReview } from '../../utils/ReviewUtils';
+import { deleteReview } from '../../../utils/ReviewUtils';
 
 export default function DeleteReviewModal({
-  onClose,
   isOpen,
-  setShouldRefresh,
+  onClose,
   review,
+  setShouldRefresh,
 }) {
   const handleClose = async () => {
     try {
@@ -26,7 +25,7 @@ export default function DeleteReviewModal({
       alert(error.message);
     } finally {
       onClose();
-      setShouldRefresh(prev => !prev)
+      setShouldRefresh(prev => !prev);
     }
   };
   return (
@@ -39,9 +38,8 @@ export default function DeleteReviewModal({
           <Text>Are you sure you want to delete this review?</Text>
           <Text fontWeight="500">This action cannot be undone.</Text>
         </ModalBody>
-
         <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={handleClose}>
+          <Button colorScheme="blue" onClick={handleClose}>
             Confirm
           </Button>
           <Button variant="ghost">Cancel</Button>

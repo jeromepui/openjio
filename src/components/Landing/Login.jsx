@@ -44,7 +44,7 @@ export default function Login() {
     <Flex
       align="center"
       bgGradient={'linear(to-l, #FED811, #FDC100)'}
-      h={{ base: '100vh' }}
+      h="100vh"
       direction="column"
       justify="center"
       w={{ base: '100vw', md: '50%' }}
