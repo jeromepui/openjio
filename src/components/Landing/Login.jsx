@@ -60,6 +60,7 @@ export default function Login() {
                 <FormLabel>Email address</FormLabel>
                 <Input
                   onChange={e => setEmail(e.target.value)}
+                  placeholder="Enter email"
                   type="email"
                   value={email}
                 />
@@ -68,6 +69,7 @@ export default function Login() {
                 <FormLabel>Password</FormLabel>
                 <Input
                   onChange={e => setPassword(e.target.value)}
+                  placeholder="Enter password"
                   type="password"
                   value={password}
                 />

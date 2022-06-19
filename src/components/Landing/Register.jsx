@@ -8,6 +8,7 @@ import {
   Input,
   Stack,
   Text,
+  useToast,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -15,6 +16,7 @@ import { supabase } from '../../supabase';
 
 export default function Register() {
   const navigate = useNavigate();
+  const toast = useToast();
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -31,6 +33,11 @@ export default function Register() {
           { data: { username } }
         );
         if (error) throw error;
+
+        setEmail('');
+        setUsername('');
+        setPassword('');
+        setConfirmPassword('');
       } catch (error) {
         if (error.status === 500) {
           alert('Username has been taken!');
@@ -38,7 +45,13 @@ export default function Register() {
           alert(error.message);
         }
       } finally {
-        alert('Check your email to confirm your sign up!');
+        toast({
+          title: 'Success!',
+          description: 'Check your email to confirm your sign up!',
+          duration: 4000,
+          isClosable: true,
+          status: 'success',
+        });
         navigate('/login');
       }
     }
@@ -64,6 +77,7 @@ export default function Register() {
                 <FormLabel>Email address</FormLabel>
                 <Input
                   onChange={e => setEmail(e.target.value)}
+                  placeholder="Enter email"
                   type="email"
                   value={email}
                 />
@@ -72,6 +86,7 @@ export default function Register() {
                 <FormLabel>Username</FormLabel>
                 <Input
                   onChange={e => setUsername(e.target.value)}
+                  placeholder="Enter username"
                   type="text"
                   value={username}
                 />
@@ -80,6 +95,7 @@ export default function Register() {
                 <FormLabel>Password</FormLabel>
                 <Input
                   onChange={e => setPassword(e.target.value)}
+                  placeholder="Enter password"
                   type="password"
                   value={password}
                 />
@@ -88,6 +104,7 @@ export default function Register() {
                 <FormLabel>Confirm Password</FormLabel>
                 <Input
                   onChange={e => setConfirmPassword(e.target.value)}
+                  placeholder="Confirm password"
                   type="password"
                   value={confirmPassword}
                 />
@@ -98,7 +115,6 @@ export default function Register() {
                   <Text color="blue.600">Sign in</Text>
                 </Link>
               </Flex>
-
               <Button
                 bg="#02CECB"
                 color="white"

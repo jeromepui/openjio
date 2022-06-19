@@ -1,5 +1,10 @@
-import { ChakraProvider, extendTheme, Flex } from '@chakra-ui/react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Flex } from '@chakra-ui/react';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from 'react-router-dom';
 import NavBar from './components/NavBar/NavBar';
 import { useAuth } from './contexts/AuthContext';
 import DashboardPage from './pages/DashboardPage';
@@ -12,28 +17,11 @@ import RegisterPage from './pages/RegisterPage';
 import SettingsPage from './pages/SettingsPage';
 import ChatPage from './pages/ChatPage';
 
-const theme = extendTheme({
-  breakpoints: {
-    sm: '320px',
-    md: '768px',
-    lg: '960px',
-    xl: '1200px',
-    '2xl': '1536px',
-  },
-  components: {
-    Button: { baseStyle: { _focus: { boxShadow: 'none' } } },
-  },
-  fonts: {
-    heading: `Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"`,
-    body: `Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"`,
-  },
-});
-
 export default function App() {
   const auth = useAuth();
 
   return (
-    <ChakraProvider theme={theme}>
+    <Router>
       {!auth.user ? (
         <Routes>
           <Route path="*" element={<Navigate to="/login" />} />
@@ -55,6 +43,6 @@ export default function App() {
           </Routes>
         </Flex>
       )}
-    </ChakraProvider>
+    </Router>
   );
 }

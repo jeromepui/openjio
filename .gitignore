@@ -7,6 +7,11 @@
 
 # testing
 /coverage
+/cypress
+/src/__tests__
+/tests
+cypress.config.js
+cypress.json
 
 # production
 /build
