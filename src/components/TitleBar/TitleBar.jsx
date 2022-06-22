@@ -16,7 +16,7 @@ export default function TitleBar({ backButton, text }) {
           size="sm"
         ></IconButton>
       )}
-      <Heading fontSize="4xl" fontWeight="700">
+      <Heading fontSize="4xl" fontWeight="700" id="heading">
         {text}
       </Heading>
     </Flex>

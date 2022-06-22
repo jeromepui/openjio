@@ -38,7 +38,10 @@ export default function ListingPage() {
         const { data: listingData, error: listingError } = await getListing(
           listingId
         );
-        if (listingError) throw listingError;
+        if (listingError) {
+          navigate('/');
+          return;
+        }
         setListing(listingData);
 
         const { data: userData, error: userError } =
@@ -75,7 +78,7 @@ export default function ListingPage() {
       }
     };
     getListingData();
-  }, [auth.user, listingId]);
+  }, [auth.user, listingId, navigate]);
 
   const handleRequest = async () => {
     try {
@@ -122,7 +125,14 @@ export default function ListingPage() {
       ) : (
         <>
           <TitleBar backButton={true} text={listing.title} />
-          <Box px="6" py="4" border="solid black" margin="50px" marginTop="0" borderRadius="10px" >
+          <Box
+            px="6"
+            py="4"
+            border="solid black"
+            margin="50px"
+            marginTop="0"
+            borderRadius="10px"
+          >
             <Stack spacing="4">
               <Text fontSize="2xl" fontWeight="500">
                 Listing Details

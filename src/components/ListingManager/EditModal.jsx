@@ -20,6 +20,7 @@ import TypeField from '../ListingForm/ListingFormFields/TypeField';
 import WebsiteField from '../ListingForm/ListingFormFields/WebsiteField';
 import { updateListing } from '../../utils/ListingUtils';
 import { updateParticipant } from '../../utils/ListingParticipantUtils';
+import { updateRequest } from '../../utils/RequestUtils';
 
 export default function EditModal({
   isOpen,
@@ -91,6 +92,11 @@ export default function EditModal({
       });
       if (participantError) throw participantError;
 
+      const { error: requestError } = await updateRequest(listing_id, {
+        listing_title: title,
+      });
+      if (requestError) throw requestError;
+
       toast({
         description: 'Your listing has been updated!',
         duration: 4000,
@@ -100,6 +106,7 @@ export default function EditModal({
       });
     } catch (error) {
       alert(error.message);
+      console.log(error);
     } finally {
       setShouldRefresh(prev => !prev);
       onClose();

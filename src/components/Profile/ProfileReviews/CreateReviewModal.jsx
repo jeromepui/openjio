@@ -98,7 +98,15 @@ export default function CreateReviewModal({
             </FormControl>
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme="blue" type="submit">
+            <Button
+              _hover={{
+                background: '#06837F',
+              }}
+              bg="#02CECB"
+              color="white"
+              onClick={() => setShouldRefresh(prev => !prev)}
+              type="submit"
+            >
               Submit
             </Button>
             <Button onClick={onClose} variant="ghost">

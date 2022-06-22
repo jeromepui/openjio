@@ -47,8 +47,8 @@ export default function ProfilePage() {
         />
         <Tabs variant="enclosed">
           <TabList>
-            <Tab>Reviews</Tab>
-            <Tab>Listings</Tab>
+            <Tab _focus={{ boxShadow: 'none' }}>Reviews</Tab>
+            <Tab _focus={{ boxShadow: 'none' }}>Listings</Tab>
           </TabList>
           <TabPanels>
             <TabPanel>

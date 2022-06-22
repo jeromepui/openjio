@@ -18,6 +18,15 @@ export const userJoinedListing = async (listingId, userId) => {
   return { data, error };
 };
 
+// Update request
+export const updateRequest = async (listingId, requestUpdates) => {
+  const { data, error } = await supabase
+    .from('requests')
+    .update(requestUpdates)
+    .eq('listing_id', listingId);
+  return { data, error };
+};
+
 // Delete request
 export const deleteRequest = async requestId => {
   const { data, error } = await supabase

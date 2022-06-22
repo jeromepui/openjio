@@ -39,10 +39,12 @@ export default function DeleteReviewModal({
           <Text fontWeight="500">This action cannot be undone.</Text>
         </ModalBody>
         <ModalFooter>
-          <Button colorScheme="blue" onClick={handleClose}>
+          <Button colorScheme="red" onClick={handleClose}>
             Confirm
           </Button>
-          <Button variant="ghost">Cancel</Button>
+          <Button onClick={onClose} variant="ghost">
+            Cancel
+          </Button>
         </ModalFooter>
       </ModalContent>
     </Modal>
