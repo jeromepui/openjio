@@ -8,6 +8,7 @@ import {
   Spinner,
   Stack,
   Text,
+  Tooltip,
   useDisclosure,
 } from '@chakra-ui/react';
 import { useEffect, useState, useRef } from 'react';
@@ -118,15 +119,21 @@ export default function RequestsTab({ shouldRefresh, setShouldRefresh }) {
                       <Text fontSize="md" noOfLines="1">
                         Request to join:
                       </Text>
-                      <Text
-                        color="black"
-                        fontSize="xl"
-                        fontWeight="700"
-                        noOfLines="1"
-                        maxW="140px"
+                      <Tooltip
+                        label={request.listing_title}
+                        placement="bottom-start"
                       >
-                        {request.listing_title}
-                      </Text>
+                        <Text
+                          color="black"
+                          fontSize="xl"
+                          fontWeight="700"
+                          noOfLines="1"
+                          maxW="300px"
+                        >
+                          {request.listing_title}
+                        </Text>
+                      </Tooltip>
+
                       <Text fontSize="md">Requested by:</Text>
                       <Text fontSize="xl" fontWeight="700">
                         {request.requester_username}

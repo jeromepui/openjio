@@ -1,4 +1,4 @@
-import { Badge, Flex, Stack, Text } from '@chakra-ui/react';
+import { Badge, Flex, Stack, Text, Tooltip } from '@chakra-ui/react';
 import ListingCardActions from './ListingCardActions';
 
 export default function ListingManagerCard({
@@ -11,9 +11,12 @@ export default function ListingManagerCard({
   return (
     <Flex boxShadow="lg" h="200px" justify="space-between" p="4" rounded="lg">
       <Stack alignContent="left">
-        <Text fontSize="2xl" fontWeight="700" noOfLines="1" w="200px">
-          {title}
-        </Text>
+        <Tooltip label={title} placement="bottom-start">
+          <Text fontSize="2xl" fontWeight="700" noOfLines="1" w="200px">
+            {title}
+          </Text>
+        </Tooltip>
+
         {remaining_slots > 0 ? (
           <Badge
             colorScheme="green"

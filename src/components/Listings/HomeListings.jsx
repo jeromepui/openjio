@@ -8,13 +8,14 @@ import {
   Spinner,
   Stack,
   Text,
+  Tooltip,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getAllOpenListings } from '../../utils/ListingUtils';
 import { getUserProfile } from '../../utils/UserUtils';
 
-export default function Listings() {
+export default function HomeListings() {
   const [listings, setListings] = useState();
   const [loading, setLoading] = useState(false);
 
@@ -80,14 +81,16 @@ export default function Listings() {
                       />
                       <Text fontSize="md">{listing.username}</Text>
                     </HStack>
-                    <Text
-                      fontSize="2xl"
-                      fontWeight="700"
-                      noOfLines="1"
-                      w="200px"
-                    >
-                      {listing.title}
-                    </Text>
+                    <Tooltip label={listing.title} placement="bottom-start">
+                      <Text
+                        fontSize="2xl"
+                        fontWeight="700"
+                        noOfLines="1"
+                        w="300px"
+                      >
+                        {listing.title}
+                      </Text>
+                    </Tooltip>
                     {listing.remaining_slots > 0 ? (
                       <Badge
                         colorScheme="green"

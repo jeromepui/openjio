@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 import NavBar from './components/NavBar/NavBar';
 import { useAuth } from './contexts/AuthContext';
+import ChatPage from './pages/ChatPage';
 import DashboardPage from './pages/DashboardPage';
 import HomePage from './pages/HomePage';
 import ListingFormPage from './pages/ListingFormPage';
@@ -14,8 +15,8 @@ import ListingDetailsPage from './pages/ListingDetailsPage';
 import LoginPage from './pages/LoginPage';
 import ProfilePage from './pages/ProfilePage';
 import RegisterPage from './pages/RegisterPage';
+import SearchPage from './pages/SearchPage';
 import SettingsPage from './pages/SettingsPage';
-import ChatPage from './pages/ChatPage';
 
 export default function App() {
   const auth = useAuth();
@@ -39,6 +40,7 @@ export default function App() {
             <Route path="/add-listing" element={<ListingFormPage />} />
             <Route path="/listing/:id" element={<ListingDetailsPage />} />
             <Route path="/profile/:id" element={<ProfilePage />} />
+            <Route path="/search/:search" element={<SearchPage />} />
             <Route path="/settings" element={<SettingsPage />} />
           </Routes>
         </Flex>
