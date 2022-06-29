@@ -4,7 +4,7 @@ import TitleBar from '../components/TitleBar/TitleBar';
 export default function ListingFormPage() {
   return (
     <>
-      <TitleBar backButton={true} text="Add a new listing"></TitleBar>
+      <TitleBar backButton={true} text="Add a new listing" />
       <ListingForm />
     </>
   );

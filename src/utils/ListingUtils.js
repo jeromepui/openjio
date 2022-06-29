@@ -28,6 +28,17 @@ export const getUserListings = async (userId, status) => {
   return { data, error };
 };
 
+// Get search listings
+export const getSearchListings = async search => {
+  const searchArray = search.split(' ');
+  const queryString = searchArray.join(' & ');
+  const { data, error } = await supabase
+    .from('listings')
+    .select()
+    .textSearch('title', queryString);
+  return { data, error };
+};
+
 // Get username of listing owner
 export const getListingOwnerUsername = async userId => {
   const { data, error } = await supabase

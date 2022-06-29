@@ -123,7 +123,7 @@ export default function RequestsTab({ shouldRefresh, setShouldRefresh }) {
                         fontSize="xl"
                         fontWeight="700"
                         noOfLines="1"
-                        maxW="140px"
+                        maxW="300px"
                       >
                         {request.listing_title}
                       </Text>

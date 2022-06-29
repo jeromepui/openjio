@@ -11,7 +11,7 @@ export default function ListingManagerCard({
   return (
     <Flex boxShadow="lg" h="200px" justify="space-between" p="4" rounded="lg">
       <Stack alignContent="left">
-        <Text fontSize="2xl" fontWeight="700" noOfLines="1" w="200px">
+        <Text fontSize="2xl" fontWeight="700" noOfLines="1">
           {title}
         </Text>
         {remaining_slots > 0 ? (

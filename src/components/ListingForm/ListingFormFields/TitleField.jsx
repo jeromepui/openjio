@@ -15,7 +15,7 @@ export default function TitleField({ errors, register, value }) {
             value: true,
           },
           maxLength: {
-            message: 'Title is too long',
+            message: 'Maximum length of title is 64 characters.',
             value: 64,
           },
         })}

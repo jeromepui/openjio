@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 import { getAllOpenListings } from '../../utils/ListingUtils';
 import { getUserProfile } from '../../utils/UserUtils';
 
-export default function Listings() {
+export default function HomeListings() {
   const [listings, setListings] = useState();
   const [loading, setLoading] = useState(false);
 
@@ -80,12 +80,7 @@ export default function Listings() {
                       />
                       <Text fontSize="md">{listing.username}</Text>
                     </HStack>
-                    <Text
-                      fontSize="2xl"
-                      fontWeight="700"
-                      noOfLines="1"
-                      w="200px"
-                    >
+                    <Text fontSize="2xl" fontWeight="700" noOfLines="1">
                       {listing.title}
                     </Text>
                     {listing.remaining_slots > 0 ? (

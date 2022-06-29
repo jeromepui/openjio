@@ -4,7 +4,7 @@ import TitleBar from '../components/TitleBar/TitleBar';
 export default function DashboardPage() {
   return (
     <>
-      <TitleBar backButton={false} text="Dashboard"></TitleBar>
+      <TitleBar backButton={false} text="Dashboard" />
       <ListingManager />
     </>
   );
