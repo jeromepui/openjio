@@ -10,10 +10,10 @@ export default function NavItemsLeft() {
     <HStack spacing="8">
       <Link to="/">
         <Button
-          background={pathname === '/' && '#B4FFFF'}
+          background={pathname === '/' && '#FED811'}
           color="black"
           _hover={{
-            background: '#B4FFFF',
+            background: '#FED811',
           }}
           leftIcon={<MdHome />}
           variant="ghost"
@@ -23,10 +23,10 @@ export default function NavItemsLeft() {
       </Link>
       <Link to="/dashboard">
         <Button
-          background={pathname === '/dashboard' && '#B4FFFF'}
+          background={pathname === '/dashboard' && '#FED811'}
           color="black"
           _hover={{
-            background: '#B4FFFF',
+            background: '#FED811',
           }}
           leftIcon={<MdDashboard />}
           variant="ghost"

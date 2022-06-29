@@ -67,15 +67,9 @@ export default function JoinedTab({ shouldRefresh, setShouldRefresh }) {
               <Box key={index}>
                 <Flex boxShadow="lg" h="120px" p="4" rounded="lg">
                   <Stack alignContent="left">
-                    <Text
-                      fontSize="2xl"
-                      fontWeight="700"
-                      noOfLines="1"
-                      w="200px"
-                    >
+                    <Text fontSize="2xl" fontWeight="700" noOfLines="1">
                       {listing.title}
                     </Text>
-
                     <Text
                       fontSize="2xl"
                       fontWeight="700"

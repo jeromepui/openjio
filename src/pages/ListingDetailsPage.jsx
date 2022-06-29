@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Flex,
   Link,
   Spinner,
@@ -161,9 +162,7 @@ export default function ListingPage() {
               </Text>
               <Text fontWeight={'bold'}>Created by:</Text>
               <RouterLink to={`/profile/${listing.created_by}`}>
-                <Text _hover={{ textDecoration: 'underline' }}>
-                  {user?.username}
-                </Text>
+                <Button>{user?.username}</Button>
               </RouterLink>
               {listing.created_by !== auth.user.id && (
                 <RequestButton
