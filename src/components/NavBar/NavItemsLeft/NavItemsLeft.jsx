@@ -1,5 +1,5 @@
 import { Button, HStack } from '@chakra-ui/react';
-import { MdDashboard, MdHome } from 'react-icons/md';
+import { MdChat, MdDashboard, MdHome } from 'react-icons/md';
 import { Link, useLocation } from 'react-router-dom';
 import SearchBar from './SearchBar';
 
@@ -32,6 +32,19 @@ export default function NavItemsLeft() {
           variant="ghost"
         >
           Dashboard
+        </Button>
+      </Link>
+      <Link to="/chat">
+        <Button
+          background={pathname === '/chat' && '#FED811'}
+          color="black"
+          _hover={{
+            background: '#FED811',
+          }}
+          leftIcon={<MdChat />}
+          variant="ghost"
+        >
+         Chat
         </Button>
       </Link>
       <SearchBar />

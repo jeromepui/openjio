@@ -1,8 +1,7 @@
 import { Button, HStack } from '@chakra-ui/react';
 import { MdAdd } from 'react-icons/md';
 import { Link } from 'react-router-dom';
-import ChatButton from './ChatButton';
-import ProfileButton from './ProfileButton';
+import ProfileButton from './SettingsButton';
 
 export default function NavItemsRight() {
   return (
@@ -19,7 +18,6 @@ export default function NavItemsRight() {
           Add Listing
         </Button>
       </Link>
-      <ChatButton />
       <ProfileButton />
     </HStack>
   );
