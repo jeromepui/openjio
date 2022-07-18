@@ -97,7 +97,7 @@ export default function SettingsPage() {
 
   return (
     <>
-      <TitleBar backButton={false} text="Edit profile" />
+      <TitleBar backButton={true} text="Edit profile" />
       <Box px="6">
         {loading ? (
           <Flex align="center" justify="center">

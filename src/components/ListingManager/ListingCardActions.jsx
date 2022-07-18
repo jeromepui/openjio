@@ -124,14 +124,30 @@ export default function ListingCardActions({
                 variant="outline"
               />
               <MenuList>
+                <MenuItem onClick={onEditOpen}>Edit</MenuItem>
                 <MenuItem onClick={onClosedDeleteOpen}>Delete</MenuItem>
                 <MenuItem onClick={handleOpenListing}>Reopen Listing</MenuItem>
+                <MenuItem onClick={onOpenManageOpen}>
+                  Manage Participants
+                </MenuItem>
               </MenuList>
             </Menu>
+            <EditModal
+              isOpen={isEditOpen}
+              listing={listing}
+              onClose={onEditClose}
+              setShouldRefresh={setShouldRefresh}
+            />
             <DeleteModal
               isOpen={isClosedDeleteOpen}
               listing={listing}
               onClose={onClosedDeleteClose}
+            />
+            <ManageModal
+              isOpen={isOpenManageOpen}
+              listing={listing}
+              onClose={onOpenManageClose}
+              setShouldRefresh={setShouldRefresh}
             />
           </>
         );
