@@ -24,6 +24,9 @@ export default function SettingsButton() {
           <Link to="/settings">
             <MenuItem>Settings</MenuItem>
           </Link>
+          <Link to="/help">
+            <MenuItem>Help</MenuItem>
+          </Link>
           <MenuItem onClick={auth.logout}>Log Out</MenuItem>
         </MenuList>
       </Menu>

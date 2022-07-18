@@ -8,14 +8,18 @@ export default function NavItemsRight() {
     <HStack spacing="8">
       <Link to="/add-listing">
         <Button
-          bg="#B4FFFF"
-          color="black"
+          bg="white"
+          color="#06837F"
+          borderRadius="8px"
+          border="solid"
+          borderColor="#06837F"
           _hover={{
-            background: '#B4FFFF',
+            background: '#E1FCFC',
+            opacity: '100%',
           }}
           leftIcon={<MdAdd />}
         >
-          Add Listing
+          New Listing
         </Button>
       </Link>
       <ProfileButton />

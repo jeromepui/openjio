@@ -17,6 +17,7 @@ import ProfilePage from './pages/ProfilePage';
 import RegisterPage from './pages/RegisterPage';
 import SearchPage from './pages/SearchPage';
 import SettingsPage from './pages/SettingsPage';
+import HelpPage from './pages/HelpPage';
 
 export default function App() {
   const auth = useAuth();
@@ -42,6 +43,7 @@ export default function App() {
             <Route path="/profile/:id" element={<ProfilePage />} />
             <Route path="/search/:search" element={<SearchPage />} />
             <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/help" element={<HelpPage />} />
           </Routes>
         </Flex>
       )}

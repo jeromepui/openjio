@@ -30,7 +30,7 @@ export default function RequiredSpendField({ errors, register }) {
       </InputGroup>
       <ErrorMessage
         errors={errors}
-        name="target"
+        name="requiredSpend"
         render={({ message }) => <Text color="red.400">{message}</Text>}
       />
     </FormControl>
