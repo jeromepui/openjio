@@ -17,7 +17,7 @@ import { MdAdd } from 'react-icons/md';
 
 export default function ListingsCreate() {
   return (
-    <Stack alignContent="flex-start" mt="1%" maxW="75vw">
+    <>
       <Heading size="xl">Create new listings</Heading>
       <Text fontSize="xl">
         To create a new listing, simply click on
@@ -99,6 +99,6 @@ export default function ListingsCreate() {
         may find it under Open tab of the dashboard, as all new listings are by
         default open.
       </Text>
-    </Stack>
+    </>
   );
 }

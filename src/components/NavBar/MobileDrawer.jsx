@@ -54,6 +54,9 @@ export default function MobileDrawer() {
               <RouterLink to="/settings">
                 <Link onClick={onClose}>Settings</Link>
               </RouterLink>
+              <RouterLink to="/help">
+                <Link onClick={onClose}>Help</Link>
+              </RouterLink>
             </VStack>
           </DrawerBody>
           <DrawerFooter>

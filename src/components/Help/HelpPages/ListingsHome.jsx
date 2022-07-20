@@ -1,9 +1,9 @@
 import React from 'react';
-import { Stack, Heading, Text, Image } from '@chakra-ui/react';
+import { Heading, Text, Image } from '@chakra-ui/react';
 
 export default function ListingsHome() {
   return (
-    <Stack alignContent="flex-start" mt="1%" maxW="75vw">
+    <>
       <Heading size="xl">Home</Heading>
       <Text fontSize="xl">
         The home page displays all <b>open</b> listings created by all OpenJio
@@ -19,6 +19,6 @@ export default function ListingsHome() {
           alt="Listing details page"
         />
       </Text>
-    </Stack>
+    </>
   );
 }

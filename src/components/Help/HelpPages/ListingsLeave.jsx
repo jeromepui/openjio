@@ -1,8 +1,8 @@
-import { Stack, Heading, Text, Image, Button } from '@chakra-ui/react';
+import { Heading, Text, Image, Button } from '@chakra-ui/react';
 
 export default function ListingsLeave() {
   return (
-    <Stack alignContent="flex-start" mt="1%" maxW="75vw">
+    <>
       <Heading size="xl">Leave a listing</Heading>
       <Text fontSize="xl">
         To leave a listing, head to Joined tab under the dashboard and simply
@@ -24,6 +24,6 @@ export default function ListingsLeave() {
         />
         Leaving a listing will remove the listing from the Joined tab.
       </Text>
-    </Stack>
+    </>
   );
 }

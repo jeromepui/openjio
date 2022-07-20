@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Stack,
   Heading,
   Text,
   TableContainer,
@@ -14,7 +13,7 @@ import {
 
 export default function OverviewListings() {
   return (
-    <Stack alignContent="flex-start" mt="1%" maxW="75vw">
+    <>
       <Heading size="xl">Listings and shopping groups</Heading>
       <Text fontSize="xl">
         A listing is simply an open invitation created by OpenJio users for
@@ -89,6 +88,6 @@ export default function OverviewListings() {
         Each listing is connected to one shopping group, and each shopping group
         has a group chat automatically created for them.
       </Text>
-    </Stack>
+    </>
   );
 }

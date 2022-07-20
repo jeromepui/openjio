@@ -1,10 +1,10 @@
 import React from 'react';
-import { Stack, Heading, Text, Image, Icon, Button } from '@chakra-ui/react';
+import { Heading, Text, Image, Icon, Button } from '@chakra-ui/react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 
 export default function ListingsEditInfo() {
   return (
-    <Stack alignContent="flex-start" mt="1%" maxW="75vw">
+    <>
       <Heading size="xl">Edit listing information</Heading>
       <Text fontSize="xl">
         To edit information of an existing listing, head to either Open or
@@ -35,6 +35,6 @@ export default function ListingsEditInfo() {
         Note that we do not allow changing the number of slots available for the
         listing after it is created.
       </Text>
-    </Stack>
+    </>
   );
 }

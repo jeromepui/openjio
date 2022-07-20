@@ -1,9 +1,9 @@
 import React from 'react';
-import { Stack, Heading, Text, Image } from '@chakra-ui/react';
+import { Heading, Text, Image } from '@chakra-ui/react';
 
 export default function ListingsSearch() {
   return (
-    <Stack alignContent="flex-start" mt="1%" maxW="75vw">
+    <>
       <Heading size="xl">Search listings</Heading>
       <Text fontSize="xl">
         To search for a listing, key in your search key in the search bar in the
@@ -25,6 +25,6 @@ export default function ListingsSearch() {
         Note that currently in OpenJio, the search function only matches the
         search key with whole words in the listing title (non-case sensitive).
       </Text>
-    </Stack>
+    </>
   );
 }

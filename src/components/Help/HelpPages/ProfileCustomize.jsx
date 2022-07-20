@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Stack,
   Heading,
   Text,
   Image,
@@ -13,7 +12,7 @@ import { SmallCloseIcon } from '@chakra-ui/icons';
 
 export default function ProfileCustomize() {
   return (
-    <Stack alignContent="flex-start" mt="1%" maxW="75vw">
+    <>
       <Heading size="xl">Customize own profile</Heading>
       <Text fontSize="xl">
         To customize your profile, access the control center by clicking on{' '}
@@ -76,6 +75,6 @@ export default function ProfileCustomize() {
         />
         on the profile photo circle.
       </Text>
-    </Stack>
+    </>
   );
 }

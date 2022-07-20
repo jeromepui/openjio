@@ -17,7 +17,7 @@ import { BsThreeDotsVertical } from 'react-icons/bs';
 
 export default function ListingsDashboard() {
   return (
-    <Stack alignContent="flex-start" mt="1%" maxW="75vw">
+    <>
       <Heading size="xl">Dashboard</Heading>
       <Text fontSize="xl">
         OpenJio has a centralized dashboard for users to manage all listings
@@ -77,6 +77,6 @@ export default function ListingsDashboard() {
         />
         in the top right corner of the card.
       </Text>
-    </Stack>
+    </>
   );
 }

@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { Button, Stack, Heading, Text, Image } from '@chakra-ui/react';
+import { Button, Heading, Text, Image } from '@chakra-ui/react';
 
 export default function ListingsJoin() {
   return (
-    <Stack alignContent="flex-start" mt="1%" maxW="75vw">
+    <>
       <Heading size="xl">Join a listing</Heading>
       <Text fontSize="xl">
         A user can join a listing through the home page.
@@ -85,6 +85,6 @@ export default function ListingsJoin() {
         the owner of the listing has either approved or denied the previous
         request.
       </Text>
-    </Stack>
+    </>
   );
 }

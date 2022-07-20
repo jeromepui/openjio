@@ -7,7 +7,7 @@ import {
 
 export default function HelpMenu( { setContent } ) {
   return (
-    <Stack justifyContent="flex-start" m="6px" h="85vh">
+    <Stack justifyContent="flex-start" m="6px" h="85vh" maxW='25vw'>
       <Text fontSize="sm" fontWeight="extrabold">
         OVERVIEW
       </Text>

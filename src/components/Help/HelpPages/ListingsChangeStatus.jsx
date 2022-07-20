@@ -1,10 +1,10 @@
 import React from 'react';
-import { Stack, Heading, Text, Image, Icon } from '@chakra-ui/react';
+import { Heading, Text, Image, Icon } from '@chakra-ui/react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 
 export default function ListingsChangeStatus() {
   return (
-    <Stack alignContent="flex-start" mt="1%" maxW="75vw">
+    <>
       <Heading size="xl">Change listing status</Heading>
       <Text fontSize="xl">
         Listings have two statuses: <b>open</b> (available for public view and
@@ -28,6 +28,6 @@ export default function ListingsChangeStatus() {
         in the dashboard, select the menu button of the listing's card and click
         on <i>Reopen Listing</i>.
       </Text>
-    </Stack>
+    </>
   );
 }
