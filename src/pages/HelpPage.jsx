@@ -24,19 +24,26 @@ export default function HelpPage() {
 
       <IconButton
         onClick={onOpen}
-        bg="#FDC100"
         borderRadius="50px"
         pl="16px"
         position="absolute"
         bottom="20px"
         right="20px"
+        bg="teal.400"
+        color="white"
         aria-label="Menu button for Help"
         icon={<HiDotsHorizontal />}
         display={{ sm: 'block', md: 'none' }}
         size="lg"
       />
 
-      <Box pl="5%" pt="2%" w="100%" display={{ sm: 'block', md: 'none' }} overflowY="auto">
+      <Box
+        pl="5%"
+        pt="2%"
+        w="100%"
+        display={{ sm: 'block', md: 'none' }}
+        overflowY="auto"
+      >
         <HelpContent content={content} />
       </Box>
       <HelpMenuMobile

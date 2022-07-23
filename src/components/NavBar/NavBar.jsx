@@ -6,7 +6,13 @@ import NavItemsRight from './NavItemsRight/NavItemsRight';
 
 export default function NavBar() {
   return (
-    <Flex bg="#FDC100" justify="space-between" py="2" px="6">
+    <Flex
+      bg="#FDC100"
+      justify="space-between"
+      py="2"
+      px="6"
+      alignItems="center"
+    >
       <Logo />
       <HStack
         display={{ sm: 'none', md: 'flex' }}
@@ -14,8 +20,10 @@ export default function NavBar() {
         w="92%"
       >
         <NavItemsLeft />
+
         <NavItemsRight />
       </HStack>
+
       <MobileDrawer />
     </Flex>
   );
