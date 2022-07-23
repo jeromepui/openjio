@@ -1,9 +1,9 @@
 import React from 'react';
-import { Stack, Heading, Text, Image, Button } from '@chakra-ui/react';
+import { Heading, Text, Image, Button } from '@chakra-ui/react';
 
 export default function ProfileViewOthers() {
   return (
-    <Stack alignContent="flex-start" mt="1%" maxW="75vw">
+    <>
       <Heading size="xl">View others' profile </Heading>
       <Text fontSize="xl">
         Profile pages of other users are similar to a user's own profile page.
@@ -72,6 +72,6 @@ export default function ProfileViewOthers() {
           alt="Shopping group participants column in chat"
         />
       </Text>
-    </Stack>
+    </>
   );
 }

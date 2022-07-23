@@ -1,9 +1,9 @@
 import React from 'react';
-import { Stack, Heading, Text, Image, } from '@chakra-ui/react';
+import { Heading, Text, Image, } from '@chakra-ui/react';
 
 export default function Chat() {
   return (
-    <Stack alignContent="flex-start" mt="1%" maxW="75vw">
+    <>
       <Heading size="xl">Chat with shopping group </Heading>
       <Text fontSize="xl">
         Each shopping group in OpenJio will automatically have a group chat
@@ -27,6 +27,6 @@ export default function Chat() {
           alt="Shopping Group column under Chat"
         />
       </Text>
-    </Stack>
+    </>
   );
 }

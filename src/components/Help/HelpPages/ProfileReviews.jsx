@@ -1,9 +1,9 @@
 import React from 'react';
-import { Stack, Heading, Text, Image, Button } from '@chakra-ui/react';
+import { Heading, Text, Image, Button } from '@chakra-ui/react';
 
 export default function ProfileReviews() {
   return (
-    <Stack alignContent="flex-start" mt="1%" maxW="75vw">
+    <>
       <Heading size="xl">Rate and review </Heading>
       <Text fontSize="xl">
         Users may rate and review all OpenJio users apart from themselves. They
@@ -32,6 +32,6 @@ export default function ProfileReviews() {
           alt="A modal review form"
         />
       </Text>
-    </Stack>
+    </>
   );
 }

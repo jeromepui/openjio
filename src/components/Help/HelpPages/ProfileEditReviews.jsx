@@ -1,10 +1,10 @@
 import React from 'react';
-import { Stack, Heading, Text, Image, IconButton } from '@chakra-ui/react';
+import { Heading, Text, Image, IconButton } from '@chakra-ui/react';
 import { MdEdit, MdDelete } from 'react-icons/md';
 
 export default function ProfileEditReviews() {
   return (
-    <Stack alignContent="flex-start" mt="1%" maxW="75vw">
+    <>
       <Heading size="xl">Edit or remove reviews </Heading>
       <Text fontSize="xl">
         To edit reviews previously made for a user, click on Edit reviews
@@ -54,6 +54,6 @@ export default function ProfileEditReviews() {
         If no reviews have been created before for the user, the edit reviews
         button ill be disabled.
       </Text>
-    </Stack>
+    </>
   );
 }

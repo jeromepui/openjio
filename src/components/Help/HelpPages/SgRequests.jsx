@@ -1,9 +1,9 @@
 import React from 'react';
-import { Stack, Heading, Text, Image, Button } from '@chakra-ui/react';
+import { Heading, Text, Image, Button } from '@chakra-ui/react';
 
 export default function SgRequests() {
   return (
-    <Stack alignContent="flex-start" mt="1%" maxW="75vw">
+    <>
       <Heading size="xl">Manage join listing requests </Heading>
       <Text fontSize="xl">
         You can view requests to join a listing you created under Request tab in
@@ -51,6 +51,6 @@ export default function SgRequests() {
         </Button>
         will redirect you to the requester’s profile page.
       </Text>
-    </Stack>
+    </>
   );
 }

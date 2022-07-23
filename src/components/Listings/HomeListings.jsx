@@ -67,7 +67,7 @@ export default function HomeListings() {
                 <Flex
                   boxShadow="lg"
                   h="200px"
-                  justifyContent={{ sm: 'center', md: 'start' }}
+                  justifyContent={{ sm: 'start', md: 'start' }}
                   p="4"
                   rounded="lg"
                 >

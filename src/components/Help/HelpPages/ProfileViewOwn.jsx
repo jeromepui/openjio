@@ -1,10 +1,10 @@
 import React from 'react';
-import { Stack, Heading, Text, Image, Icon } from '@chakra-ui/react';
+import { Heading, Text, Image, Icon } from '@chakra-ui/react';
 import { MdSettings } from 'react-icons/md';
 
 export default function ProfileViewOwn() {
   return (
-    <Stack alignContent="flex-start" mt="1%" maxW="75vw">
+    <>
       <Heading size="xl">View own profile</Heading>
       <Text fontSize="xl">
         To open up your own profile, simple access the control center by
@@ -26,6 +26,6 @@ export default function ProfileViewOwn() {
           alt="Profile page with Listings tab open"
         />
       </Text>
-    </Stack>
+    </>
   );
 }

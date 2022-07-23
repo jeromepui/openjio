@@ -1,10 +1,10 @@
 import React from 'react';
-import { Stack, Heading, Text, Image, Icon, Button } from '@chakra-ui/react';
+import { Heading, Text, Image, Icon, Button } from '@chakra-ui/react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 
 export default function SgParticipants() {
   return (
-    <Stack alignContent="flex-start" mt="1%" maxW="75vw">
+    <>
       <Heading size="xl">Manage participants </Heading>
       <Text fontSize="xl">
         To remove a participant from a shopping group, navigate to either Open
@@ -34,6 +34,6 @@ export default function SgParticipants() {
         </Button>{' '}
         behind a user’s name will kick the user out of the shopping group.
       </Text>
-    </Stack>
+    </>
   );
 }

@@ -1,4 +1,5 @@
 import { React } from 'react';
+import { Stack } from '@chakra-ui/react';
 import Chat from './HelpPages/Chat';
 import ListingsChangeStatus from './HelpPages/ListingsChangeStatus';
 import ListingsCreate from './HelpPages/ListingsCreate';
@@ -83,5 +84,14 @@ export default function HelpContent({ content }) {
         return;
     }
   }
-  return <>{renderContent()}</>;
+  return (
+    <Stack
+      alignContent="flex-start"
+      mt="1%"
+      maxW={{ sm: '90vw', md: '75vw' }}
+      pb="10%"
+    >
+      {renderContent()}
+    </Stack>
+  );
 }

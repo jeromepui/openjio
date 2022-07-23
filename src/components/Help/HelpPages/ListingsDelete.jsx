@@ -1,10 +1,10 @@
 import React from 'react';
-import { Stack, Heading, Text, Image, Icon } from '@chakra-ui/react';
+import { Heading, Text, Image, Icon } from '@chakra-ui/react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 
 export default function ListingsDelete() {
   return (
-    <Stack alignContent="flex-start" mt="1%" maxW="75vw">
+    <>
       <Heading size="xl">Delete listing</Heading>
       <Text fontSize="xl">
         To delete a listing, head to either Open or Closed tab in the dashboard
@@ -19,6 +19,6 @@ export default function ListingsDelete() {
         />
         <br /> Deleted lisings will be immediately removed from home and the dashboard.
       </Text>
-    </Stack>
+    </>
   );
 }
