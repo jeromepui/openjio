@@ -1,21 +1,14 @@
-import React from 'react';
-import { Heading, Text, Image, Button } from '@chakra-ui/react';
+import { Button, Heading, Image, Text } from '@chakra-ui/react';
 
 export default function ProfileReviews() {
   return (
     <>
       <Heading size="xl">Rate and review </Heading>
-      <Text fontSize="xl">
+      <Text fontSize="lg">
         Users may rate and review all OpenJio users apart from themselves. They
         may do so via the profile page of the to-be-reviewed user. <br /> <br />
         On the profile page of another user, one may find the button
-        <Button
-          _hover={{ cursor: 'initial' }}
-          _active={{}}
-          ml="1%"
-          mr="1%"
-          size="sm"
-        >
+        <Button _hover={{ cursor: 'initial' }} _active={{}} mx="10px" size="sm">
           Leave a review
         </Button>
         under the user's avatar. <br /> <br />

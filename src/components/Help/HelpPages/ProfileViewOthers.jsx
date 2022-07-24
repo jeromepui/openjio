@@ -1,11 +1,10 @@
-import React from 'react';
-import { Heading, Text, Image, Button } from '@chakra-ui/react';
+import { Button, Heading, Image, Text } from '@chakra-ui/react';
 
 export default function ProfileViewOthers() {
   return (
     <>
       <Heading size="xl">View others' profile </Heading>
-      <Text fontSize="xl">
+      <Text fontSize="lg">
         Profile pages of other users are similar to a user's own profile page.
         The only difference is that the review and rating function is enabled.
         <br /> <br />
@@ -35,8 +34,7 @@ export default function ProfileViewOthers() {
           }}
           _active={{}}
           size="sm"
-          ml="1%"
-          mr="1%"
+          mx="10px"
         >
           Username
         </Button>

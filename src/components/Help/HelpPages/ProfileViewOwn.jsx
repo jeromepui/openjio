@@ -1,12 +1,11 @@
-import React from 'react';
-import { Heading, Text, Image, Icon } from '@chakra-ui/react';
+import { Heading, Icon, Image, Text } from '@chakra-ui/react';
 import { MdSettings } from 'react-icons/md';
 
 export default function ProfileViewOwn() {
   return (
     <>
       <Heading size="xl">View own profile</Heading>
-      <Text fontSize="xl">
+      <Text fontSize="lg">
         To open up your own profile, simple access the control center by
         clicking on <Icon as={MdSettings} ml="8px" mr="8px" /> and select <i>View
         profile</i> under the drop-down menu. <br /> <br />

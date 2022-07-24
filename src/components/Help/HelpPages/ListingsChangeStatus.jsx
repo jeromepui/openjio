@@ -1,12 +1,11 @@
-import React from 'react';
-import { Heading, Text, Image, Icon } from '@chakra-ui/react';
+import { Heading, Icon, Image, Text } from '@chakra-ui/react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 
 export default function ListingsChangeStatus() {
   return (
     <>
       <Heading size="xl">Change listing status</Heading>
-      <Text fontSize="xl">
+      <Text fontSize="lg">
         Listings have two statuses: <b>open</b> (available for public view and
         users may request to join them) or <b>closed</b> (hidden from the public
         and users cannot request to join them). One can toggle the status of a

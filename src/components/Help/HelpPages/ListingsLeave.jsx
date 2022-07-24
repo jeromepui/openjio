@@ -1,17 +1,16 @@
-import { Heading, Text, Image, Button } from '@chakra-ui/react';
+import { Button, Heading, Image, Text } from '@chakra-ui/react';
 
 export default function ListingsLeave() {
   return (
     <>
       <Heading size="xl">Leave a listing</Heading>
-      <Text fontSize="xl">
+      <Text fontSize="lg">
         To leave a listing, head to Joined tab under the dashboard and simply
         select{' '}
         <Button
           colorScheme="red"
-          mr="0.5%"
-          ml="0.5%"
           _active={{}}
+          mx="10px"
           size="sm"
           _hover={{ cursor: 'initial' }}
         >

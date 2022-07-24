@@ -1,18 +1,14 @@
-import React from 'react';
-
 import { Button, Heading, Text, Image } from '@chakra-ui/react';
 
 export default function ListingsJoin() {
   return (
     <>
       <Heading size="xl">Join a listing</Heading>
-      <Text fontSize="xl">
+      <Text fontSize="lg">
         A user can join a listing through the home page.
-        <br />
         <br />
         Click on a listing of interest on the home page and you will be brought
         to the details page of the listing.
-        <br />
         <br />
         <Image
           src="../../../listing-details-page.jpg"
@@ -20,46 +16,41 @@ export default function ListingsJoin() {
         />
         To join the listing, click on{' '}
         <Button
-          mr="8px"
-          ml="8px"
           _hover={{
             cursor: 'initial',
           }}
           _active={{}}
           bg="#02CECB"
           color="white"
-          w="300px"
+          mx="10px"
           size="sm"
+          w="300px"
         >
           Request to join listing
         </Button>
         at the bottom of the page. This will send a request to the listing owner
         for approval.
         <br />
-        <br />
         If you are approved by the owner to join the listing, the listing will
         appear under Joined tab under your dashboard.
-        <br />
         <br />
         <Image
           src="../../../joined-tab.jpg"
           alt="Joined tab under the dashboard"
         />
         <br />
-        <br />
         Note that a user will not be able to join a listing they have joined.
         The{' '}
         <Button
-          mr="8px"
-          ml="8px"
           _hover={{
             cursor: 'initial',
           }}
           _active={{}}
           bg="#02CECB"
           color="white"
-          w="300px"
+          mx="10px"
           size="sm"
+          w="300px"
         >
           Request to join listing
         </Button>{' '}
@@ -68,8 +59,7 @@ export default function ListingsJoin() {
         <br />
         Additionally, to prevent spams, OpenJio disables the{' '}
         <Button
-          mr="8px"
-          ml="8px"
+          mx="10px"
           _hover={{
             cursor: 'initial',
           }}

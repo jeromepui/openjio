@@ -1,21 +1,20 @@
-import React from 'react';
 import {
   Heading,
-  Text,
   TableContainer,
   Table,
-  Thead,
   Tbody,
-  Tr,
-  Th,
   Td,
+  Text,
+  Th,
+  Thead,
+  Tr
 } from '@chakra-ui/react';
 
 export default function OverviewListings() {
   return (
     <>
       <Heading size="xl">Listings and shopping groups</Heading>
-      <Text fontSize="xl">
+      <Text fontSize="lg">
         A listing is simply an open invitation created by OpenJio users for
         others to join their shopping group. <br />
         <br />
@@ -76,7 +75,7 @@ export default function OverviewListings() {
       </TableContainer>
       <br />
 
-      <Text fontSize="xl">
+      <Text fontSize="lg">
         <Heading size="md">Listing status</Heading>
         Listings also have two statuses: <b>open</b> (available for public view
         and users may request to join them) or <b>closed</b> (hidden from the

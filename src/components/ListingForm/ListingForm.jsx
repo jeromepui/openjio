@@ -78,7 +78,7 @@ export default function ListingForm() {
     } finally {
       toast({
         title: 'Success!',
-        description: 'Your new listing has been added!',
+        description: 'Your new listing has been added! A group chat has been created for you as well!',
         duration: 4000,
         isClosable: true,
         status: 'success',

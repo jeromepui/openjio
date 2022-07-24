@@ -1,7 +1,5 @@
-import React from 'react';
 import {
   Button,
-  Stack,
   Heading,
   Text,
   TableContainer,
@@ -19,7 +17,7 @@ export default function ListingsCreate() {
   return (
     <>
       <Heading size="xl">Create new listings</Heading>
-      <Text fontSize="xl">
+      <Text fontSize="lg">
         To create a new listing, simply click on
         <Button
           size="sm"
@@ -38,7 +36,6 @@ export default function ListingsCreate() {
         </Button>
         in the navigation bar, and you will be brought to a form that looks
         something like this:
-        <br />
         <br />
         <Image src="../../../new-listing-form.jpg" alt="New listing form" />
         <br />
@@ -81,18 +78,9 @@ export default function ListingsCreate() {
           </Tbody>
         </Table>
       </TableContainer>
-      <br />
-
-      <Text fontSize="xl">
-        Upon clicking
-        <Button
-          _hover={{ cursor: 'initial' }}
-          _active={{}}
-          ml="1%"
-          mr="1%"
-          size="sm"
-          w="10%"
-        >
+      <Text fontSize="lg">
+        Upon clicking the
+        <Button _active={{}} mx="10px" size="sm">
           Submit
         </Button>
         button at the end of the form, the new listing will be created and you

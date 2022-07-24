@@ -1,12 +1,11 @@
-import React from 'react';
-import { Heading, Text, Image, IconButton } from '@chakra-ui/react';
+import { Heading, IconButton, Image, Text } from '@chakra-ui/react';
 import { MdEdit, MdDelete } from 'react-icons/md';
 
 export default function ProfileEditReviews() {
   return (
     <>
       <Heading size="xl">Edit or remove reviews </Heading>
-      <Text fontSize="xl">
+      <Text fontSize="lg">
         To edit reviews previously made for a user, click on Edit reviews
         beneath the Leave a review. A drawer will pop up from the side, showing
         all reviews you have made for the user.

@@ -1,17 +1,15 @@
-import React from 'react';
 import {
-  Stack,
   Heading,
-  Text,
-  TableContainer,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
   Icon,
   Image,
+  TableContainer,
+  Table,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
 } from '@chakra-ui/react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 
@@ -19,10 +17,9 @@ export default function ListingsDashboard() {
   return (
     <>
       <Heading size="xl">Dashboard</Heading>
-      <Text fontSize="xl">
+      <Text fontSize="lg">
         OpenJio has a centralized dashboard for users to manage all listings
-        they have created or joined. To access the dashboard, simply click on
-         Dashboard on the navigation bar. <br />
+        they have created or joined.
         <br />
         <Image src="../../../openjio-dashboard.jpg" alt="OpenJio's dashboard" />
         There are currently four tabs under the dashboard, which are Open,
@@ -70,11 +67,7 @@ export default function ListingsDashboard() {
         <br />
         <br />
         To view actions available for the listing, select the menu button
-        <Icon
-          as={BsThreeDotsVertical}
-          ml="8px"
-          mr="8px"
-        />
+        <Icon as={BsThreeDotsVertical} ml="8px" mr="8px" />
         in the top right corner of the card.
       </Text>
     </>

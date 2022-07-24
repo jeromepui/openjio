@@ -1,4 +1,3 @@
-import { React } from 'react';
 import { Stack } from '@chakra-ui/react';
 import Chat from './HelpPages/Chat';
 import ListingsChangeStatus from './HelpPages/ListingsChangeStatus';

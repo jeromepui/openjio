@@ -1,8 +1,7 @@
-import React from 'react';
 import {
   Link,
-  Text,
   Stack,
+  Text,
 } from '@chakra-ui/react';
 
 export default function HelpMenu( { setContent } ) {

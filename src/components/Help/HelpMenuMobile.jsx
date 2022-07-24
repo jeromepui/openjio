@@ -1,14 +1,13 @@
-import React from 'react';
 import {
-  Link,
-  Text,
-  Stack,
   Drawer,
   DrawerBody,
   DrawerHeader,
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
+  Link,
+  Text,
+  Stack,
 } from '@chakra-ui/react';
 
 export default function HelpMenuMobile({

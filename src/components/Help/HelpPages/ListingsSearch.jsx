@@ -1,11 +1,10 @@
-import React from 'react';
-import { Heading, Text, Image } from '@chakra-ui/react';
+import { Heading, Image, Text } from '@chakra-ui/react';
 
 export default function ListingsSearch() {
   return (
     <>
       <Heading size="xl">Search listings</Heading>
-      <Text fontSize="xl">
+      <Text fontSize="lg">
         To search for a listing, key in your search key in the search bar in the
         navigation bar. <br />
         <br /> <Image src="../../../searchbar.jpg" alt="Search bar" />

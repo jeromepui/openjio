@@ -1,11 +1,10 @@
-import React from 'react';
 import {
-  Heading,
-  Text,
-  Image,
-  Icon,
   Button,
+  Heading,
+  Icon,
   IconButton,
+  Image,
+  Text,
 } from '@chakra-ui/react';
 import { MdSettings } from 'react-icons/md';
 import { SmallCloseIcon } from '@chakra-ui/icons';
@@ -14,22 +13,23 @@ export default function ProfileCustomize() {
   return (
     <>
       <Heading size="xl">Customize own profile</Heading>
-      <Text fontSize="xl">
+      <Text fontSize="lg">
         To customize your profile, access the control center by clicking on{' '}
-        <Icon as={MdSettings} ml="8px" mr="8px" /> and select <i>Settings</i>. At the
-        moment, OpenJio only allows its users to upload an avatar. <br /> <br />
+        <Icon as={MdSettings} ml="8px" mr="8px" /> and select <i>Settings</i>.
+        At the moment, OpenJio only allows its users to upload an avatar. <br />{' '}
+        <br />
         <Image
           src="../../../edit-profile.jpg"
           alt="Profile customization page"
         />
-        To upload an avatar, click on <i>Choose File</i> on the photo chooser to browse
-        for a picture. <br /> <br />
+        To upload an avatar, click on <i>Choose File</i> on the photo chooser to
+        browse for a picture. <br /> <br />
         <Image
           src="../../../choose-photo.jpg"
           alt="Photo selector under Settings for profile customization"
         />
-        <br /> <br />
-        A window will pop up. Select a picture and select <i>Open</i>. <br /> <br />
+        <br /> <br />A window will pop up. Select a picture and select{' '}
+        <i>Open</i>. <br /> <br />
         <Image
           src="../../../photo-selector.jpg"
           alt="Photo selector window to browse pictures"
@@ -47,11 +47,9 @@ export default function ProfileCustomize() {
           color="white"
           _hover={{ cursor: 'initial' }}
           _active={{}}
-          ml="1%"
-          mr="1%"
+          mx="10px"
           size="sm"
           w="20%"
-
         >
           Upload photo
         </Button>
@@ -69,8 +67,7 @@ export default function ProfileCustomize() {
           rounded="full"
           _hover={{ cursor: 'initial' }}
           _active={{}}
-          ml="0.5%"
-          mr="0.5%"
+          mx="10px"
           size="xs"
         />
         on the profile photo circle.

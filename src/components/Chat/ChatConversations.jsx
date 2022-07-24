@@ -32,6 +32,7 @@ export default function ChatConversations({ setListingId }) {
             key={index}
             mb="4"
             onClick={e => setListingId(listing.listing_id)}
+            overflow="hidden"
             size="lg"
           >
             {listing.listing_title}
