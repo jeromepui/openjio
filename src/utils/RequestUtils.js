@@ -20,11 +20,14 @@ export const userJoinedListing = async (listingId, userId) => {
 
 // Update request
 export const updateRequest = async (listingId, requestUpdates) => {
-  const { data, error } = await supabase
+  const { data, error: requestError } = await supabase.from('requests').select().eq('listing_id', listingId);
+  if (data.length === 0) return { requestError };
+
+  const { error } = await supabase
     .from('requests')
-    .update(requestUpdates)
+    .update(requestUpdates, { returning: "minimal" })
     .eq('listing_id', listingId);
-  return { data, error };
+  return { error };
 };
 
 // Delete request

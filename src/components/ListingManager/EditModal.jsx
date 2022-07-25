@@ -106,7 +106,6 @@ export default function EditModal({
       });
     } catch (error) {
       alert(error.message);
-      console.log(error);
     } finally {
       setShouldRefresh(prev => !prev);
       onClose();

@@ -104,7 +104,7 @@ export default function HomeListings() {
                         Full
                       </Badge>
                     )}
-                    <Text fontSize="md" fontWeight="500" noOfLines="1">
+                    <Text fontSize="md" fontWeight="500" noOfLines="1" w="200px">
                       {listing.website}
                     </Text>
                     <Text fontSize="md" color="gray.600">
